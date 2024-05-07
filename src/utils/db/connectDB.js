@@ -1,10 +1,11 @@
-import { productionEnv } from "@/app/layout";
+import { developmentEnv } from "@/app/layout";
+import { InternalServerError } from "@/errors";
 import mongoose from "mongoose";
 
 export default async function connectDB() {
-  const connectionURL = productionEnv
-    ? process.env.MONGOURL
-    : "mongodb://localhost:27017/xclusive-store";
+  const connectionURL = developmentEnv
+    ? "mongodb://localhost:27017/xclusive-store"
+    : process.env.MONGO_URL;
 
   try {
     console.log("connecting to database");
@@ -13,5 +14,6 @@ export default async function connectDB() {
   } catch (error) {
     console.log("error connecting to database");
     console.log(error);
+    throw new InternalServerError("error connecting to database");
   }
 }

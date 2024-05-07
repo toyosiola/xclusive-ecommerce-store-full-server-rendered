@@ -3,7 +3,7 @@
 #### db
 
 - [x] Install mongoose
-- [ ] Install react-intersection-observer, uuid ( or use crypto instead), http-status-codes, react-toastify, bcryptjs, jwt, server-only
+- [x] Install react-intersection-observer, uuid ( or use crypto instead), http-status-codes, react-toastify, bcryptjs, jwt, server-only
 - [x] Create local MongoDB server and copy connection string
 - [x] Create connectDB function in src/utils/db/connectDB
   - [x] create connectionUrl const that alternates local or remote DB url as per run environment
@@ -17,22 +17,22 @@
 
 #### error instances
 
-- [ ] Extend Error constructor, create and export custom:
-  - [ ] NotFound error class, 404 status
-  - [ ] unauthenticated error class, 401 status
-  - [ ] Forbidden error class, 403 status
-  - [ ] Server error class, 500 status
+- [x] Extend Error constructor, create and export custom:
+  - [x] NotFound error class, 404 status
+  - [x] unauthenticated error class, 401 status
+  - [x] Forbidden error class, 403 status
+  - [x] Server error class, 500 status
 
 #### /layout.js
 
-- [ ] Setup & apply font on html and make it accessible with tailwind classes
+- [x] Setup & apply font on html and make it accessible with tailwind classes
 - [x] Invoke connectDb func to establish connection with DB
-- [ ] Create Nav and Footer UI in /src/components, use usePathname (or electedLayoutSegment) to identify active navLink
-- [ ] Render Nav and Footer components in the root layout as shared components
-- [ ] Create global-error.js - remember 'use client'
-  - [ ] It will also contain shared Nav and Footer just like root layout
-  - [ ] It will render error.message or generic error message with status code if available
-  - [ ] It will contain a Try again button (reset or router.replace) or link as the case may be
+- [x] Create Nav and Footer UI in /src/components, use usePathname (or selectedLayoutSegment) to identify active navLink
+- [x] Render Nav and Footer components in the root layout as shared components
+- [x] Create global-error.js - remember 'use client'
+  - [x] It will also contain shared Nav and Footer just like root layout
+  - [x] It will render error.message or generic error message with status code if available
+  - [x] It will contain a Try again button (reset or router.replace) or link as the case may be
   - [ ] Content of global-error.js is duplicated into error.js except with the html and body tags
 
 #### /page.js

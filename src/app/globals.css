@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  img {
+    @apply w-full;
+  }
+  h3 {
+    @apply font-inter text-3xl font-semibold leading-[1.333] md:text-4xl;
+  }
+}
+
+@layer components {
+  .btn2 {
+    @apply block max-w-max rounded bg-secondary2 px-8 py-4 text-text duration-300 hover:bg-hoverButton md:px-12;
+  }
+}
+
+@layer utilities {
+  .global-container {
+    @apply mx-auto max-w-screen-2xl px-6 lg:px-14 2xl:px-32;
+  }
+
+  .heading-container {
+    @apply mb-10 items-center gap-8 sm:flex md:gap-20;
+  }
+
+  .product-shadow {
+    box-shadow: 0px 1px 13px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Hamburger Menu */
+.hamburger {
+  @apply relative h-6 w-6 cursor-pointer duration-[250ms];
+}
+
+.hamburger-top,
+.hamburger-middle,
+.hamburger-bottom {
+  @apply absolute left-0 top-0 h-0.5 w-6 bg-button duration-500;
+}
+
+.hamburger-middle {
+  @apply translate-y-[7px];
+}
+
+.hamburger-bottom {
+  @apply translate-y-[14px];
+}
+
+.open.hamburger {
+  @apply fixed right-6 top-12;
+}
+
+.open .hamburger-top {
+  @apply translate-x-[6px] translate-y-[6px]  rotate-45;
+}
+
+.open .hamburger-bottom {
+  @apply translate-x-[6px] translate-y-[6px]  -rotate-45;
+}
+
+.open .hamburger-middle {
+  @apply hidden;
+}
