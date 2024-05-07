@@ -1,5 +1,5 @@
 import Product from "@/models/ProductModel";
-import allProducts from "@/data/productsData";
+import allProducts from "@/data/productsData.json";
 
 export default async function populateDB() {
   await Product.deleteMany();

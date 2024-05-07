@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Inter, Poppins } from "next/font/google";
-import connectDB from "@/utils/db/connectDB";
+import { connectDB } from "@/utils/db";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 
@@ -25,7 +25,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="w-[100vw] min-h-[100vh] grid grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
+      <body className="max-w-[100vw] min-h-[100vh] grid grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
         <NavBar />
         {children}
         <Footer />

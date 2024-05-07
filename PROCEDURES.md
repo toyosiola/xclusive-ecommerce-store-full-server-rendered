@@ -33,14 +33,14 @@
   - [x] It will also contain shared Nav and Footer just like root layout
   - [x] It will render error.message or generic error message with status code if available
   - [x] It will contain a Try again button (reset or router.replace) or link as the case may be
-  - [ ] Content of global-error.js is duplicated into error.js except with the html and body tags
+  - [x] Content of global-error.js is duplicated into error.js except with the html and body tags
 
 #### /page.js
 
-- [ ] Create UI
-- [ ] Make all product categories links to /products?<category>
-- [ ] Initiate fetching for featured and best selling products. use promise.all. View more should be link to /products?<category>
-- [ ] Subcategories should also be link to /products?<category>
+- [x] Create UI
+- [x] Make all product categories links to /products?<category> : flash sales, all main categories, all sub categories, best_selling
+- [x] Initiate fetching for featured and best selling products. use promise.all. View more should be link to /products?<category>
+- [x] Subcategories should also be link to /products?<category>
 - [ ] Optimize as much as feasible. Stream async sections, loading skeleton, db field projections, fetching limit, reduce network round-trips etcetera
 
 #### /products :)

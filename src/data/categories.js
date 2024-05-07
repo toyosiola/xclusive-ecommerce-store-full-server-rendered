@@ -4,7 +4,7 @@ import {
   HeadPhoneCategoryIcon,
   PhoneCategoryIcon,
   SmartWatchCategoryIcon,
-} from "../_assets/icons";
+} from "@/assets/icons";
 
 export const mainCategories = [
   { title: "All" },
