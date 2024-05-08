@@ -5,9 +5,15 @@ import {
   DeliveryServiceIcon,
   SecuredIcon,
 } from "@/assets/icons";
+import {
+  BestSellingProductsSamples,
+  FlashSalesProductsSamples,
+  TopProductsSamples,
+} from "@/components/FeaturedProducts";
 import FlashSalesTimer from "@/components/FlashSalesTimer";
 import LtdOfferTimer from "@/components/LtdOfferTimer";
 import MainCategory from "@/components/MainCategory";
+import ProductSkeleton from "@/components/ProductSkeleton";
 import SearchInput from "@/components/SearchInput";
 import SectionTag from "@/components/SectionTag";
 import SingleProduct from "@/components/SingleProduct";
@@ -17,38 +23,12 @@ import { mainCategories, subCategories } from "@/data/categories";
 import Product from "@/models/ProductModel";
 import Image from "next/image";
 import Link from "next/link";
-import { devEnv } from "./layout";
+import { Suspense } from "react";
 
 // revalidate once a day
 export const revalidate = 60 * 60 * 24;
 
 export default async function Home() {
-  // to do - add field projection
-  const flashSalesPromise = Product.aggregate([
-    { $match: { discount: { $gt: 0 } } },
-    { $sample: { size: 4 } },
-  ]);
-
-  const bestSellingPromise = Product.aggregate([
-    { $match: { reviewsCount: { $gt: 50 } } },
-    { $sample: { size: 4 } },
-  ]);
-
-  const topProductsPromise = Product.aggregate([
-    { $match: { price: { $gt: 70000 } } },
-    { $sample: { size: 4 } },
-  ]);
-
-  const [
-    flashSalesProductsSample,
-    bestSellingProductsSample,
-    topProductsSample,
-  ] = await Promise.all([
-    flashSalesPromise,
-    bestSellingPromise,
-    topProductsPromise,
-  ]);
-
   return (
     <>
       <main className="relative w-full overflow-x-hidden">
@@ -126,11 +106,9 @@ export default async function Home() {
             </div>
 
             {/* Flash sales products */}
-            <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
-              {flashSalesProductsSample.map((product) => (
-                <SingleProduct key={product._id} {...product} />
-              ))}
-            </div>
+            <Suspense fallback={<ProductSkeleton />}>
+              <FlashSalesProductsSamples />
+            </Suspense>
 
             {/* Link to view all flash sales */}
             <Link href={"/products?c=flash_sales"} className="btn2 mx-auto">
@@ -174,11 +152,9 @@ export default async function Home() {
             </div>
 
             {/* Best selling container */}
-            <div className="mb-14 place-items-center gap-4 gap-y-14 space-y-4 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
-              {bestSellingProductsSample.map((product) => (
-                <SingleProduct key={product._id} {...product} />
-              ))}
-            </div>
+            <Suspense fallback={<ProductSkeleton />}>
+              <BestSellingProductsSamples />
+            </Suspense>
             {/* view all link for smaller screens only */}
             <Link
               href={"/products?f=best_selling"}
@@ -233,12 +209,9 @@ export default async function Home() {
             <h3 className="mb-14">Explore Our Products</h3>
 
             {/* products container */}
-            {/* to do - filter out only top products */}
-            <div className="mb-14 grid-cols-2 place-items-center gap-4 gap-y-14 space-y-4 sm:grid sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
-              {topProductsSample.map((product) => (
-                <SingleProduct key={product._id} {...product} />
-              ))}
-            </div>
+            <Suspense fallback={<ProductSkeleton />}>
+              <TopProductsSamples />
+            </Suspense>
             <Link href="/products" className="btn2 mx-auto">
               View All Products
             </Link>
