@@ -17,7 +17,7 @@ export const devEnv = process.env.NODE_ENV === "development";
 
 export const metadata = {
   title: "Xclusive Store",
-  description: "One stop store for you exclusive needs",
+  description: "One stop store for your exclusive needs",
 };
 
 export default async function RootLayout({ children }) {

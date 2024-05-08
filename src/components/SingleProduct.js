@@ -38,7 +38,7 @@ function SingleProduct({
           <TrashIcon />
         </div>
       ) : (
-        <div className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"></div>
+        <div className="absolute right-3 top-3 rounded-full bg-white p-1"></div>
       )}
 
       {/* discount */}
