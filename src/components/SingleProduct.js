@@ -30,12 +30,16 @@ function SingleProduct({
   return (
     <div className="relative mx-auto w-[20rem] max-w-full overflow-x-hidden sm:mx-0">
       {/* icons */}
-      <div
-        className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"
-        title="Remove from wishlist"
-      >
-        {isWishlistPage && <TrashIcon />}
-      </div>
+      {isWishlistPage ? (
+        <div
+          className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"
+          title="Remove from wishlist"
+        >
+          <TrashIcon />
+        </div>
+      ) : (
+        <div className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"></div>
+      )}
 
       {/* discount */}
       {discount ? (
