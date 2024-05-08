@@ -62,8 +62,9 @@ function SingleProduct({
             src={images[0]}
             width={338}
             height={253}
-            alt={"camera"}
-            className="h-full w-full rounded-lg object-cover"
+            alt={name}
+            sizes="(min-width: 640px) 50vw, (min-width: 768px) 33vw, (min-width: 1024px) 25vw, 100vw"
+            className="w-full h-full rounded-lg object-cover"
           />
         </div>
 

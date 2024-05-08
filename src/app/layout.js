@@ -13,7 +13,7 @@ const poppins = Poppins({
 });
 
 // variable to differentiate dev/prod environment when necessary app-wide
-export const developmentEnv = process.env.NODE_ENV === "development";
+export const devEnv = process.env.NODE_ENV === "development";
 
 export const metadata = {
   title: "Xclusive Store",

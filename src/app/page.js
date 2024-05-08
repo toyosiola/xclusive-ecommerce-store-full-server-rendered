@@ -17,9 +17,10 @@ import { mainCategories, subCategories } from "@/data/categories";
 import Product from "@/models/ProductModel";
 import Image from "next/image";
 import Link from "next/link";
+import { devEnv } from "./layout";
 
 // revalidate once a day
-export const revalidate = 0; // 60 * 60 * 24;
+export const revalidate = 60 * 60 * 24;
 
 export default async function Home() {
   // to do - add field projection
@@ -50,7 +51,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="relative border overflow-x-hidden">
+      <main className="relative w-full overflow-x-hidden">
         {/* HERO SECTION*/}
         <section>
           <div className="global-container md:grid-cols-[auto_1fr] gap-11 md:grid">
@@ -63,7 +64,7 @@ export default async function Home() {
               {/* categories */}
               <ul className="flex justify-between gap-2 overflow-x-auto md:block md:space-y-4 lg:w-56">
                 {mainCategories.map((category) => (
-                  <MainCategory key={crypto.randomUUID} {...category} />
+                  <MainCategory key={crypto.randomUUID()} {...category} />
                 ))}
               </ul>
             </div>
@@ -104,6 +105,8 @@ export default async function Home() {
                   alt="iPhone 14 series"
                   width={498}
                   height={328}
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  priority
                 />
               </div>
             </div>
@@ -124,8 +127,8 @@ export default async function Home() {
 
             {/* Flash sales products */}
             <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
-              {flashSalesProductsSample.map((product, index) => (
-                <SingleProduct key={index} {...product} />
+              {flashSalesProductsSample.map((product) => (
+                <SingleProduct key={product._id} {...product} />
               ))}
             </div>
 
@@ -172,8 +175,8 @@ export default async function Home() {
 
             {/* Best selling container */}
             <div className="mb-14 place-items-center gap-4 gap-y-14 space-y-4 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
-              {bestSellingProductsSample.map((product, index) => (
-                <SingleProduct key={crypto.randomUUID()} {...product} />
+              {bestSellingProductsSample.map((product) => (
+                <SingleProduct key={product._id} {...product} />
               ))}
             </div>
             {/* view all link for smaller screens only */}
@@ -232,8 +235,8 @@ export default async function Home() {
             {/* products container */}
             {/* to do - filter out only top products */}
             <div className="mb-14 grid-cols-2 place-items-center gap-4 gap-y-14 space-y-4 sm:grid sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
-              {topProductsSample.map((product, index) => (
-                <SingleProduct key={index} {...product} />
+              {topProductsSample.map((product) => (
+                <SingleProduct key={product._id} {...product} />
               ))}
             </div>
             <Link href="/products" className="btn2 mx-auto">

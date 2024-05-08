@@ -1,9 +1,9 @@
-import { developmentEnv } from "@/app/layout";
+import { devEnv } from "@/app/layout";
 import { InternalServerError } from "@/errors";
 import mongoose from "mongoose";
 
 export default async function connectDB() {
-  const connectionURL = developmentEnv
+  const connectionURL = devEnv
     ? "mongodb://localhost:27017/xclusive-store"
     : process.env.MONGO_URL;
 
