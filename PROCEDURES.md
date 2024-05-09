@@ -41,7 +41,7 @@
 - [x] Make all product categories links to /products?<category> : flash sales, all main categories, all sub categories, best_selling
 - [x] Initiate fetching for featured and best selling products. use promise.all. View more should be link to /products?<category>
 - [x] Subcategories should also be link to /products?<category>
-- [ ] Optimize as much as feasible. Stream async sections, loading skeleton, db field projections, fetching limit, reduce network round-trips etcetera
+- [x] Optimize as much as feasible. Stream async sections, loading skeleton, db field projections, fetching limit, reduce network round-trips etcetera
 
 #### /products :)
 
