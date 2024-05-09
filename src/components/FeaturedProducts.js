@@ -1,37 +1,31 @@
 import Product from "@/models/ProductModel";
 import SingleProduct from "./SingleProduct";
 
-const projectStage = {
-  $project: {
-    name: 1,
-    images: 1,
-    averageRating: 1,
-    reviewsCount: 1,
-    price: 1,
-    newProduct: 1,
-    discount: 1,
-  },
+const subPipeline = (query) => {
+  return [
+    { $match: query },
+    { $sample: { size: 4 } },
+    {
+      $project: {
+        name: 1,
+        images: 1,
+        averageRating: 1,
+        reviewsCount: 1,
+        price: 1,
+        newProduct: 1,
+        discount: 1,
+      },
+    },
+  ];
 };
 
 const featuredProducts = (async function () {
   return Product.aggregate([
     {
       $facet: {
-        flashSales: [
-          { $match: { discount: { $gt: 0 } } },
-          { $sample: { size: 4 } },
-          projectStage,
-        ],
-        bestSelling: [
-          { $match: { reviewsCount: { $gt: 50 } } },
-          { $sample: { size: 4 } },
-          projectStage,
-        ],
-        topProducts: [
-          { $match: { price: { $gt: 70000 } } },
-          { $sample: { size: 4 } },
-          projectStage,
-        ],
+        flashSales: subPipeline({ discount: { $gt: 0 } }),
+        bestSelling: subPipeline({ reviewsCount: { $gt: 50 } }),
+        topProducts: subPipeline({ price: { $gt: 70000 } }),
       },
     },
   ]);
