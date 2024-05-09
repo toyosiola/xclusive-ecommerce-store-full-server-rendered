@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import { connectDB } from "@/utils/db";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import GlobalProvider from "@/contexts/providers/GlobalProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -25,10 +26,12 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="max-w-[100vw] min-h-[100vh] grid grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
-        <NavBar />
-        {children}
-        <Footer />
+      <body className="grid min-h-[100vh] max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
+        <GlobalProvider>
+          <NavBar />
+          {children}
+          <Footer />
+        </GlobalProvider>
       </body>
     </html>
   );

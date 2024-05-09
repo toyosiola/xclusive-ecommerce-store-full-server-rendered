@@ -1,22 +1,21 @@
 import Product from "@/models/ProductModel";
 import SingleProduct from "./SingleProduct";
 
+// define projection stage for each aggregation
+export const projectStage = {
+  $project: {
+    name: 1,
+    images: 1,
+    averageRating: 1,
+    reviewsCount: 1,
+    price: 1,
+    newProduct: 1,
+    discount: 1,
+  },
+};
+
 const subPipeline = (query) => {
-  return [
-    { $match: query },
-    { $sample: { size: 4 } },
-    {
-      $project: {
-        name: 1,
-        images: 1,
-        averageRating: 1,
-        reviewsCount: 1,
-        price: 1,
-        newProduct: 1,
-        discount: 1,
-      },
-    },
-  ];
+  return [{ $match: query }, { $sample: { size: 4 } }, projectStage];
 };
 
 const featuredProducts = (async function () {

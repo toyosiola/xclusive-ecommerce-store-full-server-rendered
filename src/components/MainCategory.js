@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 function MainCategory({ title }) {
-  // ?c stands for category
+  // c in href stands for category
   return (
     <li>
       <Link

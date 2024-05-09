@@ -45,16 +45,15 @@
 
 #### /products :)
 
-- [ ] Create products folder with page.js
-- [ ] pass key prop to overall html element tag, use uuid to generate value
-- [ ] use same category links from home
-- [ ] use searchParams to get category
-- [ ] create filterQuery const, assign empty object
-- [ ] If category, add appropriate filter property to the query object
-- [ ] Pass queryObject to Product.find. Should return products, numOfProducts fulfilling the criteria and maxPrice. Remember limits, projections
-- [ ] Render products with products found
-- [ ] Pass numOfProducts and maxPrice to MoreProducts component
-
+- [x] Create products folder with page.js
+- [x] pass key prop to overall html element tag, use uuid to generate value
+- [x] use same category links from home
+- [x] use searchParams to get category
+- [x] create filterQuery const, assign empty object
+- [x] If category, add appropriate filter property to the query object
+- [x] Pass queryObject to Product.find. Should return products, numOfProducts fulfilling the criteria and maxPrice. Remember limits, projections
+- [x] Render products with products found
+- [x] Pass numOfProducts and maxPrice to MoreProducts component
 - [ ] export number of productsPerPage variable. Should be a number divisible by 2 \* 3 e.g. 48. Pass variable as prop to MoreProducts
 
   ##### priceLimit input

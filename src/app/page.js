@@ -16,11 +16,9 @@ import MainCategory from "@/components/MainCategory";
 import ProductSkeleton from "@/components/ProductSkeleton";
 import SearchInput from "@/components/SearchInput";
 import SectionTag from "@/components/SectionTag";
-import SingleProduct from "@/components/SingleProduct";
 import SubCategory from "@/components/SubCategory";
 import { mainCategories, subCategories } from "@/data/categories";
 // import allProducts from "@/data/productsData.json";
-import Product from "@/models/ProductModel";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -28,13 +26,13 @@ import { Suspense } from "react";
 // revalidate once a day
 export const revalidate = 60 * 60 * 24;
 
-export default async function Home() {
+export default function Home() {
   return (
     <>
       <main className="relative w-full overflow-x-hidden">
         {/* HERO SECTION*/}
         <section>
-          <div className="global-container md:grid-cols-[auto_1fr] gap-11 md:grid">
+          <div className="global-container gap-11 md:grid md:grid-cols-[auto_1fr]">
             <div className="pt-10 md:border-r md:pr-8">
               {/* Search box */}
               <div className="mb-4 flex items-center gap-2 rounded bg-secondary px-3 text-xs sm:mb-5 sm:text-sm lg:hidden">
@@ -44,7 +42,7 @@ export default async function Home() {
               {/* categories */}
               <ul className="flex justify-between gap-2 overflow-x-auto md:block md:space-y-4 lg:w-56">
                 {mainCategories.map((category) => (
-                  <MainCategory key={crypto.randomUUID()} {...category} />
+                  <MainCategory key={category.id} {...category} />
                 ))}
               </ul>
             </div>
@@ -106,12 +104,12 @@ export default async function Home() {
             </div>
 
             {/* Flash sales products */}
-            <Suspense fallback={<ProductSkeleton />}>
+            <Suspense fallback={<ProductSkeleton count={4} />}>
               <FlashSalesProductsSamples />
             </Suspense>
 
             {/* Link to view all flash sales */}
-            <Link href={"/products?c=flash_sales"} className="btn2 mx-auto">
+            <Link href="/products?c=flash sales" className="btn2 mx-auto">
               View All Products
             </Link>
           </div>
@@ -129,7 +127,7 @@ export default async function Home() {
             {/* Sub-categories container */}
             <div className="flex justify-between gap-8 overflow-x-auto">
               {subCategories.map((subC) => (
-                <SubCategory key={crypto.randomUUID()} {...subC} />
+                <SubCategory key={subC.id} {...subC} />
               ))}
             </div>
           </div>
@@ -144,7 +142,7 @@ export default async function Home() {
             <div className="heading-container flex justify-between">
               <h3>Best Selling Products</h3>
               <Link
-                href={"/products?f=best_selling"}
+                href={"/products?c=best selling"}
                 className="btn2 hidden sm:block"
               >
                 View All
@@ -152,12 +150,12 @@ export default async function Home() {
             </div>
 
             {/* Best selling container */}
-            <Suspense fallback={<ProductSkeleton />}>
+            <Suspense fallback={<ProductSkeleton count={4} />}>
               <BestSellingProductsSamples />
             </Suspense>
             {/* view all link for smaller screens only */}
             <Link
-              href={"/products?f=best_selling"}
+              href={"/products?c=best selling"}
               className="btn2 mx-auto sm:hidden"
             >
               View All
@@ -209,7 +207,7 @@ export default async function Home() {
             <h3 className="mb-14">Explore Our Products</h3>
 
             {/* products container */}
-            <Suspense fallback={<ProductSkeleton />}>
+            <Suspense fallback={<ProductSkeleton count={4} />}>
               <TopProductsSamples />
             </Suspense>
             <Link href="/products" className="btn2 mx-auto">
