@@ -59,7 +59,7 @@ function SingleProduct({
         </p>
       )}
       {/* product details container */}
-      <Link href={"/products/" + id} className="">
+      <Link href={"/products/" + id} className="" prefetch={false}>
         {/* image container */}
         <div className="h-[12.8125rem]">
           <Image
@@ -68,7 +68,7 @@ function SingleProduct({
             height={253}
             alt={name}
             sizes="(min-width: 640px) 50vw, (min-width: 768px) 33vw, (min-width: 1024px) 25vw, 100vw"
-            className="w-full h-full rounded-lg object-cover"
+            className="h-full w-full rounded-lg object-cover"
           />
         </div>
 
@@ -133,12 +133,12 @@ function SingleProduct({
 
         {/* increase and decrease buttons container. Disappear when item not in cart  */}
         <div
-          className={`absolute left-0 top-0 flex w-full items-center justify-between text-center text-text hidden`}
+          className={`absolute left-0 top-0 flex hidden w-full items-center justify-between text-center text-text`}
         >
           <button className="h-12 rounded bg-black px-3  text-2xl font-bold duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-30">
             -
           </button>
-          <p className="text-2xl font-semibold select-none text-black">0</p>
+          <p className="select-none text-2xl font-semibold text-black">0</p>
           <button className="h-12 rounded bg-black px-3 text-2xl font-bold  duration-300 hover:opacity-70">
             +
           </button>
