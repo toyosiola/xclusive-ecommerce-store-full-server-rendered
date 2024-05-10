@@ -11,5 +11,5 @@ export default function MoreProducts({ maxPrice, totalCount }) {
     setInitialDetails({ maxPrice, totalCount });
   }, []);
 
-  return <div>MoreProducts</div>;
+  return <div></div>;
 }

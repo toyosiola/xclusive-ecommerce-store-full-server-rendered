@@ -3,21 +3,14 @@ import SingleProduct from "./SingleProduct";
 import MoreProducts from "./MoreProducts";
 import getInitialProductsWrapper from "@/utils/getInitialProducts";
 
-export default async function ProductList({ category, pricelimit, sort }) {
+export default async function ProductList({ category, sort, pricelimit }) {
   const getInitialProducts = getInitialProductsWrapper(
     category,
-    pricelimit,
     sort,
+    pricelimit,
   );
 
   const [{ products, maxPrice, totalCount }] = await getInitialProducts();
-  // if (loading && !scrollFetching) {
-  //   return (
-  //     <div className="grid h-[calc(100vh-18rem)] place-items-center rounded-lg bg-gray-50">
-  //       <LoadingSpinner />
-  //     </div>
-  //   );
-  // }
 
   return (
     <>

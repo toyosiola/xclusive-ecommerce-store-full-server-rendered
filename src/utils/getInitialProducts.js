@@ -4,7 +4,7 @@ import { unstable_cache } from "next/cache";
 export const productsPerPage = 48;
 
 // use wrapper for unstable cache to pass params to cache key
-export default function getInitialProductsWrapper(category, pricelimit, sort) {
+export default function getInitialProductsWrapper(category, sort, pricelimit) {
   return unstable_cache(
     async () => {
       // construct filter query depending on product category

@@ -9,10 +9,10 @@ import ProductSkeleton from "@/components/ProductSkeleton";
 import SortSelector from "@/components/SortSelector";
 
 export default function Products({
-  searchParams: { category, pricelimit, sort },
+  searchParams: { category, sort, pricelimit },
 }) {
   return (
-    <main className="mb-36 mt-10 sm:mt-20" key={Math.random()}>
+    <main className="mb-36 mt-10 sm:mt-20" key={crypto.randomUUID()}>
       <div className="global-container">
         <BreadCrumb page="Products" />
         <div className="grid-cols-[auto_1fr] gap-4 md:grid lg:gap-10">
@@ -43,7 +43,11 @@ export default function Products({
 
             {/* all products */}
             <Suspense fallback={<ProductSkeleton count={48} isProductsPage />}>
-              <ProductList category={category} sort={sort} />
+              <ProductList
+                category={category}
+                sort={sort}
+                pricelimit={pricelimit}
+              />
             </Suspense>
           </div>
         </div>
