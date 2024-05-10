@@ -3,13 +3,11 @@ import SearchInput from "@/components/SearchInput";
 import MainCategory from "@/components/MainCategory";
 import { PriceLimitBar } from "@/components/PriceLimitBar";
 import { mainCategories } from "@/data/categories";
-import Product from "@/models/ProductModel";
-import { projectStage } from "@/components/FeaturedProducts";
 import ProductList from "@/components/ProductList";
 import { Suspense } from "react";
 import ProductSkeleton from "@/components/ProductSkeleton";
 
-export default function Products({ searchParams: { c: category } }) {
+export default function Products({ searchParams: { category } }) {
   return (
     <main className="mb-36 mt-10 sm:mt-20" key={crypto.randomUUID()}>
       <div className="global-container">
@@ -33,7 +31,7 @@ export default function Products({ searchParams: { c: category } }) {
             </div>
 
             {/* other filters */}
-            {/* <PriceLimitBar /> */}
+            <PriceLimitBar />
 
             {/* reset button */}
             <button className="btn2 mb-10 px-6 py-2 text-sm lg:text-base">

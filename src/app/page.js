@@ -109,7 +109,10 @@ export default function Home() {
             </Suspense>
 
             {/* Link to view all flash sales */}
-            <Link href="/products?c=flash sales" className="btn2 mx-auto">
+            <Link
+              href="/products?category=flash sales"
+              className="btn2 mx-auto"
+            >
               View All Products
             </Link>
           </div>
@@ -142,7 +145,7 @@ export default function Home() {
             <div className="heading-container flex justify-between">
               <h3>Best Selling Products</h3>
               <Link
-                href={"/products?c=best selling"}
+                href={"/products?category=best selling"}
                 className="btn2 hidden sm:block"
               >
                 View All
@@ -155,7 +158,7 @@ export default function Home() {
             </Suspense>
             {/* view all link for smaller screens only */}
             <Link
-              href={"/products?c=best selling"}
+              href={"/products?category=best selling"}
               className="btn2 mx-auto sm:hidden"
             >
               View All
@@ -265,7 +268,7 @@ export default function Home() {
                       Featured woman collections that give you another vibe.
                     </p>
                     <Link
-                      href="/products?c=women"
+                      href="/products?category=women"
                       className="inline-block border-b duration-200 hover:border-b-transparent hover:text-text1"
                     >
                       Shop Now

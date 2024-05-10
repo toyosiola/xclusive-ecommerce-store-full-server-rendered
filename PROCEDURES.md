@@ -54,23 +54,23 @@
 - [x] Pass queryObject to Product.find. Should return products, numOfProducts fulfilling the criteria and maxPrice. Remember limits, projections
 - [x] Render products with products found
 - [x] Pass numOfProducts and maxPrice to MoreProducts component
-- [ ] export number of productsPerPage variable. Should be a number divisible by 2 \* 3 e.g. 48. Pass variable as prop to MoreProducts
+- [x] export number of productsPerPage variable. Should be a number divisible by 2 \* 3 e.g. 48. Pass variable as prop to MoreProducts
 
   ##### priceLimit input
 
-  - [ ] Price filtering input should be client comp, range type, standalone component
-  - [ ] min = 0, max = maxPrice gotten from global state (/ parent).
-  - [ ] create currentValue local state, pass maxPrice as initial value
-  - [ ] pass currentValue as its value
-  - [ ] onChange, update currentValue state
-  - [ ] onMouseup, debounce for 1s, create url const, construct url from:
-    - [ ] set price value to global state
-    - [ ] get pathname from usePathname, make it first part of the url
-    - [ ] searchParams part of the url formulation should be put in a function that accept all variables as parameters
-    - [ ] get category searchParams as props from parent component, if true, add category to url as urlSearchParams
-    - [ ] get value of set price, add to url as urlSearchParams
-    - [ ] get sort from global state, if value is not "none", pass sort to url as urlSearchParams
-    - [ ] router.replace(url)
+  - [x] Price filtering input should be client comp, range type, standalone component
+  - [x] min = 0, max = maxPrice gotten from global state (/ parent).
+  - [x] create currentValue local state, pass maxPrice as initial value
+  - [x] pass currentValue as its value
+  - [x] onChange, update currentValue state
+  - [x] onMouseup, debounce for 1s, create url const, construct url from:
+    - [x] set price value to global state
+    - [x] get pathname from usePathname, make it first part of the url
+    - [x] searchParams part of the url formulation should be put in a function that accept all variables as parameters
+    - [x] get category searchParams as props from parent component, if true, add category to url as urlSearchParams
+    - [x] get value of set price, add to url as urlSearchParams
+    - [x] get sort from global state, if value is not "none", pass sort to url as urlSearchParams
+    - [x] router.replace(url)
 
   ##### sort input
 
