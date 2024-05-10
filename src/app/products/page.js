@@ -6,6 +6,7 @@ import { mainCategories } from "@/data/categories";
 import ProductList from "@/components/ProductList";
 import { Suspense } from "react";
 import ProductSkeleton from "@/components/ProductSkeleton";
+import SortSelector from "@/components/SortSelector";
 
 export default function Products({ searchParams: { category } }) {
   return (
@@ -32,36 +33,11 @@ export default function Products({ searchParams: { category } }) {
 
             {/* other filters */}
             <PriceLimitBar />
-
-            {/* reset button */}
-            <button className="btn2 mb-10 px-6 py-2 text-sm lg:text-base">
-              Reset filter(s)
-            </button>
           </div>
 
           {/* Products container */}
           <div className="">
-            <div className="mb-6 items-center gap-1 sm:flex">
-              <p className="mb-3 sm:mb-0">
-                <span className="font-semibold">0</span>
-                items found
-              </p>
-              <hr className="hidden grow border sm:block" />
-
-              <label htmlFor="sort_by" className="inline-flex gap-1 font-bold">
-                Sort by
-                <select
-                  name="sort_by"
-                  className="rounded border border-black/30 font-normal"
-                >
-                  <option value="none">none</option>
-                  <option value="price_ascending">price - lowest</option>
-                  <option value="price_descending">price - highest</option>
-                  <option value="name_ascending">name (a - z)</option>
-                  <option value="name_descending">name (z - a)</option>
-                </select>
-              </label>
-            </div>
+            <SortSelector />
 
             {/* all products */}
             <Suspense fallback={<ProductSkeleton count={48} isProductsPage />}>

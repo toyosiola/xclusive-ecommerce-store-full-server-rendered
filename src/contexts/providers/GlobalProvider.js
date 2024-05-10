@@ -18,14 +18,8 @@ export default function GlobalProvider({ children }) {
     dispatch({ type: SET_INITIAL_DETAILS, payload: { maxPrice, totalCount } });
   }
 
-  function setPriceLimit(price) {
-    dispatch({ type: SET_PRICE, payload: price });
-  }
-
   return (
-    <GlobalContext.Provider
-      value={{ ...state, setPriceLimit, setInitialDetails }}
-    >
+    <GlobalContext.Provider value={{ ...state, setInitialDetails }}>
       {children}
     </GlobalContext.Provider>
   );

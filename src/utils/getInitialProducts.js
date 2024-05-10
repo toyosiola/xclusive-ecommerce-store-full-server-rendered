@@ -93,6 +93,6 @@ export default function getInitialProductsWrapper(category) {
       ]);
     },
     ["initial-products", category ? category : "all"],
-    { tags: ["fetch-products"], revalidate: 18000 },
+    { tags: ["fetch-products"] },
   );
 }

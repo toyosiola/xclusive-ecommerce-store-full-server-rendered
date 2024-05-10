@@ -256,3 +256,7 @@
 - [ ] timestamps
 
 #### research on MongoDB search and implement
+
+#### to do
+
+- [ ] remove revalidation from home

@@ -7,7 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export function PriceLimitBar() {
-  const { maxPrice, setPriceLimit } = useGlobalContext();
+  const { maxPrice } = useGlobalContext();
   const searchParams = useSearchParams();
   const priceLimit =
     searchParams.get("pricelimit") && Number(searchParams.get("pricelimit"));
@@ -25,7 +25,6 @@ export function PriceLimitBar() {
 
   function updateSearchParams(e) {
     const newPriceLimit = e.target.value;
-    setPriceLimit(newPriceLimit);
     const category = searchParams.get("category");
     const sortBy = searchParams.get("sort");
     const url = `${pathname}?${category ? `category=${category}&` : ""}pricelimit=${newPriceLimit}${sortBy ? `&sort=${sortBy}` : ""}`;

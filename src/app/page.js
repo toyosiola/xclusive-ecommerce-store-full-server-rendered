@@ -24,7 +24,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 // revalidate once a day
-export const revalidate = 60 * 60 * 24;
+export const revalidate = 60 * 30; // 60 * 60 * 24;
 
 export default function Home() {
   return (
