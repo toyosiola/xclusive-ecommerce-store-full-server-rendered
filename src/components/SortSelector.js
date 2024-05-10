@@ -38,10 +38,10 @@ export default function SortSelector() {
           className="rounded border border-black/30 font-normal"
         >
           <option value="none">none</option>
-          <option value="price_ascending">price - lowest</option>
-          <option value="price_descending">price - highest</option>
-          <option value="name_ascending">name (a - z)</option>
-          <option value="name_descending">name (z - a)</option>
+          <option value="price ascending">price - lowest</option>
+          <option value="price descending">price - highest</option>
+          <option value="name ascending">name (a - z)</option>
+          <option value="name descending">name (z - a)</option>
         </select>
       </label>
     </div>

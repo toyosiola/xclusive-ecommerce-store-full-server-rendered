@@ -74,10 +74,10 @@
 
   ##### sort input
 
-  - [ ] standalone component, should be select type
-  - [ ] have five options: none (default), price-ascending, price-descending, name a-z, name z-a
-  - [ ] create currentValue local state, onChange, update local state
-  - [ ] import the url formulation func, invoke and pass all parameters
+  - [x] standalone component, should be select type
+  - [x] have five options: none (default), price-ascending, price-descending, name a-z, name z-a
+  - [x] create currentValue local state, onChange, update local state
+  - [x] import the url formulation func, invoke and pass all parameters
 
   ##### MoreProducts
 
@@ -88,7 +88,7 @@
   - [ ] Destructure ref, inView from useInView
   - [ ] create a more Products, loading, and page local state
   - [ ] Create const num of pages, calculate from num of products / num of products per page. Math.ceil
-  - [ ] create a useEffect that run once, set numOfProducts and maxPrice to global state
+  - [x] create a useEffect that run once, set numOfProducts and maxPrice to global state
   - [ ] Create a use effect with inView, page dependency
   - [ ] Run fetching in if block, if inView is true and page is not greater than num of pages
   - [ ] Call query string constructor function and add ur api url

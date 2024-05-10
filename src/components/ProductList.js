@@ -3,8 +3,13 @@ import SingleProduct from "./SingleProduct";
 import MoreProducts from "./MoreProducts";
 import getInitialProductsWrapper from "@/utils/getInitialProducts";
 
-export default async function ProductList({ category }) {
-  const getInitialProducts = getInitialProductsWrapper(category);
+export default async function ProductList({ category, pricelimit, sort }) {
+  const getInitialProducts = getInitialProductsWrapper(
+    category,
+    pricelimit,
+    sort,
+  );
+
   const [{ products, maxPrice, totalCount }] = await getInitialProducts();
   // if (loading && !scrollFetching) {
   //   return (

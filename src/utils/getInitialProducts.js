@@ -4,10 +4,10 @@ import { unstable_cache } from "next/cache";
 export const productsPerPage = 48;
 
 // use wrapper for unstable cache to pass params to cache key
-export default function getInitialProductsWrapper(category) {
+export default function getInitialProductsWrapper(category, pricelimit, sort) {
   return unstable_cache(
     async () => {
-      // construct filter query from depending on searchParams value
+      // construct filter query depending on product category
       const filterQuery = {};
       if (category) {
         switch (category) {
@@ -58,11 +58,48 @@ export default function getInitialProductsWrapper(category) {
         }
       }
 
-      // find products, total number of products, maxPrice and limit returned products
-      return await Product.aggregate([
+      // add price limit to filter query
+      if (pricelimit) {
+        filterQuery.price = { $lte: Number(pricelimit) };
+      }
+
+      // construct sort query
+      const sortQuery = {};
+      if (sort) {
+        switch (sort) {
+          case "name ascending": {
+            sortQuery.name = 1;
+            break;
+          }
+          case "name descending": {
+            sortQuery.name = -1;
+            break;
+          }
+          case "price ascending": {
+            sortQuery.price = 1;
+            break;
+          }
+          case "price descending": {
+            sortQuery.price = -1;
+            break;
+          }
+        }
+      }
+
+      // build aggregation pipeline
+      const aggregationPipeline = [
         {
           $match: filterQuery,
         },
+      ];
+
+      // add sort stage if sort is true
+      if (sort && sort !== "none") {
+        aggregationPipeline.push({ $sort: sortQuery });
+      }
+
+      // add group stage
+      aggregationPipeline.push(
         {
           $group: {
             _id: null, // Group all documents together
@@ -90,9 +127,16 @@ export default function getInitialProductsWrapper(category) {
             products: { $slice: ["$products", productsPerPage] }, // Limit the array items to number of products per page
           },
         },
-      ]);
+      );
+
+      return await Product.aggregate(aggregationPipeline);
     },
-    ["initial-products", category ? category : "all"],
-    { tags: ["fetch-products"] },
+    [
+      "initial-products",
+      category ? category : "all",
+      pricelimit ? pricelimit : "",
+      sort ? sort : "none",
+    ],
+    { tags: ["products"] },
   );
 }
