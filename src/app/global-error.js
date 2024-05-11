@@ -1,7 +1,7 @@
 "use client";
 
 import Footer from "@/components/Footer";
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Navbar";
 import { Inter, Poppins } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -20,10 +20,10 @@ export const metadata = {
 export default function GlobalError({ error, reset }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="w-[100vw] min-h-[100vh] grid grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
+      <body className="grid min-h-[100vh] w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
         <NavBar />
-        <main className="flex items-center flex-col h-full justify-center">
-          <h3 className="text-center mb-6 px-2">
+        <main className="flex h-full flex-col items-center justify-center">
+          <h3 className="mb-6 px-2 text-center">
             Something went wrong! Please try again
           </h3>
           <button className="btn2 mb-4" onClick={() => reset()}>

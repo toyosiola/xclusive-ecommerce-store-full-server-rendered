@@ -19,7 +19,7 @@
 
 @layer utilities {
   .global-container {
-    @apply mx-auto max-w-screen-2xl px-6 lg:px-14 2xl:px-32;
+    @apply mx-auto w-[100vw] max-w-screen-2xl px-6 lg:px-14 2xl:px-32;
   }
 
   .heading-container {
@@ -33,13 +33,13 @@
 
 /* Hamburger Menu */
 .hamburger {
-  @apply relative h-6 w-6 cursor-pointer duration-[250ms];
+  @apply relative h-4 w-6 cursor-pointer;
 }
 
 .hamburger-top,
 .hamburger-middle,
 .hamburger-bottom {
-  @apply absolute left-0 top-0 h-0.5 w-6 bg-button duration-500;
+  @apply absolute left-0 top-0 h-0.5 w-6 bg-button;
 }
 
 .hamburger-middle {
@@ -50,18 +50,18 @@
   @apply translate-y-[14px];
 }
 
-.open.hamburger {
-  @apply fixed right-6 top-12;
+/* .close.hamburger {
+  @apply duration-[5000ms];
+} */
+
+.close .hamburger-top {
+  @apply translate-y-[6px]  rotate-45 duration-500;
 }
 
-.open .hamburger-top {
-  @apply translate-x-[6px] translate-y-[6px]  rotate-45;
+.close .hamburger-bottom {
+  @apply translate-y-[6px]  -rotate-45 duration-500;
 }
 
-.open .hamburger-bottom {
-  @apply translate-x-[6px] translate-y-[6px]  -rotate-45;
-}
-
-.open .hamburger-middle {
+.close .hamburger-middle {
   @apply hidden;
 }

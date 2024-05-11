@@ -20,11 +20,11 @@ export default function Products({
           <div className="">
             {/* Search box */}
             <div className="mb-4 flex items-center gap-2 rounded bg-secondary px-3 text-xs sm:mb-5 sm:text-sm lg:hidden">
-              <SearchInput className="grow bg-transparent px-1 py-3 focus:outline-none md:max-w-[8rem]" />
+              <SearchInput />
             </div>
 
             {/* categories */}
-            <div className="mb-6 text-sm">
+            <div className="mb-6 max-w-full overflow-hidden text-sm">
               <h4 className="mb-1 font-semibold md:mb-3">Categories</h4>
               <ul className="flex justify-between gap-2 overflow-x-auto md:block md:space-y-4">
                 {mainCategories.map((category) => (

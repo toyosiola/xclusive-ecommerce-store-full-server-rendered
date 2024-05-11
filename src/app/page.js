@@ -23,20 +23,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
-// revalidate once a day
-export const revalidate = 60 * 30; // 60 * 60 * 24;
+// revalidate once in 3 days
+export const revalidate = 60 * 60 * 24 * 3;
 
 export default function Home() {
   return (
     <>
-      <main className="relative w-full overflow-x-hidden">
+      <main className="relative">
         {/* HERO SECTION*/}
         <section>
           <div className="global-container gap-11 md:grid md:grid-cols-[auto_1fr]">
             <div className="pt-10 md:border-r md:pr-8">
               {/* Search box */}
               <div className="mb-4 flex items-center gap-2 rounded bg-secondary px-3 text-xs sm:mb-5 sm:text-sm lg:hidden">
-                <SearchInput className="grow bg-transparent px-1 py-3 focus:outline-none md:max-w-[8rem]" />
+                <SearchInput />
               </div>
 
               {/* categories */}
