@@ -81,23 +81,24 @@
 
   ##### MoreProducts
 
-  - [ ] create a MoreProducts client component, render it at the bottom of server rendered products
-  - [ ] Client component with React fragment enclosure
-  - [ ] Import useInView from react intersection observer
-  - [ ] Accept productsPerPage prop from parent component
-  - [ ] Destructure ref, inView from useInView
-  - [ ] create a more Products, loading, and page local state
-  - [ ] Create const num of pages, calculate from num of products / num of products per page. Math.ceil
+  - [x] create a MoreProducts client component, render it at the bottom of server rendered products
+  - [x] Client component with React fragment enclosure
+  - [x] Import useInView from react intersection observer
+  - [x] Accept productsPerPage prop from parent component
+  - [x] Destructure ref, inView from useInView
+  - [x] create a more Products, loading, and page local state
+  - [x] Create const num of pages, calculate from num of products / num of products per page. Math.ceil
   - [x] create a useEffect that run once, set numOfProducts and maxPrice to global state
-  - [ ] Create a use effect with inView, page dependency
-  - [ ] Run fetching in if block, if inView is true and page is not greater than num of pages
-  - [ ] Call query string constructor function and add ur api url
-  - [ ] [spread former and new products] top update more products state
-  - [ ] Set loading before and after fetching
-  - [ ] Increase page count after successful loading
-  - [ ] Render more products, enclosing html tag should have same styles as products in parent component
-  - [ ] Put a div at the bottom of more products as intersection pointer
-  - [ ] Put loading that is rendered when fetching
+  - [x] Create a use effect with inView, page dependency
+  - [x] Run fetching in if block, if inView is true and page is not greater than num of pages
+  - [x] Call query string constructor function and add ur api url
+  - [x] [spread former and new products] top update more products state
+  - [x] Set loading before and after fetching
+  - [x] Increase page count after successful loading
+  - [x] Render more products, enclosing html tag should have same styles as products in parent component
+  - [x] Put a div at the bottom of more products as intersection pointer
+  - [x] Put loading that is rendered when fetching
+  - [ ] Show error toast if error
 
 #### products api route
 

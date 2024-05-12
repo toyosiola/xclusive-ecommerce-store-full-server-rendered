@@ -56,9 +56,9 @@ const productSchema = new Schema(
       trim: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const Product = models.Product || model("Product", productSchema);
+const Product = models?.Product || model("Product", productSchema);
 
 export default Product;

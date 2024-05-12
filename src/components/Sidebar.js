@@ -19,13 +19,15 @@ export default function Sidebar() {
       </button>
 
       <section
-        className={`fixed inset-0 z-30 max-w-[100vh] -translate-x-full overflow-hidden duration-300 lg:hidden ${isSidebarOpen ? "translate-x-0" : ""}`}
+        className={`fixed inset-0 z-30 max-w-[100vh] overflow-hidden duration-300 lg:hidden ${isSidebarOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
       >
         <div
           className="absolute left-0 top-0 h-full w-full bg-black/10"
           onClick={() => setIsSidebarOpen(false)}
         ></div>
-        <div className="relative h-full w-96 max-w-full bg-gray-100">
+        <div
+          className={`relative h-full w-96 max-w-[80vw] -translate-x-full bg-gray-100 duration-300 ${isSidebarOpen ? "translate-x-0" : ""}`}
+        >
           {/* Logo */}
           <div className="relative mb-5 flex items-center justify-between border-b border-gray-300 bg-white px-2 pb-4 pt-10">
             <Link
