@@ -7,6 +7,7 @@ import {
 import formatPrice from "@/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
+import RatingStars from "./RatingStars";
 
 function SingleProduct({
   _id: id,
@@ -93,31 +94,7 @@ function SingleProduct({
           {/* ratings container */}
           <div className="flex items-center gap-2 text-lg">
             {/* stars container */}
-            <div className="flex">
-              {Array.from({ length: 5 }, (_, index) => {
-                if (averageRating >= index + 1) {
-                  return (
-                    <span key={index}>
-                      <StarFullyFilledIcon />
-                    </span>
-                  );
-                }
-                if (averageRating < index + 1 && averageRating >= index + 0.5) {
-                  return (
-                    <span key={index}>
-                      <StarHalfFilledIcon />
-                    </span>
-                  );
-                }
-                if (averageRating < index + 1) {
-                  return (
-                    <span key={index}>
-                      <StarEmptyIcon />
-                    </span>
-                  );
-                }
-              })}
-            </div>
+            <RatingStars averageRating={averageRating} />
             {/* count */}
             <p className="text-lg font-bold text-black/50">({reviewsCount})</p>
           </div>
