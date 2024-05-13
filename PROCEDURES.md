@@ -102,9 +102,11 @@
 
 #### products api route
 
-- [ ] get all possible url search params from req url
-- [ ] construct db filter query, remember limits and projections. Sort if needed
-- [ ] Return fetched products on response
+- [x] get all possible url search params from req url
+- [x] construct db filter query, remember limits and projections. Sort if needed
+- [x] Return fetched products on
+
+#### single product page
 
 #### /sign-up
 
