@@ -1,6 +1,10 @@
 import { productsPerPage } from "@/components/ProductList";
 import Product from "@/models/ProductModel";
-import { constructFilterQuery, constructSortQuery } from "@/utils/db";
+import {
+  connectDB,
+  constructFilterQuery,
+  constructSortQuery,
+} from "@/utils/db";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
@@ -20,6 +24,7 @@ export async function GET(req) {
 
     result.skip((page - 1) * productsPerPage).limit(productsPerPage);
 
+    await connectDB();
     const products = await result;
     return Response.json(products);
   } catch (error) {
