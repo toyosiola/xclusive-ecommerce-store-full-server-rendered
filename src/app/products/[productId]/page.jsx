@@ -18,6 +18,7 @@ export async function generateStaticParams() {
 }
 
 export default async function SingleProductPage({ params: { productId } }) {
+  await connectDB();
   const product = await Product.findOne({ _id: productId }).select(
     "name price averageRating reviewsCount images description discount",
   );

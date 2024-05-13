@@ -2,6 +2,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import SingleProduct from "./SingleProduct";
 import MoreProducts from "./MoreProducts";
 import getInitialProductsWrapper from "@/utils/getInitialProducts";
+import { connectDB } from "@/utils/db";
 
 export const productsPerPage = 48;
 
@@ -12,6 +13,7 @@ export default async function ProductList({ category, sort, priceLimit }) {
     priceLimit,
   );
 
+  await connectDB();
   const [{ products, maxPrice, totalCount }] = await getInitialProducts();
 
   return (

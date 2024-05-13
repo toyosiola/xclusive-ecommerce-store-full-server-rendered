@@ -1,5 +1,6 @@
 import Product from "@/models/ProductModel";
 import SingleProduct from "./SingleProduct";
+import { connectDB } from "@/utils/db";
 
 // define projection stage for each aggregation
 export const projectStage = {
@@ -19,6 +20,7 @@ const subPipeline = (query) => {
 };
 
 const featuredProducts = (async function () {
+  await connectDB();
   return Product.aggregate([
     {
       $facet: {
