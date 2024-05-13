@@ -9,16 +9,17 @@ export async function GET(req) {
   const page = Number(searchParams.get("page"));
   const priceLimit = searchParams.get("pricelimit");
 
-  const filterQuery = constructFilterQuery({ category, priceLimit });
-  let result = Product.find(filterQuery);
-  if (sort) {
-    const sortQuery = constructSortQuery(sort);
-    result.sort(sortQuery);
-  }
-
-  result.skip((page - 1) * productsPerPage).limit(productsPerPage);
-
   try {
+    const filterQuery = constructFilterQuery({ category, priceLimit });
+    let result = Product.find(filterQuery);
+
+    if (sort) {
+      const sortQuery = constructSortQuery(sort);
+      result.sort(sortQuery);
+    }
+
+    result.skip((page - 1) * productsPerPage).limit(productsPerPage);
+
     const products = await result;
     return Response.json(products);
   } catch (error) {
