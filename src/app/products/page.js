@@ -9,10 +9,10 @@ import ProductSkeleton from "@/components/ProductSkeleton";
 import SortSelector from "@/components/SortSelector";
 
 export default function Products({
-  searchParams: { category, sort, pricelimit },
+  searchParams: { category, sort, pricelimit: priceLimit },
 }) {
   return (
-    <main className="mb-36 mt-10 sm:mt-20" key={crypto.randomUUID()}>
+    <main className="mt-10 sm:mt-20" key={crypto.randomUUID()}>
       <div className="global-container">
         <BreadCrumb page="Products" />
         <div className="grid-cols-[auto_1fr] gap-4 md:grid lg:gap-10">
@@ -46,7 +46,7 @@ export default function Products({
               <ProductList
                 category={category}
                 sort={sort}
-                pricelimit={pricelimit}
+                priceLimit={priceLimit}
               />
             </Suspense>
           </div>

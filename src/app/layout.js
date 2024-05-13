@@ -4,6 +4,8 @@ import { connectDB } from "@/utils/db";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GlobalProvider from "@/contexts/providers/GlobalProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -32,6 +34,7 @@ export default async function RootLayout({ children }) {
           {children}
           <Footer />
         </GlobalProvider>
+        <ToastContainer position="top-center" theme="colored" />
       </body>
     </html>
   );

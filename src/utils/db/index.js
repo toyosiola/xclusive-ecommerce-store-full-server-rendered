@@ -1,3 +1,4 @@
 import connectDB from "./connectDB";
+import { constructFilterQuery, constructSortQuery } from "./constructDbQuery";
 
-export { connectDB };
+export { connectDB, constructFilterQuery, constructSortQuery };

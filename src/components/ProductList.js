@@ -5,11 +5,11 @@ import getInitialProductsWrapper from "@/utils/getInitialProducts";
 
 export const productsPerPage = 48;
 
-export default async function ProductList({ category, sort, pricelimit }) {
+export default async function ProductList({ category, sort, priceLimit }) {
   const getInitialProducts = getInitialProductsWrapper(
     category,
     sort,
-    pricelimit,
+    priceLimit,
   );
 
   const [{ products, maxPrice, totalCount }] = await getInitialProducts();

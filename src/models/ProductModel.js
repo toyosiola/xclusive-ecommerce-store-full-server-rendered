@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Schema, models, model } from "mongoose";
 
 const productSchema = new Schema(
