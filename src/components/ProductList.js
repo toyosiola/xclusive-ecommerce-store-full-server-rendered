@@ -3,6 +3,8 @@ import SingleProduct from "./SingleProduct";
 import MoreProducts from "./MoreProducts";
 import getInitialProductsWrapper from "@/utils/getInitialProducts";
 
+export const productsPerPage = 48;
+
 export default async function ProductList({ category, sort, pricelimit }) {
   const getInitialProducts = getInitialProductsWrapper(
     category,
@@ -19,7 +21,11 @@ export default async function ProductList({ category, sort, pricelimit }) {
           <SingleProduct key={product._id} {...product} />
         ))}
       </div>
-      <MoreProducts maxPrice={maxPrice} totalCount={totalCount} />
+      <MoreProducts
+        maxPrice={maxPrice}
+        totalCount={totalCount}
+        productsPerPage={productsPerPage}
+      />
     </>
   );
 }

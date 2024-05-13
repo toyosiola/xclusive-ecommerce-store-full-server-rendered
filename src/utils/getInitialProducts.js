@@ -2,8 +2,7 @@ import "server-only";
 
 import Product from "@/models/ProductModel";
 import { unstable_cache } from "next/cache";
-
-export const productsPerPage = 48;
+import { productsPerPage } from "@/components/ProductList";
 
 // use wrapper for unstable cache to pass params to cache key
 export default function getInitialProductsWrapper(category, sort, pricelimit) {

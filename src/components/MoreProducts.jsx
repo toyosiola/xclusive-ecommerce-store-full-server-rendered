@@ -4,11 +4,14 @@ import { useGlobalContext } from "@/contexts/providers/GlobalProvider";
 import { useEffect, useState } from "react";
 import SingleProduct from "./SingleProduct";
 import { useInView } from "react-intersection-observer";
-import { productsPerPage } from "@/utils/getInitialProducts";
 import LoadingSpinner from "./LoadingSpinner";
 import { useSearchParams } from "next/navigation";
 
-export default function MoreProducts({ maxPrice, totalCount }) {
+export default function MoreProducts({
+  maxPrice,
+  totalCount,
+  productsPerPage,
+}) {
   const { setInitialDetails } = useGlobalContext();
   const searchParams = useSearchParams();
   const [moreProducts, setMoreProducts] = useState([]);
