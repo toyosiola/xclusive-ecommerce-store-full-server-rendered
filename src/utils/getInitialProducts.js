@@ -1,3 +1,5 @@
+import "server-only";
+
 import Product from "@/models/ProductModel";
 import { unstable_cache } from "next/cache";
 

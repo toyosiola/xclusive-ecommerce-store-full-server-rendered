@@ -1,3 +1,5 @@
+import "server-only";
+
 import { devEnv } from "@/app/layout";
 import { InternalServerError } from "@/errors";
 import mongoose from "mongoose";
