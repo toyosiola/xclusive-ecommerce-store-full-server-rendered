@@ -98,7 +98,7 @@
   - [x] Render more products, enclosing html tag should have same styles as products in parent component
   - [x] Put a div at the bottom of more products as intersection pointer
   - [x] Put loading that is rendered when fetching
-  - [ ] Show error toast if error
+  - [x] Show error toast if error
 
 #### products api route
 
