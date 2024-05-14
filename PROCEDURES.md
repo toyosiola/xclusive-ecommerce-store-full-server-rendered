@@ -110,14 +110,14 @@
 
 #### /sign-up
 
-- [ ] Create sign-up page and sign-up form (client component)
-- [ ] create sign-up server action and return {success: boolean, message: string}
-- [ ] Import sign-up server action, import useFormState
-- [ ] Form input should have First name, last name, email, password, address (not required). email should be unique to user,
-- [ ] Submit button should be in a separate file in components, import useFormStatus
-  - [ ] Check for pending, if pending, disable button (aerial-disable)
-- [ ] If success, show modal advising to verify mail. Modal should contain button to refresh page or reset form
-- [ ] If !success, show error with toast. Check react docs how useFormState works
+- [x] Create sign-up page and sign-up form (client component)
+- [x] create sign-up server action and return {success: boolean, message: string}
+- [x] Import sign-up server action, import useActionState
+- [x] Form input should have First name, last name, email, password, address (not required). email should be unique to user,
+- [x] Submit button should be in a separate file in components, import useFormStatus
+  - [x] Check for pending, if pending, disable button
+- [x] If success, show modal advising to verify mail. Modal should contain button to refresh page or reset form
+- [x] If !success, show error with toast. Check react docs how useFormState works
 - [ ] Add frontend validation later
 - [ ] In sign-up server action:
   - [ ] Validate required inputs
