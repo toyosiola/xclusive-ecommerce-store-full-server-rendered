@@ -17,8 +17,11 @@ export default function LoginForm() {
     if (signUp) {
       try {
         const resp = await createAccount(formData);
+
         if (resp.success) {
           setShowModal(true);
+        } else {
+          toast.error(resp.message, { position: "top-right" });
         }
       } catch (error) {
         toast.error("An error occurred! Please try again", {
@@ -50,20 +53,22 @@ export default function LoginForm() {
           </div>
         )}
 
-        <SingleFormInput placeholder="Email *" type={"email"} name={"email"} />
+        <SingleFormInput placeholder="Email *" type="email" name="email" />
         <SingleFormInput
           placeholder="Password *"
           type="password"
           name="password"
         />
         {signUp && (
-          <SingleFormInput
-            placeholder="Confirm password *"
-            type="password"
-            name="matchingPassword"
-          />
+          <>
+            <SingleFormInput
+              placeholder="Confirm password *"
+              type="password"
+              name="matchingPassword"
+            />
+            <SingleFormInput placeholder="Address" name="address" />
+          </>
         )}
-        {signUp && <SingleFormInput placeholder="Address" name="address" />}
 
         {/* error message */}
         <small className="-mt-4 block font-semibold text-red-500"></small>
