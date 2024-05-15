@@ -5,6 +5,7 @@ import RatingStars from "@/components/RatingStars";
 import Product from "@/models/ProductModel";
 import formatPrice from "@/utils/formatPrice";
 import { connectDB } from "@/utils/db";
+import { notFound } from "next/navigation";
 
 // generate pages that are not pregenerated on demand
 export const dynamicParams = true;
@@ -19,9 +20,20 @@ export async function generateStaticParams() {
 
 export default async function SingleProductPage({ params: { productId } }) {
   await connectDB();
-  const product = await Product.findOne({ _id: productId }).select(
-    "name price averageRating reviewsCount images description discount",
-  );
+  let product;
+  try {
+    product = await Product.findOne({ _id: productId }).select(
+      "name price averageRating reviewsCount images description discount",
+    );
+    if (!product) {
+      notFound();
+    }
+  } catch (error) {
+    if (error.name === "CastError") {
+      notFound();
+    }
+    throw new Error("An error occurred! Try again");
+  }
 
   const {
     _id: id,
