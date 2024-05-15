@@ -8,14 +8,14 @@ const UserSchema = Schema({
   firstName: {
     type: String,
     required: [true, "Please provide name"],
-    minLength: 2,
-    maxLength: 25,
+    minLength: [2, "First name must not be lesser than 2 characters"],
+    maxLength: [6, "First name must not be greater than 6 characters"],
   },
   lastName: {
     type: String,
     required: [true, "Please provide name"],
-    minLength: 2,
-    maxLength: 25,
+    minLength: [2, "Last name must not be lesser than 2 characters"],
+    maxLength: [6, "Last name must not be greater than 6 characters"],
   },
   email: {
     type: String,
@@ -29,12 +29,12 @@ const UserSchema = Schema({
   password: {
     type: String,
     required: [true, "Please provide password"],
-    minlength: 6,
+    minLength: [6, "Password must not be less than 6 characters"],
   },
   address: {
     type: String,
     default: "",
-    maxLength: 200,
+    maxLength: [200, "First name must not be greater than 200 characters"],
   },
   role: {
     type: String,

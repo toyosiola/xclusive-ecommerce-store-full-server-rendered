@@ -119,7 +119,7 @@
 - [x] If success, show modal advising to verify mail. Modal should contain button to refresh page or reset form
 - [x] If !success, show error with toast. Check react docs how useFormState works
 - [ ] Add frontend validation later
-- [ ] In sign-up server action:
+- In sign-up server action:
   - [x] Validate required inputs
   - [x] Check if email hasn't been used
     - [ ] (create a functionality later to check this before form is submitted)
@@ -136,35 +136,37 @@
 - [ ] get user with email, if !user, error out
 - [ ] compare verification tokens, if !valid, error out. Update user verification state if valid
 - [ ] generate jwt (create a func for this. server-only)
-  - [ ] Generate secret key and store in env. Try this command to generate a secret key: `openssl rand -base64 32` (It should generate a 32 character random string)
-  - [ ] token contains user last name, userID, include role only if user is admin. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
+  - [ ] token contains user last name, userId, role. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
 - [ ] attach jwt to cookie, return user object with only name for conditional client rendering,
 - [ ] redirect home on client
 
 #### /login
 
-- [ ] Create login page and sign-up form (client component)
-- [ ] create login server action and return {error: false, message: string}
-- [ ] Import login server action, import useFormState
-- [ ] Form input should have email, password
-- [ ] Submit button should be in a separate file, import useFormStatus
-  - [ ] Check for pending, if pending, disable button (aerial-disable)
-- [ ] If error, show error with toast. Check react docs how useFormState works
-- [ ] If success, redirect home from server
+- [x] Create login page and sign-up form (client component)
+- [x] create login server action and return {error: false, message: string}
+- [x] Import login server action, import useFormState
+- [x] Form input should have email, password
+- [x] Submit button should be in a separate file, import useFormStatus
+  - [x] Check for pending, if pending, disable button
+- [x] If error, show error with toast. Check react docs how useActionState works
 - [ ] Forgot password functionality later
-- [ ] In login server action:
-  - [ ] Validate required inputs
-  - [ ] find user with email, error out where necessary
-  - [ ] compare password, error out where necessary
+- In login server action:
+
+  - [x] Validate required inputs
+  - [x] find user with email, error out where necessary
+  - [x] compare password, error out where necessary
   - [ ] check if user is verified
-  - [ ] synchronize session cart with user cart
+  - synchronize session cart with user cart:
     - [ ] check if session exist
     - [ ] check user cart, if a product is in user cart and also session cart, update count to session count
     - [ ] if product in session is not in user cart, add it to user cart. delete session
-  - [ ] Create token func
+  - [x] Create token func
   - [ ] May add token refresh / update functionality later on
-  - [ ] If successful, return user object with only name for conditional client rendering,
-  - [ ] redirect home on client
+  - [x] If successful, return user object with only name for conditional client rendering,
+  - [x] redirect home on client
+  - [ ] conditional rendering of login
+
+#### logout
 
 #### add to wishlist functionality
 

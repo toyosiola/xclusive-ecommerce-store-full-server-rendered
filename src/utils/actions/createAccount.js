@@ -59,11 +59,11 @@ export default async function createAccount(formData) {
       verificationToken,
     });
   } catch (error) {
-    let errorMessage = "An error occurred, please try again";
-
+    let errorMessage = "An error occurred! Please try again";
+    console.log(error);
     // mongoose validation error
     if (error.name === "ValidationError") {
-      errorMessage = Object.values(err.errors)
+      errorMessage = Object.values(error.errors)
         .map((item) => item.message)
         .join(", ");
     }
@@ -73,11 +73,6 @@ export default async function createAccount(formData) {
       errorMessage = `Duplicate value entered for ${Object.keys(
         error.keyValue,
       )}, please choose another one`;
-    }
-
-    // mongoose cast error, for
-    if (error.name === "CastError") {
-      errorMessage = `No item found with id : ${err.value}`;
     }
 
     return { success: false, message: errorMessage };

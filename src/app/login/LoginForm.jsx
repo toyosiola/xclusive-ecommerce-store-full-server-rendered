@@ -7,8 +7,11 @@ import createAccount from "@/utils/actions/createAccount";
 import SubmitButton from "./SubmitButton";
 import { toast } from "react-toastify";
 import Modal from "./Modal";
+import login from "@/utils/actions/login";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [signUp, toggleSignUp] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -18,18 +21,40 @@ export default function LoginForm() {
       try {
         const resp = await createAccount(formData);
 
+        // if create account is successful
         if (resp.success) {
           setShowModal(true);
         } else {
+          // if create account is not successful
           toast.error(resp.message, { position: "top-right" });
         }
       } catch (error) {
+        // if error occur during account creating
         toast.error("An error occurred! Please try again", {
           position: "top-right",
         });
       }
     } else {
-      // call login
+      // call login if signUp is false
+      try {
+        const resp = await login(formData);
+
+        // if login is successful
+        if (resp.success) {
+          toast.success(`Hello ${resp.user.name}! Welcome back 👋`);
+          localStorage.setItem("user", JSON.stringify(resp.user));
+          router.push("/");
+        } else {
+          // if login is not successful
+          toast.error(resp.message, { position: "top-right" });
+        }
+      } catch (error) {
+        // if error occur during logging in
+        console.log(error);
+        toast.error("An error occurred! Please try again", {
+          position: "top-right",
+        });
+      }
     }
   }
 
