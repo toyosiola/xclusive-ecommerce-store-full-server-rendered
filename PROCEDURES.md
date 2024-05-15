@@ -120,13 +120,14 @@
 - [x] If !success, show error with toast. Check react docs how useFormState works
 - [ ] Add frontend validation later
 - [ ] In sign-up server action:
-  - [ ] Validate required inputs
-  - [ ] Check if email hasn't been used
+  - [x] Validate required inputs
+  - [x] Check if email hasn't been used
     - [ ] (create a functionality later to check this before form is submitted)
-  - [ ] Hash user password (only if password is modified) with Mongoose pre save middleware
-  - [ ] Generate verification token with crypto randomBytes, and add to user
-  - [ ] Add role to each user, create user, send verification mail and advise to check email
-    - [ ] See to proper mongoose validation error handling
+  - [x] Hash user password (only if password is modified) with Mongoose pre save middleware
+  - [x] Generate verification token with crypto randomBytes, and add to user
+  - [x] Add role to each user, create user
+    - [x] See to proper mongoose validation error handling
+  - [ ] send verification mail and advise to check email
   - [ ] If verification email sending failed, delete created user and return error
 
 #### /verify-email
