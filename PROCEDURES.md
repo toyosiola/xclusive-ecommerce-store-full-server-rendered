@@ -157,9 +157,9 @@
   - [x] compare password, error out where necessary
   - [ ] check if user is verified
   - synchronize session cart with user cart:
-    - [ ] check if session exist
-    - [ ] check user cart, if a product is in user cart and also session cart, update count to session count
-    - [ ] if product in session is not in user cart, add it to user cart. delete session
+    - [x] check if session exist
+    - [x] check user cart, if a product is in user cart and also session cart, give precedence to session
+    - [x] if product in session is not in user cart, add it to user cart. delete session
   - [x] Create token func
   - [ ] May add token refresh / update functionality later on
   - [x] If successful, return user object with only name for conditional client rendering,
@@ -170,13 +170,13 @@
 
 #### add to wishlist functionality
 
-- [ ] create a cached verifySession server-only func that verifies if user is logged in. Possible return value: null, {isAuth (false), sessionId}, {isAuth (true), name, userId, role}. Possible error throw: 401 (auth issue), 404(user not found), 500 (db errors out)
-  - [ ] get session cookie, if !session, return null, if session, verify jwt
-    - [ ] if jwt throw error, throw authenticated, delete cookie
-  - [ ] if valid, check for userId or sessionId,
-  - [ ] if sessionId return {isAuth (false), sessionId}
-  - [ ] if userId, check for user in db, if user is true, return {isAuth (true), name, userId, role}
-  - [ ] if !user, return 404 user not found , if db error, return 500 an error occurred
+- [x] create a cached verifySession server-only func that verifies if user is logged in. Possible return value: null, {isAuth (false), sessionId}, {isAuth (true), name, userId, role}. Possible error throw: 401 (auth issue), 404(user not found), 500 (db errors out)
+  - [x] get session cookie, if !session, return null, if session, verify jwt
+    - [x] if jwt throw error, throw authenticated, delete cookie
+  - [x] if valid, check for userId or sessionId,
+  - [x] if sessionId return {isAuth (false), sessionId}
+  - [x] if userId, check for user in db (throw 500 if db errors out), if user is true, return {isAuth (true), name, userId, role}
+  - [x] if !user, return 404 user not found , if db error, return 500 an error occurred
 - [ ] create add to wishlist server action or manage wishlist (add & remove)
 - [ ] import, invoke and await verifySession in try/catch, assign returned value to session,
 - [ ] if !session or !session.userId, redirect to login
@@ -238,31 +238,32 @@
 
 #### session schema
 
-- [ ] session (ID): hashed string or objectId
-- [ ] cart: [{ product: ObjectId, cartQuantity }]
-- [ ] timestamps
+- [x] \_id: objectId
+- [x] cart: [{ product: ObjectId, cartQuantity }]
+- [x] timestamps
 
 #### cart schema
 
-- [ ] product: objectId type
-- [ ] user: objectId type
-- [ ] cartQuantity
-- [ ] timestamps
+- [x] product: objectId type
+- [x] user: objectId type
+- [x] cartQuantity
+- [x] timestamps
 
 #### user schema
 
-- [ ] firstName
-- [ ] lastName
-- [ ] email
-- [ ] password (hashed)
-- [ ] address (not required)
-- [ ] Verification token
-- [ ] Email verified
-- [ ] token validity period
-- [ ] timestamps
+- [x] firstName
+- [x] lastName
+- [x] email
+- [x] password (hashed)
+- [x] address (not required)
+- [x] Verification token
+- [x] Email verified
+- [x] password token validity period
+- [x] timestamps
 
 #### research on MongoDB search and implement
 
 #### to do
 
 - [ ] remove revalidation from home
+- [ ] create indexes for all db query

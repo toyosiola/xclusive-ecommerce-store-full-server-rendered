@@ -24,6 +24,7 @@ export default function Navbar() {
             {navLinks.map((link) => {
               return <NavLink key={crypto.randomUUID()} {...link} />;
             })}
+            <NavLink href="/login" title="Login/Signup" />
           </ul>
 
           <div className="flex items-center gap-8">

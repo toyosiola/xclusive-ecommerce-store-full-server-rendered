@@ -14,7 +14,11 @@ export default async function ProductList({ category, sort, priceLimit }) {
   );
 
   await connectDB();
-  const [{ products, maxPrice, totalCount }] = await getInitialProducts();
+  const [{ products, maxPrice, totalCount }] = await getInitialProducts(
+    category,
+    sort,
+    priceLimit,
+  );
 
   return (
     <>

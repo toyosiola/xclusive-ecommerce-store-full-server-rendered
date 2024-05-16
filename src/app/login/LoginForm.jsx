@@ -3,11 +3,11 @@
 import SingleFormInput from "@/components/SingleFormInput";
 import { IconGoogleColored } from "@/assets/icons";
 import { useState } from "react";
-import createAccount from "@/utils/actions/createAccount";
+import createAccount from "@/utils/server-actions/createAccount";
 import SubmitButton from "./SubmitButton";
 import { toast } from "react-toastify";
 import Modal from "./Modal";
-import login from "@/utils/actions/login";
+import login from "@/utils/server-actions/login";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {

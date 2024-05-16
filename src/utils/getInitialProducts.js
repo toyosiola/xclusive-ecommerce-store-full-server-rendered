@@ -8,7 +8,7 @@ import { constructFilterQuery, constructSortQuery } from "./db";
 // use wrapper for unstable cache to pass params to cache key
 export default function getInitialProductsWrapper(category, sort, priceLimit) {
   return unstable_cache(
-    async () => {
+    async (category, sort, priceLimit) => {
       // construct filter query depending on product category
       const filterQuery = constructFilterQuery({ category, priceLimit });
 

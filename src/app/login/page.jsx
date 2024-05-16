@@ -11,6 +11,7 @@ function Login() {
             src={"/images/phone-beside-cart.png"}
             width={805}
             height={600}
+            priority
             sizes="(min-width: 1024px) 50vw, 0vw"
             alt="Smartphone beside cart"
           />

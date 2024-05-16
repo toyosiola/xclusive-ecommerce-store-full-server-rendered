@@ -4,52 +4,55 @@ import { models, model, Schema } from "mongoose";
 import isEmail from "validator/es/lib/isEmail";
 import bcrypt from "bcryptjs";
 
-const UserSchema = Schema({
-  firstName: {
-    type: String,
-    required: [true, "Please provide name"],
-    minLength: [2, "First name must not be lesser than 2 characters"],
-    maxLength: [6, "First name must not be greater than 6 characters"],
-  },
-  lastName: {
-    type: String,
-    required: [true, "Please provide name"],
-    minLength: [2, "Last name must not be lesser than 2 characters"],
-    maxLength: [6, "Last name must not be greater than 6 characters"],
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "Please provide email"],
-    validate: {
-      validator: isEmail,
-      message: "Please provide valid email",
+const UserSchema = new Schema(
+  {
+    firstName: {
+      type: String,
+      required: [true, "Please provide name"],
+      minLength: [2, "First name must not be lesser than 2 characters"],
+      maxLength: [6, "First name must not be greater than 6 characters"],
     },
+    lastName: {
+      type: String,
+      required: [true, "Please provide name"],
+      minLength: [2, "Last name must not be lesser than 2 characters"],
+      maxLength: [6, "Last name must not be greater than 6 characters"],
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Please provide email"],
+      validate: {
+        validator: isEmail,
+        message: "Please provide valid email",
+      },
+    },
+    password: {
+      type: String,
+      required: [true, "Please provide password"],
+      minLength: [6, "Password must not be less than 6 characters"],
+    },
+    address: {
+      type: String,
+      default: "",
+      maxLength: [200, "First name must not be greater than 200 characters"],
+    },
+    role: {
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
+    },
+    verificationToken: String,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationDate: Date,
+    passwordToken: String,
+    passwordTokenExpirationDate: Date,
   },
-  password: {
-    type: String,
-    required: [true, "Please provide password"],
-    minLength: [6, "Password must not be less than 6 characters"],
-  },
-  address: {
-    type: String,
-    default: "",
-    maxLength: [200, "First name must not be greater than 200 characters"],
-  },
-  role: {
-    type: String,
-    enum: ["admin", "user"],
-    default: "user",
-  },
-  verificationToken: String,
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  verificationDate: Date,
-  passwordToken: String,
-  passwordTokenExpirationDate: Date,
-});
+  { timestamps: true },
+);
 
 UserSchema.pre("save", async function () {
   // if password is not modified, don't hash password
