@@ -1,7 +1,14 @@
 import Image from "next/image";
 import LoginForm from "./LoginForm";
+import verifySession from "@/utils/verifySession";
+import { redirect } from "next/navigation";
 
-function Login() {
+async function Login() {
+  const session = await verifySession();
+  if (session?.isAuth) {
+    redirect("/");
+  }
+
   return (
     <main className="mb-36 mt-14" key={crypto.randomUUID()}>
       <div className="mx-auto grid max-w-[2000px] items-center lg:grid-cols-2 lg:gap-6 xl:gap-32">
