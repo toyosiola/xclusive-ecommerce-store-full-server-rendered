@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import GlobalProvider from "@/contexts/providers/GlobalProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import verifySession from "@/utils/verifySession";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -25,11 +26,16 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   await connectDB();
+  let user = null;
+  const session = await verifySession();
+  if (session?.isAuth) {
+    user = { name: session.name };
+  }
 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="grid min-h-[100vh] max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
-        <GlobalProvider>
+        <GlobalProvider user={user}>
           <Navbar />
           {children}
           <Footer />
