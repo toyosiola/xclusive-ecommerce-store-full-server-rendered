@@ -9,9 +9,12 @@ import { toast } from "react-toastify";
 import Modal from "./Modal";
 import login from "@/utils/server-actions/login";
 import { useRouter } from "next/navigation";
+import { useGlobalContext } from "@/contexts/providers/GlobalProvider";
+import { SET_USER } from "@/contexts/actions";
 
 export default function LoginForm() {
   const router = useRouter();
+  const { dispatch } = useGlobalContext();
   const [signUp, toggleSignUp] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
@@ -42,7 +45,7 @@ export default function LoginForm() {
         // if login is successful
         if (resp.success) {
           toast.success(`Hello ${resp.user.name}! Welcome back 👋`);
-          localStorage.setItem("user", JSON.stringify(resp.user));
+          dispatch({ type: SET_USER, payload: resp.user });
           router.push("/");
         } else {
           // if login is not successful

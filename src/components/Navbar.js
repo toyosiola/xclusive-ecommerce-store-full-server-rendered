@@ -8,7 +8,7 @@ import Sidebar from "./Sidebar";
 export default function Navbar() {
   return (
     <>
-      <nav className="border-b pb-4 pt-10">
+      <nav className="border-b pb-4 pt-8">
         <div className="global-container flex items-center justify-between">
           {/* Logo */}
           <Link
@@ -24,7 +24,6 @@ export default function Navbar() {
             {navLinks.map((link) => {
               return <NavLink key={crypto.randomUUID()} {...link} />;
             })}
-            <NavLink href="/login" title="Login/Signup" />
           </ul>
 
           <div className="flex items-center gap-8">

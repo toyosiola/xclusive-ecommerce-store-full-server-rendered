@@ -3,11 +3,17 @@
 import navLinks from "@/data/navLinks";
 import Link from "next/link";
 import { useState } from "react";
+import UserMenu from "./UserMenu";
+import { useGlobalContext } from "@/contexts/providers/GlobalProvider";
 
 export default function Sidebar() {
+  const { user } = useGlobalContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <>
+      {/* user menu */}
+      {user && <UserMenu />}
+
       {/* open sidebar Hamburger Button --> */}
       <button
         className={`hamburger block lg:hidden ${isSidebarOpen ? "opacity-0" : ""}`}
