@@ -3,6 +3,8 @@
 import User from "@/models/UserModel";
 import isEmail from "validator/es/lib/isEmail";
 import crypto from "crypto";
+import transporter from "../nodemailer";
+import { devEnv } from "@/app/layout";
 
 export default async function createAccount(formData) {
   let verificationToken;
@@ -60,7 +62,6 @@ export default async function createAccount(formData) {
     });
   } catch (error) {
     let errorMessage = "An error occurred! Please try again";
-    console.log(error);
     // mongoose validation error
     if (error.name === "ValidationError") {
       errorMessage = Object.values(error.errors)
@@ -79,10 +80,26 @@ export default async function createAccount(formData) {
   }
 
   // // send verification email
-  // try {
-  // } catch (error) {
-  //   // if error happened sending email, delete created user with email
-  // }
+  try {
+    const host = devEnv
+      ? "http://localhost:3000"
+      : "https://xclusive-store.vercel.app";
+    const verificationLink = `${host}/verify-email?t=${verificationToken}&e=${email}`;
+    await transporter.sendMail({
+      from: `"Xclusive Store" <${process.env.EMAIL}>`,
+      to: email,
+      subject: "Account Verification",
+      text: "Account Verification",
+      html: `<h3>Welcome to Xclusive store</h3><h4>Account verification</h4><p>Hello ${firstName} ${lastName},</p><p>Thank you for choosing to shop with us. Please confirm your email address to verify your account by clicking on this link: <a href="${verificationLink}">Verify account.</a></p><p>If you did not sign up for an account on Xclusive store, kindly disregard this email.</p><p>Happy Shopping!</p><p><strong>The Xclusive Team.</strong></p>`,
+    });
+  } catch (error) {
+    // if error happened sending email, delete created user with email
+    await User.deleteOne({ email });
+    return {
+      success: false,
+      message: "An error occurred, please try again...",
+    };
+  }
 
   return { success: true, message: "Account successfully created" };
 }

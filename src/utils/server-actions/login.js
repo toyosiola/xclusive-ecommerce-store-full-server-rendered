@@ -31,13 +31,13 @@ export default async function login(formData) {
     return { success: false, message: "Invalid login credentials!" };
   }
 
-  // // check if user is verified
-  // if (!user.isVerified) {
-  //   return {
-  //     success: false,
-  //     message: "Please check your email to verify your account",
-  //   };
-  // }
+  // check if user is verified
+  if (!user.isVerified) {
+    return {
+      success: false,
+      message: "Please check your email to verify your account",
+    };
+  }
 
   // synchronize (not logged in) session cart and saved user cart
   try {

@@ -10,13 +10,13 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Please provide name"],
       minLength: [2, "First name must not be lesser than 2 characters"],
-      maxLength: [6, "First name must not be greater than 6 characters"],
+      maxLength: [25, "First name must not be greater than 25 characters"],
     },
     lastName: {
       type: String,
       required: [true, "Please provide name"],
       minLength: [2, "Last name must not be lesser than 2 characters"],
-      maxLength: [6, "Last name must not be greater than 6 characters"],
+      maxLength: [25, "Last name must not be greater than 25 characters"],
     },
     email: {
       type: String,
@@ -35,7 +35,7 @@ const UserSchema = new Schema(
     address: {
       type: String,
       default: "",
-      maxLength: [200, "First name must not be greater than 200 characters"],
+      maxLength: [200, "Address must not be greater than 200 characters"],
     },
     role: {
       type: String,

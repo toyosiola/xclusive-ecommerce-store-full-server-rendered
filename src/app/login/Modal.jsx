@@ -9,16 +9,14 @@ export default function Modal({ showModal }) {
       <div className="max-w-screen-sm rounded-xl bg-white px-8 py-14">
         <h3 className="mb-3 text-center text-button1">Success</h3>
         <p className="mb-4">
-          {/* Account created successfully. Please check your email to verify
-          account */}
-          Your account has been created successfully! You can now proceed to
-          login
+          Account created successfully. Please check your email to verify your
+          account.
         </p>
         <button
           className="btn2 mx-auto font-bold "
           onClick={() => router.refresh()}
         >
-          Login
+          Ok
         </button>
       </div>
     </section>
