@@ -3,12 +3,12 @@ import "server-only";
 import Product from "@/models/ProductModel";
 import { unstable_cache } from "next/cache";
 import { productsPerPage } from "@/components/ProductList";
-import { constructFilterQuery, constructSortQuery } from "./db";
+import { connectDB, constructFilterQuery, constructSortQuery } from "./db";
 
 // use wrapper for unstable cache to pass params to cache key
 export default function getInitialProductsWrapper(category, sort, priceLimit) {
   return unstable_cache(
-    async (category, sort, priceLimit) => {
+    async () => {
       // construct filter query depending on product category
       const filterQuery = constructFilterQuery({ category, priceLimit });
 
@@ -58,6 +58,7 @@ export default function getInitialProductsWrapper(category, sort, priceLimit) {
         },
       );
 
+      await connectDB();
       return await Product.aggregate(aggregationPipeline);
     },
     [

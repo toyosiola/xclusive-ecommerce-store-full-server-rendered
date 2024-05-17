@@ -1,4 +1,3 @@
-import LoadingSpinner from "./LoadingSpinner";
 import SingleProduct from "./SingleProduct";
 import MoreProducts from "./MoreProducts";
 import getInitialProductsWrapper from "@/utils/getInitialProducts";
@@ -7,18 +6,12 @@ import { connectDB } from "@/utils/db";
 export const productsPerPage = 48;
 
 export default async function ProductList({ category, sort, priceLimit }) {
-  const getInitialProducts = getInitialProductsWrapper(
-    category,
-    sort,
-    priceLimit,
-  );
-
   await connectDB();
-  const [{ products, maxPrice, totalCount }] = await getInitialProducts(
+  const [{ products, maxPrice, totalCount }] = await getInitialProductsWrapper(
     category,
     sort,
     priceLimit,
-  );
+  )(); // wrapper for passing cache keys. returns getInitialProducts func
 
   return (
     <>

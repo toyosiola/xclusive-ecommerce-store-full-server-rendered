@@ -6,6 +6,7 @@ import verifySession from "../verifySession";
 import Session from "@/models/SessionModel";
 import Cart from "@/models/CartModel";
 import User from "@/models/UserModel";
+import { connectDB } from "../db";
 
 export default async function login(formData) {
   const cookie = cookies();
@@ -17,6 +18,7 @@ export default async function login(formData) {
     return { success: false, message: "Please provide all inputs" };
   }
 
+  await connectDB();
   const user = await User.findOne({ email }).select(
     "firstName password isVerified",
   );

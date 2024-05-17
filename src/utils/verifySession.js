@@ -30,11 +30,9 @@ export default async function verifySession() {
 
   // if userId is true, user is logged in. Check user in db
   if (userId) {
-    // wrapper for passing cache keys
-    const getUser = getUserWrapper({ _id: userId }, "firstName role");
-
     try {
-      user = await getUser({ _id: userId }, "firstName role");
+      // wrapper for passing cache keys. returns getUser func
+      user = await getUserWrapper({ _id: userId }, "firstName role")();
     } catch (error) {
       // if database error during fetching
       throw new InternalServerError("An error occurred! Please try again");

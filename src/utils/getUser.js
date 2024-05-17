@@ -1,10 +1,12 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import User from "@/models/UserModel";
+import { connectDB } from "./db";
 
 export default function getUserWrapper(identifier, projection = "") {
   return unstable_cache(
-    async function (identifier, projection = "") {
+    async function () {
+      await connectDB();
       let user = User.findOne(identifier);
       if (projection) {
         user.select(projection);
