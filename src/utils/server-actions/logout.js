@@ -5,5 +5,5 @@ const { redirect } = require("next/navigation");
 
 export default async function logout() {
   cookies().delete("session");
-  redirect("/");
+  redirect("/login");
 }
