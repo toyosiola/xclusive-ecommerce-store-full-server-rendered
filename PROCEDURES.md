@@ -127,18 +127,18 @@
   - [x] Generate verification token with crypto randomBytes, and add to user
   - [x] Add role to each user, create user
     - [x] See to proper mongoose validation error handling
-  - [ ] send verification mail and advise to check email
-  - [ ] If verification email sending failed, delete created user and return error
+  - [x] send verification mail and advise to check email
+  - [x] If verification email sending failed, delete created user and return error
 
 #### /verify-email
 
-- [ ] get token and email from searchParams
-- [ ] get user with email, if !user, error out
-- [ ] compare verification tokens, if !valid, error out. Update user verification state if valid
-- [ ] generate jwt (create a func for this. server-only)
+- [x] get token and email from searchParams
+- [x] get user with email, if !user, error out
+- [x] compare verification tokens, if !valid, error out. Update user verification state if valid
+- [x] generate jwt (create a func for this. server-only)
   - [ ] token contains user last name, userId, role. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
-- [ ] attach jwt to cookie, return user object with only name for conditional client rendering,
-- [ ] redirect home on client
+- [x] attach jwt to cookie, return user object with only name for conditional client rendering,
+- [x] redirect home on client
 
 #### /login
 
@@ -155,7 +155,7 @@
   - [x] Validate required inputs
   - [x] find user with email, error out where necessary
   - [x] compare password, error out where necessary
-  - [ ] check if user is verified
+  - [x] check if user is verified
   - synchronize session cart with user cart:
     - [x] check if session exist
     - [x] check user cart, if a product is in user cart and also session cart, give precedence to session
@@ -164,7 +164,7 @@
   - [ ] May add token refresh / update functionality later on
   - [x] If successful, return user object with only name for conditional client rendering,
   - [x] redirect home on client
-  - [ ] conditional rendering of login
+  - [x] conditional rendering of login
 
 #### logout
 
