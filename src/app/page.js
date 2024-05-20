@@ -18,6 +18,8 @@ import SearchInput from "@/components/SearchInput";
 import SectionTag from "@/components/SectionTag";
 import SubCategory from "@/components/SubCategory";
 import { mainCategories, subCategories } from "@/data/categories";
+import { getUserWishlist } from "@/utils/getWishlist";
+import verifySession from "@/utils/verifySession";
 // import allProducts from "@/data/productsData.json";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,7 +28,15 @@ import { Suspense } from "react";
 // revalidate once in 3 days
 export const revalidate = 60 * 60 * 24 * 3;
 
-export default function Home() {
+export default async function Home() {
+  // get user wishlist
+  const verifiedSession = await verifySession();
+  let userWishlist;
+  if (verifiedSession?.isAuth) {
+    userWishlist = await getUserWishlist(verifiedSession.userId)();
+    userWishlist = userWishlist.map((item) => item.product);
+  }
+
   return (
     <>
       <main className="relative">
@@ -105,7 +115,7 @@ export default function Home() {
 
             {/* Flash sales products */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <FlashSalesProductsSamples />
+              <FlashSalesProductsSamples userWishlist={userWishlist} />
             </Suspense>
 
             {/* Link to view all flash sales */}
@@ -154,7 +164,7 @@ export default function Home() {
 
             {/* Best selling container */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <BestSellingProductsSamples />
+              <BestSellingProductsSamples userWishlist={userWishlist} />
             </Suspense>
             {/* view all link for smaller screens only */}
             <Link
@@ -211,7 +221,7 @@ export default function Home() {
 
             {/* products container */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <TopProductsSamples />
+              <TopProductsSamples userWishlist={userWishlist} />
             </Suspense>
             <Link href="/products" className="btn2 mx-auto">
               View All Products

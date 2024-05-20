@@ -1,4 +1,4 @@
-import { TrashIcon } from "@/assets/icons";
+import { HeartIcon, TrashIcon } from "@/assets/icons";
 import formatPrice from "@/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +14,10 @@ function SingleProduct({
   newProduct,
   discount,
   isWishlistPage,
+  userWishlist,
 }) {
+  const isInWishlist = userWishlist?.includes(id.toString());
+
   // reducing the length of product name above a certain level
   let newName;
   if (discount) {
@@ -26,16 +29,16 @@ function SingleProduct({
   return (
     <div className="relative mx-auto w-[20rem] max-w-full overflow-x-hidden sm:mx-0">
       {/* icons */}
-      {isWishlistPage ? (
-        <div
-          className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"
-          title="Remove from wishlist"
-        >
+      <div
+        className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"
+        title="Remove from wishlist"
+      >
+        {isWishlistPage ? (
           <TrashIcon />
-        </div>
-      ) : (
-        <div className="absolute right-3 top-3 rounded-full bg-white p-1"></div>
-      )}
+        ) : (
+          <HeartIcon className={isInWishlist ? "fill-black" : ""} />
+        )}
+      </div>
 
       {/* discount */}
       {discount ? (
