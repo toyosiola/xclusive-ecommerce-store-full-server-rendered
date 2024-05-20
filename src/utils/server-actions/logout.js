@@ -11,7 +11,8 @@ export default async function logout() {
   // purge cached user on logout
   try {
     const payload = jwt.verify(session, process.env.JWT_SECRET);
-    revalidateTag(`users/${payload.userId}`);
+    revalidateTag(`users/${payload.userId}`); // cached user for session verification
+    revalidateTag(`wishlist/user-${payload.userId}`); // cached user wishlist
   } catch (error) {
     console.error(error);
   }
