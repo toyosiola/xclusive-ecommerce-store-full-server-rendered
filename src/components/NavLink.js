@@ -10,9 +10,7 @@ export default function NavLink({ href, title }) {
   const pageRoute = "/" + (segment || "");
 
   // don't show login link if user is logged-in
-  return user && href === "/login" ? (
-    <></>
-  ) : (
+  return user && href === "/login" ? null : (
     <li className="group">
       <Link href={href} className={`hover:text-text1`}>
         <span className="inline-block px-2 pb-1">{title}</span>
