@@ -6,6 +6,8 @@ import Product from "@/models/ProductModel";
 import formatPrice from "@/utils/formatPrice";
 import { connectDB } from "@/utils/db";
 import { notFound } from "next/navigation";
+import { getUserWishlist } from "@/utils/getWishlist";
+import verifySession from "@/utils/verifySession";
 
 // generate pages that are not pregenerated on demand
 export const dynamicParams = true;
@@ -19,8 +21,19 @@ export async function generateStaticParams() {
 }
 
 export default async function SingleProductPage({ params: { productId } }) {
+  let product, isInWishlist;
   await connectDB();
-  let product;
+
+  // check if product is in user wishlist
+  const verifiedSession = await verifySession();
+  if (verifiedSession?.isAuth) {
+    const userWishlist = await getUserWishlist(verifiedSession.userId)();
+    isInWishlist = !!userWishlist.find(
+      (item) => item.product.toString() === productId,
+    );
+  }
+
+  // fetch product
   try {
     product = await Product.findOne({ _id: productId }).select(
       "name price averageRating reviewsCount images description discount",
@@ -60,6 +73,7 @@ export default async function SingleProductPage({ params: { productId } }) {
               width={640}
               height={640}
               alt={name}
+              priority
               className="h-auto w-auto object-cover"
             />
           </div>
@@ -90,10 +104,7 @@ export default async function SingleProductPage({ params: { productId } }) {
             <hr className="mb-10 w-full border border-black/50" />
 
             {/* buttons container */}
-            <div className="flex flex-wrap items-center gap-4 lg:justify-between">
-              {/* quantity container */}
-              <ActionButtons name={name} id={id} />
-            </div>
+            <ActionButtons id={id.toString()} isInWishlist={isInWishlist} />
           </div>
         </div>
       </div>

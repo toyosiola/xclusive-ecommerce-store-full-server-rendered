@@ -267,3 +267,4 @@
 
 - [ ] remove revalidation from home
 - [ ] create indexes for all db query
+- [ ] all pages/ actions that redirect to login, redirect back to the actual page after login-in (e.g. add to wishlist)

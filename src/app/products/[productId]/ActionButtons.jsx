@@ -1,8 +1,16 @@
-import { HeartIcon } from "@/assets/icons";
+"use client";
 
-export default function ActionButtons({ name, id }) {
+import { HeartIcon } from "@/assets/icons";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "@/utils/server-actions/wishlist";
+import { toast } from "react-toastify";
+import WishlistButton from "./WishlistButton";
+
+export default function ActionButtons({ id, isInWishlist }) {
   return (
-    <>
+    <div className="flex flex-wrap items-center gap-4 lg:justify-between">
       <div className="flex items-center">
         {/* reduce quantity button */}
         <button
@@ -35,12 +43,28 @@ export default function ActionButtons({ name, id }) {
       </button>
 
       {/* add to wishlist */}
-      <button
-        className="h-11 rounded border border-black/50 fill-white px-2 text-3xl duration-300 hover:bg-black/10"
-        title={"Add to wishlist"}
+      <form
+        action={async () => {
+          try {
+            if (!isInWishlist) {
+              const resp = await addToWishlist(id);
+              if (resp.success)
+                return toast.success(resp.message, { autoClose: 1500 });
+              return toast.error(resp.message);
+            }
+
+            // remove from wishlist
+            const resp = await removeFromWishlist(id);
+            if (resp.success)
+              return toast.success(resp.message, { autoClose: 1500 });
+            toast.error(resp.message);
+          } catch (error) {
+            toast.error("Failed! Please check your internet connection");
+          }
+        }}
       >
-        <HeartIcon className="" />
-      </button>
-    </>
+        <WishlistButton isInWishlist={isInWishlist} />
+      </form>
+    </div>
   );
 }
