@@ -61,9 +61,7 @@ export default function Sidebar() {
           {/* Nav Links */}
           <ul className="mb-5 border-y border-gray-300 bg-white px-2">
             {navLinks.map(({ href, title }) => {
-              return user && href === "/login" ? (
-                <></>
-              ) : (
+              return user && href === "/login" ? null : (
                 <li
                   key={crypto.randomUUID()}
                   className="border-b border-gray-200 last:border-b-0 "
