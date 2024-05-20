@@ -32,37 +32,49 @@ const featuredProducts = (async function () {
   ]);
 })();
 
-export async function FlashSalesProductsSamples() {
+export async function FlashSalesProductsSamples({ userWishlist }) {
   const [{ flashSales }] = await featuredProducts;
 
   return (
     <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
       {flashSales.map((product) => (
-        <SingleProduct key={product._id} {...product} />
+        <SingleProduct
+          key={product._id}
+          {...product}
+          userWishlist={userWishlist}
+        />
       ))}
     </div>
   );
 }
 
-export async function BestSellingProductsSamples() {
+export async function BestSellingProductsSamples({ userWishlist }) {
   const [{ bestSelling }] = await featuredProducts;
 
   return (
     <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
       {bestSelling.map((product) => (
-        <SingleProduct key={product._id} {...product} />
+        <SingleProduct
+          key={product._id}
+          {...product}
+          userWishlist={userWishlist}
+        />
       ))}
     </div>
   );
 }
 
-export async function TopProductsSamples() {
+export async function TopProductsSamples({ userWishlist }) {
   const [{ topProducts }] = await featuredProducts;
 
   return (
     <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
       {topProducts.map((product) => (
-        <SingleProduct key={product._id} {...product} />
+        <SingleProduct
+          key={product._id}
+          {...product}
+          userWishlist={userWishlist}
+        />
       ))}
     </div>
   );
