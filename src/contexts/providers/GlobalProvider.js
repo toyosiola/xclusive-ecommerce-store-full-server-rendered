@@ -4,22 +4,22 @@ import { createContext, useContext, useReducer } from "react";
 import reducer from "../reducers/globalReducer";
 import { SET_INITIAL_DETAILS, SET_PRICE } from "../actions";
 
-const initialState = {
-  maxPrice: 0,
-  totalCount: 0,
-};
-
 const GlobalContext = createContext();
 
-export default function GlobalProvider({ children }) {
+export default function GlobalProvider({ children, user }) {
+  const initialState = {
+    user,
+    maxPrice: 0,
+    totalCount: 0,
+  };
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  function setInitialDetails({ maxPrice, totalCount }) {
-    dispatch({ type: SET_INITIAL_DETAILS, payload: { maxPrice, totalCount } });
-  }
+  // function setInitialDetails({ maxPrice, totalCount }) {
+  //   dispatch({ type: SET_INITIAL_DETAILS, payload: { maxPrice, totalCount } });
+  // }
 
   return (
-    <GlobalContext.Provider value={{ ...state, setInitialDetails }}>
+    <GlobalContext.Provider value={{ ...state, dispatch }}>
       {children}
     </GlobalContext.Provider>
   );

@@ -1,1 +1,2 @@
 export const SET_INITIAL_DETAILS = "SET_INITIAL_DETAILS";
+export const SET_USER = "SET_USER";

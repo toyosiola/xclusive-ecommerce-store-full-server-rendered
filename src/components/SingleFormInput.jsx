@@ -12,7 +12,7 @@ export default function SingleInput({ type = "text", placeholder, name }) {
         type={type === "password" ? (showPassword ? "text" : type) : type}
         placeholder={placeholder}
         name={name}
-        className="grow focus:outline-none"
+        className="max-w-full grow focus:outline-none"
       />
       {type === "password" && (
         <div

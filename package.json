@@ -14,11 +14,13 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.3",
     "next": "14.2.3",
+    "nodemailer": "^6.9.13",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "^9.10.2",
     "react-toastify": "^10.0.5",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
     "eslint": "^8",

@@ -1,13 +1,16 @@
 "use client";
 
+import { useGlobalContext } from "@/contexts/providers/GlobalProvider";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 export default function NavLink({ href, title }) {
+  const { user } = useGlobalContext();
   const segment = useSelectedLayoutSegment(); // returns null for homepage
   const pageRoute = "/" + (segment || "");
 
-  return (
+  // don't show login link if user is logged-in
+  return user && href === "/login" ? null : (
     <li className="group">
       <Link href={href} className={`hover:text-text1`}>
         <span className="inline-block px-2 pb-1">{title}</span>

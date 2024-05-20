@@ -1,9 +1,4 @@
-import {
-  StarEmptyIcon,
-  StarFullyFilledIcon,
-  StarHalfFilledIcon,
-  TrashIcon,
-} from "@/assets/icons";
+import { TrashIcon } from "@/assets/icons";
 import formatPrice from "@/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";

@@ -7,13 +7,14 @@ import { useInView } from "react-intersection-observer";
 import LoadingSpinner from "./LoadingSpinner";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
+import { SET_INITIAL_DETAILS } from "@/contexts/actions";
 
 export default function MoreProducts({
   maxPrice,
   totalCount,
   productsPerPage,
 }) {
-  const { setInitialDetails } = useGlobalContext();
+  const { dispatch } = useGlobalContext();
   const searchParams = useSearchParams();
   const [moreProducts, setMoreProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export default function MoreProducts({
 
   // set maxPrice and totalCount on first product page load
   useEffect(() => {
-    setInitialDetails({ maxPrice, totalCount });
+    dispatch({ type: SET_INITIAL_DETAILS, payload: { maxPrice, totalCount } });
   }, []);
 
   // fetch products when observer is in view

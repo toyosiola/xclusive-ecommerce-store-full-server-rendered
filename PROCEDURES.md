@@ -110,70 +110,73 @@
 
 #### /sign-up
 
-- [ ] Create sign-up page and sign-up form (client component)
-- [ ] create sign-up server action and return {success: boolean, message: string}
-- [ ] Import sign-up server action, import useFormState
-- [ ] Form input should have First name, last name, email, password, address (not required). email should be unique to user,
-- [ ] Submit button should be in a separate file in components, import useFormStatus
-  - [ ] Check for pending, if pending, disable button (aerial-disable)
-- [ ] If success, show modal advising to verify mail. Modal should contain button to refresh page or reset form
-- [ ] If !success, show error with toast. Check react docs how useFormState works
+- [x] Create sign-up page and sign-up form (client component)
+- [x] create sign-up server action and return {success: boolean, message: string}
+- [x] Import sign-up server action, import useActionState
+- [x] Form input should have First name, last name, email, password, address (not required). email should be unique to user,
+- [x] Submit button should be in a separate file in components, import useFormStatus
+  - [x] Check for pending, if pending, disable button
+- [x] If success, show modal advising to verify mail. Modal should contain button to refresh page or reset form
+- [x] If !success, show error with toast. Check react docs how useFormState works
 - [ ] Add frontend validation later
-- [ ] In sign-up server action:
-  - [ ] Validate required inputs
-  - [ ] Check if email hasn't been used
+- In sign-up server action:
+  - [x] Validate required inputs
+  - [x] Check if email hasn't been used
     - [ ] (create a functionality later to check this before form is submitted)
-  - [ ] Hash user password (only if password is modified) with Mongoose pre save middleware
-  - [ ] Generate verification token with crypto randomBytes, and add to user
-  - [ ] Add role to each user, create user, send verification mail and advise to check email
-    - [ ] See to proper mongoose validation error handling
-  - [ ] If verification email sending failed, delete created user and return error
+  - [x] Hash user password (only if password is modified) with Mongoose pre save middleware
+  - [x] Generate verification token with crypto randomBytes, and add to user
+  - [x] Add role to each user, create user
+    - [x] See to proper mongoose validation error handling
+  - [x] send verification mail and advise to check email
+  - [x] If verification email sending failed, delete created user and return error
 
 #### /verify-email
 
-- [ ] get token and email from searchParams
-- [ ] get user with email, if !user, error out
-- [ ] compare verification tokens, if !valid, error out. Update user verification state if valid
-- [ ] generate jwt (create a func for this. server-only)
-  - [ ] Generate secret key and store in env. Try this command to generate a secret key: `openssl rand -base64 32` (It should generate a 32 character random string)
-  - [ ] token contains user last name, userID, include role only if user is admin. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
-- [ ] attach jwt to cookie, return user object with only name for conditional client rendering,
-- [ ] redirect home on client
+- [x] get token and email from searchParams
+- [x] get user with email, if !user, error out
+- [x] compare verification tokens, if !valid, error out. Update user verification state if valid
+- [x] generate jwt (create a func for this. server-only)
+  - [ ] token contains user last name, userId, role. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
+- [x] attach jwt to cookie, return user object with only name for conditional client rendering,
+- [x] redirect home on client
 
 #### /login
 
-- [ ] Create login page and sign-up form (client component)
-- [ ] create login server action and return {error: false, message: string}
-- [ ] Import login server action, import useFormState
-- [ ] Form input should have email, password
-- [ ] Submit button should be in a separate file, import useFormStatus
-  - [ ] Check for pending, if pending, disable button (aerial-disable)
-- [ ] If error, show error with toast. Check react docs how useFormState works
-- [ ] If success, redirect home from server
+- [x] Create login page and sign-up form (client component)
+- [x] create login server action and return {error: false, message: string}
+- [x] Import login server action, import useFormState
+- [x] Form input should have email, password
+- [x] Submit button should be in a separate file, import useFormStatus
+  - [x] Check for pending, if pending, disable button
+- [x] If error, show error with toast. Check react docs how useActionState works
 - [ ] Forgot password functionality later
-- [ ] In login server action:
-  - [ ] Validate required inputs
-  - [ ] find user with email, error out where necessary
-  - [ ] compare password, error out where necessary
-  - [ ] check if user is verified
-  - [ ] synchronize session cart with user cart
-    - [ ] check if session exist
-    - [ ] check user cart, if a product is in user cart and also session cart, update count to session count
-    - [ ] if product in session is not in user cart, add it to user cart. delete session
-  - [ ] Create token func
+- In login server action:
+
+  - [x] Validate required inputs
+  - [x] find user with email, error out where necessary
+  - [x] compare password, error out where necessary
+  - [x] check if user is verified
+  - synchronize session cart with user cart:
+    - [x] check if session exist
+    - [x] check user cart, if a product is in user cart and also session cart, give precedence to session
+    - [x] if product in session is not in user cart, add it to user cart. delete session
+  - [x] Create token func
   - [ ] May add token refresh / update functionality later on
-  - [ ] If successful, return user object with only name for conditional client rendering,
-  - [ ] redirect home on client
+  - [x] If successful, return user object with only name for conditional client rendering,
+  - [x] redirect home on client
+  - [x] conditional rendering of login
+
+#### logout
 
 #### add to wishlist functionality
 
-- [ ] create a cached verifySession server-only func that verifies if user is logged in. Possible return value: null, {isAuth (false), sessionId}, {isAuth (true), name, userId, role}. Possible error throw: 401 (auth issue), 404(user not found), 500 (db errors out)
-  - [ ] get session cookie, if !session, return null, if session, verify jwt
-    - [ ] if jwt throw error, throw authenticated, delete cookie
-  - [ ] if valid, check for userId or sessionId,
-  - [ ] if sessionId return {isAuth (false), sessionId}
-  - [ ] if userId, check for user in db, if user is true, return {isAuth (true), name, userId, role}
-  - [ ] if !user, return 404 user not found , if db error, return 500 an error occurred
+- [x] create a cached verifySession server-only func that verifies if user is logged in. Possible return value: null, {isAuth (false), sessionId}, {isAuth (true), name, userId, role}. Possible error throw: 401 (auth issue), 404(user not found), 500 (db errors out)
+  - [x] get session cookie, if !session, return null, if session, verify jwt
+    - [x] if jwt throw error, throw authenticated, delete cookie
+  - [x] if valid, check for userId or sessionId,
+  - [x] if sessionId return {isAuth (false), sessionId}
+  - [x] if userId, check for user in db (throw 500 if db errors out), if user is true, return {isAuth (true), name, userId, role}
+  - [x] if !user, return 404 user not found , if db error, return 500 an error occurred
 - [ ] create add to wishlist server action or manage wishlist (add & remove)
 - [ ] import, invoke and await verifySession in try/catch, assign returned value to session,
 - [ ] if !session or !session.userId, redirect to login
@@ -235,31 +238,32 @@
 
 #### session schema
 
-- [ ] session (ID): hashed string or objectId
-- [ ] cart: [{ product: ObjectId, cartQuantity }]
-- [ ] timestamps
+- [x] \_id: objectId
+- [x] cart: [{ product: ObjectId, cartQuantity }]
+- [x] timestamps
 
 #### cart schema
 
-- [ ] product: objectId type
-- [ ] user: objectId type
-- [ ] cartQuantity
-- [ ] timestamps
+- [x] product: objectId type
+- [x] user: objectId type
+- [x] cartQuantity
+- [x] timestamps
 
 #### user schema
 
-- [ ] firstName
-- [ ] lastName
-- [ ] email
-- [ ] password (hashed)
-- [ ] address (not required)
-- [ ] Verification token
-- [ ] Email verified
-- [ ] token validity period
-- [ ] timestamps
+- [x] firstName
+- [x] lastName
+- [x] email
+- [x] password (hashed)
+- [x] address (not required)
+- [x] Verification token
+- [x] Email verified
+- [x] password token validity period
+- [x] timestamps
 
 #### research on MongoDB search and implement
 
 #### to do
 
 - [ ] remove revalidation from home
+- [ ] create indexes for all db query
