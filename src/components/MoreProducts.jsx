@@ -1,13 +1,14 @@
 "use client";
 
 import { useGlobalContext } from "@/contexts/providers/GlobalProvider";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SingleProduct from "./SingleProduct";
 import { useInView } from "react-intersection-observer";
 import LoadingSpinner from "./LoadingSpinner";
 import { useSearchParams } from "next/navigation";
-import { toast } from "react-toastify";
 import { SET_INITIAL_DETAILS } from "@/contexts/actions";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import React from "react";
 
 export default function MoreProducts({
   maxPrice,
@@ -17,13 +18,29 @@ export default function MoreProducts({
 }) {
   const { dispatch } = useGlobalContext();
   const searchParams = useSearchParams();
-  const [moreProducts, setMoreProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(2);
   const { inView, ref: observerRef } = useInView();
   const numOfPages = Math.ceil(totalCount / productsPerPage);
   const category = searchParams.get("category");
   const sort = searchParams.get("sort");
+
+  async function fetchProducts({ pageParam }) {
+    const url = `/products/api/more-products?page=${pageParam}${category ? `&category=${category}` : ""}${sort ? `&sort=${sort}&` : ""}`;
+
+    const resp = await fetch(url);
+    if (!resp.ok) {
+      throw new Error("Error fetching products");
+    }
+    return await resp.json();
+  }
+
+  const { data, error, fetchNextPage, isFetchingNextPage, status } =
+    useInfiniteQuery({
+      queryKey: ["more-products", category ? category : "", sort ? sort : ""],
+      queryFn: fetchProducts,
+      initialPageParam: 2,
+      getNextPageParam: (_, __, lastPageParam) =>
+        lastPageParam >= numOfPages ? null : lastPageParam + 1,
+    });
 
   // set maxPrice and totalCount on first product page load
   useEffect(() => {
@@ -32,44 +49,39 @@ export default function MoreProducts({
 
   // fetch products when observer is in view
   useEffect(() => {
-    async function fetchProducts() {
-      const url = `/products/api/more-products?page=${page}${category ? `&category=${category}` : ""}${sort ? `&sort=${sort}&` : ""}`;
-
-      try {
-        setLoading(true);
-        const resp = await fetch(url);
-        if (!resp.ok) {
-          throw new Error();
-        }
-        const newProducts = await resp.json();
-        setMoreProducts((prevProducts) => [...prevProducts, ...newProducts]);
-        setPage((prevPage) => prevPage + 1);
-      } catch (error) {
-        // show error toast if error
-        toast.error("Error getting more products");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (inView && !loading && page <= numOfPages) {
-      fetchProducts();
+    if (inView) {
+      fetchNextPage();
     }
   }, [inView]);
 
   return (
     <>
-      <div className="mb-14 grid-cols-2 place-items-center gap-4 gap-y-14 space-y-10 sm:grid sm:space-y-0 lg:grid-cols-3">
-        {moreProducts.map((product) => (
-          <SingleProduct
-            key={product._id}
-            {...product}
-            userWishlist={userWishlist}
-          />
-        ))}
-      </div>
+      {data && (
+        <div className="mb-14 grid-cols-2 place-items-center gap-4 gap-y-14 space-y-10 sm:grid sm:space-y-0 lg:grid-cols-3">
+          {data.pages?.map((group) => (
+            <React.Fragment key={crypto.randomUUID()}>
+              {group.map((product) => (
+                <SingleProduct
+                  key={product._id}
+                  {...product}
+                  userWishlist={userWishlist}
+                />
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+      )}
+      {/* if error occurred fetching products */}
+      {error && (
+        <div className="mb-4 text-center">
+          <p className="mb-2">Error getting more products</p>
+          <button onClick={fetchNextPage} className="btn2 mx-auto">
+            Try again
+          </button>
+        </div>
+      )}
       {/* show loading when fetching products */}
-      {loading && (
+      {(status === "pending" || isFetchingNextPage) && (
         <div className="mb-14 mt-14 flex justify-center">
           <LoadingSpinner />
         </div>
