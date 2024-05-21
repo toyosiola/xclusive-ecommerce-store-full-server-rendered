@@ -35,7 +35,11 @@ export default function MoreProducts({
 
   const { data, error, fetchNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["more-products", category ? category : "", sort ? sort : ""],
+      queryKey: [
+        "more-products",
+        category ? category : "all",
+        sort ? sort : "none",
+      ],
       queryFn: fetchProducts,
       initialPageParam: 2,
       getNextPageParam: (_, __, lastPageParam) =>

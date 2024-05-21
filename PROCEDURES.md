@@ -177,17 +177,17 @@
   - [x] if sessionId return {isAuth (false), sessionId}
   - [x] if userId, check for user in db (throw 500 if db errors out), if user is true, return {isAuth (true), name, userId, role}
   - [x] if !user, return 404 user not found , if db error, return 500 an error occurred
-- [ ] create add to wishlist server action or manage wishlist (add & remove)
-- [ ] import, invoke and await verifySession in try/catch, assign returned value to session,
-- [ ] if !session or !session.userId, redirect to login
-- [ ] if user is logged in, create a wishlist in the database
-- [ ] revalidate path
+- [x] create add to wishlist server action or manage wishlist (add & remove)
+- [x] import, invoke and await verifySession in try/catch, assign returned value to session,
+- [x] if !session or !session.userId, redirect to login
+- [x] if user is logged in, create a wishlist in the database
+- [x] revalidate tag
 
 #### remove from wishlist functionality
 
-- [ ] create a remove from wishlist
-- [ ] find and delete, if no product found, return error
-- [ ] revalidate path
+- [x] create a remove from wishlist
+- [x] find and delete, if no product found, return error
+- [x] revalidate path
 
 #### add to cart functionality
 
@@ -223,9 +223,9 @@
 
   ##### wishlist schema
 
-  - [ ] product: objectId type
-  - [ ] user: objectId type
-  - [ ] timestamps: ISO
+  - [x] product: objectId type
+  - [x] user: objectId type
+  - [x] timestamps: ISO
 
 #### /cart
 
