@@ -29,12 +29,12 @@ import { Suspense } from "react";
 export const revalidate = 60 * 60 * 24 * 3;
 
 export default async function Home() {
-  // get user wishlist
   const verifiedSession = await verifySession();
+  // get user wishlist
   let userWishlist;
   if (verifiedSession?.isAuth) {
     userWishlist = await getUserWishlist(verifiedSession.userId)();
-    userWishlist = userWishlist.map((item) => item.product);
+    userWishlist = userWishlist.map((item) => item.product.toString());
   }
 
   return (

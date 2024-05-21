@@ -1,8 +1,8 @@
-import { HeartIcon, TrashIcon } from "@/assets/icons";
 import formatPrice from "@/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
-import RatingStars from "./RatingStars";
+import RatingStars from "../RatingStars";
+import WishlistTrashForm from "./WishlistTrashForm";
 
 function SingleProduct({
   _id: id,
@@ -29,16 +29,11 @@ function SingleProduct({
   return (
     <div className="relative mx-auto w-[20rem] max-w-full overflow-x-hidden sm:mx-0">
       {/* icons */}
-      <div
-        className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"
-        title="Remove from wishlist"
-      >
-        {isWishlistPage ? (
-          <TrashIcon />
-        ) : (
-          <HeartIcon className={isInWishlist ? "fill-black" : ""} />
-        )}
-      </div>
+      <WishlistTrashForm
+        isWishlistPage={isWishlistPage}
+        isInWishlist={isInWishlist}
+        id={id.toString()}
+      />
 
       {/* discount */}
       {discount ? (

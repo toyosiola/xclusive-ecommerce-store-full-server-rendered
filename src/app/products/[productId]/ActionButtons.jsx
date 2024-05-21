@@ -1,12 +1,28 @@
 "use client";
 
-import { HeartIcon } from "@/assets/icons";
 import {
   addToWishlist,
   removeFromWishlist,
 } from "@/utils/server-actions/wishlist";
 import { toast } from "react-toastify";
 import WishlistButton from "./WishlistButton";
+
+export async function wishlistFormAction(isInWishlist, id) {
+  try {
+    if (!isInWishlist) {
+      const resp = await addToWishlist(id);
+      if (resp.success) return toast.success(resp.message, { autoClose: 1500 });
+      return toast.error(resp.message);
+    }
+
+    // remove from wishlist
+    const resp = await removeFromWishlist(id);
+    if (resp.success) return toast.success(resp.message, { autoClose: 1500 });
+    toast.error(resp.message);
+  } catch (error) {
+    toast.error("Failed! Please check your internet connection");
+  }
+}
 
 export default function ActionButtons({ id, isInWishlist }) {
   return (
@@ -44,23 +60,8 @@ export default function ActionButtons({ id, isInWishlist }) {
 
       {/* add to wishlist */}
       <form
-        action={async () => {
-          try {
-            if (!isInWishlist) {
-              const resp = await addToWishlist(id);
-              if (resp.success)
-                return toast.success(resp.message, { autoClose: 1500 });
-              return toast.error(resp.message);
-            }
-
-            // remove from wishlist
-            const resp = await removeFromWishlist(id);
-            if (resp.success)
-              return toast.success(resp.message, { autoClose: 1500 });
-            toast.error(resp.message);
-          } catch (error) {
-            toast.error("Failed! Please check your internet connection");
-          }
+        action={() => {
+          wishlistFormAction(isInWishlist, id);
         }}
       >
         <WishlistButton isInWishlist={isInWishlist} />
