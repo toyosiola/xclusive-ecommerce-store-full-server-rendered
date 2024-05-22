@@ -8,6 +8,7 @@ import { connectDB } from "@/utils/db";
 import { notFound } from "next/navigation";
 import { getUserWishlist } from "@/utils/getWishlist";
 import verifySession from "@/utils/verifySession";
+import { getSessionCart, getUserCart } from "@/utils/getCart";
 
 // generate pages that are not pregenerated on demand
 export const dynamicParams = true;
@@ -21,16 +22,28 @@ export async function generateStaticParams() {
 }
 
 export default async function SingleProductPage({ params: { productId } }) {
-  let product, isInWishlist;
+  let product, isInWishlist, isInCart;
   await connectDB();
 
-  // check if product is in user wishlist
+  // verifiedSession is null if no session exists
   const verifiedSession = await verifySession();
+
+  // verifiedSession.isAuth is false if not-logged-in session exists
+  if (verifiedSession && !verifiedSession?.isAuth) {
+    const sessionCart = await getSessionCart(verifiedSession.sessionId);
+    isInCart = sessionCart.find(
+      (item) => item.product.toString() === productId,
+    );
+  }
+
+  // verifiedSession.isAuth is true if user is logged-in
   if (verifiedSession?.isAuth) {
-    const userWishlist = await getUserWishlist(verifiedSession.userId)();
+    const userWishlist = await getUserWishlist(verifiedSession.userId);
+    const userCart = await getUserCart(verifiedSession.userId);
     isInWishlist = !!userWishlist.find(
       (item) => item.product.toString() === productId,
     );
+    isInCart = userCart.find((item) => item.product.toString() === productId);
   }
 
   // fetch product
@@ -104,7 +117,11 @@ export default async function SingleProductPage({ params: { productId } }) {
             <hr className="mb-10 w-full border border-black/50" />
 
             {/* buttons container */}
-            <ActionButtons id={id.toString()} isInWishlist={isInWishlist} />
+            <ActionButtons
+              id={id.toString()}
+              isInWishlist={isInWishlist}
+              isInCart={isInCart}
+            />
           </div>
         </div>
       </div>

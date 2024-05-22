@@ -136,7 +136,7 @@
 - [x] get user with email, if !user, error out
 - [x] compare verification tokens, if !valid, error out. Update user verification state if valid
 - [x] generate jwt (create a func for this. server-only)
-  - [ ] token contains user last name, userId, role. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
+  - [x] token contains user last name, userId, role. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
 - [x] attach jwt to cookie, return user object with only name for conditional client rendering,
 - [x] redirect home on client
 
@@ -191,13 +191,14 @@
 
 #### add to cart functionality
 
-- [ ] create a add to cart server action
-- [ ] import, invoke and await verifySession in try/catch
-- [ ] if/else: if session.isAuth, create item in cart collections attaching user and product
-  - [ ] else, get session with id, create session cart object, push to session.cart in sessions collection
-- [ ] if !session, create a crypto session token as id
-  - [ ] create a session document in sessions collection in db with sessionId, cartArray and add productId and set quantity to provided quantity or 1
-  - [ ] sign session with jwt, and add to cookie
+- [x] create a add to cart server action
+- [x] import, invoke and await verifySession in try/catch
+- [x] if/else: if session.isAuth, create item in cart collections attaching user and product
+  - [x] else, get session with id, create session cart object, push to session.cart in sessions collection
+- if !session:
+  - [x] create a session document in sessions collection with cart as Array of objects containing product and set quantity to provided quantity or 1
+  - [x] sign session with jwt, and add to cookie
+  - [ ] revalidate tags for session and user
 
 #### remove from cart functionality
 
@@ -269,3 +270,6 @@
 - [ ] create indexes for all db query
 - [ ] all pages/ actions that redirect to login, redirect back to the actual page after login-in (e.g. add to wishlist)
 - [ ] Check error "Cookies can only be modified in a Server Action or Route Handler" because verifySession wants to delete cookie sometimes in server component
+- add user reviews to purchased product
+- add admin panel for products and user management
+- use mongodb transaction to delete and create cart items during login
