@@ -20,13 +20,9 @@ import SubCategory from "@/components/SubCategory";
 import { mainCategories, subCategories } from "@/data/categories";
 import { getUserWishlist } from "@/utils/getWishlist";
 import verifySession from "@/utils/verifySession";
-// import allProducts from "@/data/productsData.json";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-
-// revalidate once in 3 days
-export const revalidate = 60 * 60 * 24 * 3;
 
 export default async function Home() {
   const verifiedSession = await verifySession();
