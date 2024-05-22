@@ -39,7 +39,7 @@ export default async function login(formData) {
     };
   }
 
-  // synchronize (not logged in) session cart and saved user cart
+  // synchronize session cart and user cart. session is used to hold cart for users not logged in
   try {
     const session = await verifySession(); // null or object containing sessionId
 
@@ -66,12 +66,12 @@ export default async function login(formData) {
 
           // save session products in cart
           const tempCartProducts = dbSession.cart.map((item) => ({
-            ...item,
+            product: item.product,
             user: user._id,
+            cartQuantity: item.cartQuantity,
           }));
 
-          const newlyCreatedCart = await Cart.create(tempCartProducts);
-          console.log(newlyCreatedCart);
+          await Cart.create(tempCartProducts);
         } catch (error) {
           console.log("Error occurred syncing cart and sessions cart");
         }
