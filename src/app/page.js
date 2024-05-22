@@ -29,7 +29,7 @@ export default async function Home() {
   // get user wishlist
   let userWishlist;
   if (verifiedSession?.isAuth) {
-    userWishlist = await getUserWishlist(verifiedSession.userId)();
+    userWishlist = await getUserWishlist(verifiedSession.userId);
     userWishlist = userWishlist.map((item) => item.product.toString());
   }
 

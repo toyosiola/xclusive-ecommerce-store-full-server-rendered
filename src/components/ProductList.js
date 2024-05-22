@@ -1,6 +1,6 @@
 import SingleProduct from "./SingleProduct";
 import MoreProducts from "./MoreProducts";
-import getInitialProductsWrapper from "@/utils/getInitialProducts";
+import getInitialProducts from "@/utils/getInitialProducts";
 import { connectDB } from "@/utils/db";
 import verifySession from "@/utils/verifySession";
 import { getUserWishlist } from "@/utils/getWishlist";
@@ -13,15 +13,15 @@ export default async function ProductList({ category, sort, priceLimit }) {
   // get user wishlist
   let userWishlist;
   if (verifiedSession?.isAuth) {
-    userWishlist = await getUserWishlist(verifiedSession.userId)();
+    userWishlist = await getUserWishlist(verifiedSession.userId);
     userWishlist = userWishlist.map((item) => item.product.toString());
   }
 
-  const [{ products, maxPrice, totalCount }] = await getInitialProductsWrapper(
+  const [{ products, maxPrice, totalCount }] = await getInitialProducts(
     category,
     sort,
     priceLimit,
-  )(); // wrapper for passing cache keys. returns getInitialProducts func
+  );
 
   return (
     <>

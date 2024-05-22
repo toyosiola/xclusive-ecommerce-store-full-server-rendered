@@ -6,7 +6,7 @@ import { productsPerPage } from "@/components/ProductList";
 import { connectDB, constructFilterQuery, constructSortQuery } from "./db";
 
 // use wrapper for unstable cache to pass params to cache key
-export default function getInitialProductsWrapper(category, sort, priceLimit) {
+export default function getInitialProducts(category, sort, priceLimit) {
   return unstable_cache(
     async () => {
       // construct filter query depending on product category
@@ -68,5 +68,5 @@ export default function getInitialProductsWrapper(category, sort, priceLimit) {
       sort ? sort : "none",
     ],
     { tags: ["products"] },
-  );
+  )();
 }

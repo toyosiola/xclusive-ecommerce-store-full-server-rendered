@@ -10,5 +10,5 @@ export function getUserWishlist(user) {
     },
     ["wishlist", user],
     { tags: ["wishlist", `wishlist/user-${user}`] },
-  );
+  )();
 }
