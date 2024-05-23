@@ -11,7 +11,7 @@ import verifySession from "@/utils/verifySession";
 import { getSessionCart, getUserCart } from "@/utils/getCart";
 
 export default async function SingleProductPage({ params: { productId } }) {
-  let product, isInWishlist, isInCart;
+  let product, isInWishlist, cartQuantity;
   await connectDB();
 
   // verifiedSession is null if no session exists
@@ -20,9 +20,9 @@ export default async function SingleProductPage({ params: { productId } }) {
   // verifiedSession.isAuth is false if not-logged-in session exists
   if (verifiedSession && !verifiedSession?.isAuth) {
     const sessionCart = await getSessionCart(verifiedSession.sessionId);
-    isInCart = sessionCart.find(
+    cartQuantity = sessionCart.find(
       (item) => item.product.toString() === productId,
-    );
+    )?.cartQuantity;
   }
 
   // verifiedSession.isAuth is true if user is logged-in
@@ -32,13 +32,15 @@ export default async function SingleProductPage({ params: { productId } }) {
     isInWishlist = !!userWishlist.find(
       (item) => item.product.toString() === productId,
     );
-    isInCart = userCart.find((item) => item.product.toString() === productId);
+    cartQuantity = userCart.find(
+      (item) => item.product.toString() === productId,
+    )?.cartQuantity;
   }
 
   // fetch product
   try {
     product = await Product.findOne({ _id: productId }).select(
-      "name price averageRating reviewsCount images description discount",
+      "name price averageRating reviewsCount images description discount quantityInStock",
     );
     if (!product) {
       notFound();
@@ -59,6 +61,7 @@ export default async function SingleProductPage({ params: { productId } }) {
     images,
     description,
     discount,
+    quantityInStock,
   } = product;
 
   return (
@@ -108,8 +111,7 @@ export default async function SingleProductPage({ params: { productId } }) {
             {/* buttons container */}
             <ActionButtons
               id={id.toString()}
-              isInWishlist={isInWishlist}
-              cartQuantity={isInCart?.cartQuantity}
+              {...{ isInWishlist, quantityInStock, cartQuantity }}
             />
           </div>
         </div>

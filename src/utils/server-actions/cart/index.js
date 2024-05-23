@@ -1,3 +1,5 @@
 import addToCart from "./addToCart";
+import { cartQuantityHandler } from "./cartQuantityHandler";
+import removeFromCart from "./removeFromCart";
 
-export { addToCart };
+export { addToCart, removeFromCart, cartQuantityHandler };
