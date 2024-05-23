@@ -11,7 +11,6 @@ import { cookies } from "next/headers";
 export default async function addToCart(productId) {
   const cookie = cookies();
   let verifiedSession;
-  // only logged in user can add item to wishlist
   try {
     verifiedSession = await verifySession();
   } catch (error) {
@@ -45,16 +44,17 @@ export default async function addToCart(productId) {
   if (!verifiedSession.isAuth) {
     try {
       const session = await Session.findById(verifiedSession.sessionId);
-      session.cart.push({ product: productId, cartQuantity: 1 });
-      await session.save();
-
       if (!session) {
         // if session is not found in db, delete jwt (Not an expected scenario)
         cookie.delete("session");
+        revalidateTag(`cart/session-${verifiedSession.sessionId}`); // cached session cart
         return { success: false, message: "Failed, please try again" };
       }
 
-      // refresh session after updating wishlist
+      session.cart.push({ product: productId, cartQuantity: 1 });
+      await session.save();
+
+      // refresh session after updating cart
       const token = createJWT({ sessionId: session._id.toString() });
       cookie.set("session", token, {
         httpOnly: true,
