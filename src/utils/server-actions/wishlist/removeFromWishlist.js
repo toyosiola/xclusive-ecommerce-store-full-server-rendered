@@ -23,7 +23,6 @@ export default async function removeFromWishlist(productId) {
     revalidateTag(`wishlist/user-${payload.userId}`); // cached user wishlist
     return { success: true, message: "Removed from wishlist" };
   } catch (error) {
-    console.log(error);
     return { success: false, message: "An error occurred! Please try again" };
   }
 }

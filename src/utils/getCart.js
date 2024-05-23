@@ -15,10 +15,8 @@ export function getUserCart(user) {
 }
 
 export function getSessionCart(sessionId) {
-  console.log("invoking get cart");
   return unstable_cache(
     async () => {
-      console.log("get cart cache miss");
       return (
         await Session.findOne({ _id: sessionId }, "-createdAt -updatedAt")
       )?.cart;

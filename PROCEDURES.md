@@ -198,14 +198,14 @@
 - if !session:
   - [x] create a session document in sessions collection with cart as Array of objects containing product and set quantity to provided quantity or 1
   - [x] sign session with jwt, and add to cookie
-  - [ ] revalidate tags for session and user
+  - [x] revalidate tags for session and user
 
 #### remove from cart functionality
 
-- [ ] create remove from cart
-- [ ] get session from cookie, verify, check for userId or session
-- [ ] if user, remove from card collection with user and product id
-- [ ] if session, remove from cart in session
+- [x] create remove from cart
+- [x] get session from cookie, verify, check for userId or session
+- [x] if user, remove from card collection with user and product id
+- [x] if session, remove from cart in session
 
 #### cart count
 

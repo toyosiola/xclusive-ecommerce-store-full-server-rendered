@@ -120,7 +120,7 @@ export default async function SingleProductPage({ params: { productId } }) {
             <ActionButtons
               id={id.toString()}
               isInWishlist={isInWishlist}
-              isInCart={isInCart}
+              cartQuantity={isInCart?.cartQuantity}
             />
           </div>
         </div>

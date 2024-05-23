@@ -6,6 +6,9 @@ import {
 } from "@/utils/server-actions/wishlist";
 import { toast } from "react-toastify";
 import WishlistButton from "./WishlistButton";
+import { addToCart } from "@/utils/server-actions/cart";
+import AddToCartButton from "./AddToCartButton";
+import removeFromCart from "@/utils/server-actions/cart/removeFromCart";
 
 export async function wishlistFormAction(isInWishlist, id) {
   try {
@@ -24,7 +27,24 @@ export async function wishlistFormAction(isInWishlist, id) {
   }
 }
 
-export default function ActionButtons({ id, isInWishlist }) {
+export async function addToCartFormAction(cartQuantity, id) {
+  try {
+    if (!cartQuantity) {
+      const resp = await addToCart(id);
+      if (resp.success) return toast.success(resp.message, { autoClose: 1500 });
+      return toast.error(resp.message);
+    }
+
+    // remove from cart
+    const resp = await removeFromCart(id);
+    if (resp.success) return toast.success(resp.message, { autoClose: 1500 });
+    toast.error(resp.message);
+  } catch (error) {
+    toast.error("Failed! Please check your internet connection");
+  }
+}
+
+export default function ActionButtons({ id, isInWishlist, cartQuantity }) {
   return (
     <div className="flex flex-wrap items-center gap-4 lg:justify-between">
       <div className="flex items-center">
@@ -51,12 +71,9 @@ export default function ActionButtons({ id, isInWishlist }) {
       </div>
 
       {/* add to cart button */}
-      <button
-        className="btn2 py-o flex h-11 items-center disabled:cursor-not-allowed disabled:opacity-50"
-        title={"Add to cart"}
-      >
-        Add to cart
-      </button>
+      <form action={() => addToCartFormAction(cartQuantity, id)}>
+        <AddToCartButton cartQuantity={cartQuantity} />
+      </form>
 
       {/* add to wishlist */}
       <form
