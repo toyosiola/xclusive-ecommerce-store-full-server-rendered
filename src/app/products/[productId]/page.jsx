@@ -10,17 +10,6 @@ import { getUserWishlist } from "@/utils/getWishlist";
 import verifySession from "@/utils/verifySession";
 import { getSessionCart, getUserCart } from "@/utils/getCart";
 
-// generate pages that are not pregenerated on demand
-export const dynamicParams = true;
-
-// pregenerate few pages
-export async function generateStaticParams() {
-  await connectDB();
-  const products = await Product.find({}, { _id: 1 }).limit(10);
-
-  return products.map((product) => ({ productId: product._id.toString() }));
-}
-
 export default async function SingleProductPage({ params: { productId } }) {
   let product, isInWishlist, isInCart;
   await connectDB();
