@@ -32,10 +32,10 @@ export async function wishlistFormAction(isInWishlist, id) {
   }
 }
 
-export async function addToCartFormAction(cartQuantity, id) {
+export async function addToCartFormAction(cartQuantity, id, localCartQuantity) {
   try {
     if (!cartQuantity) {
-      const resp = await addToCart(id);
+      const resp = await addToCart(id, localCartQuantity);
       if (resp.success) return toast.success(resp.message, { autoClose: 1500 });
       return toast.error(resp.message);
     }
@@ -91,7 +91,9 @@ export default function ActionButtons({
       </form>
 
       {/* add to cart button */}
-      <form action={() => addToCartFormAction(cartQuantity, id)}>
+      <form
+        action={() => addToCartFormAction(cartQuantity, id, localCartQuantity)}
+      >
         <AddToCartButton cartQuantity={cartQuantity} />
       </form>
 

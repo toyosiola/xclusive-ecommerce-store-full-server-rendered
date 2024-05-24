@@ -7,7 +7,7 @@ import verifySession from "@/utils/verifySession";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export default async function addToCart(productId) {
+export default async function addToCart(productId, localCartQuantity) {
   let verifiedSession;
   try {
     verifiedSession = await verifySession();
@@ -21,7 +21,7 @@ export default async function addToCart(productId) {
     try {
       // sessions collection is used to manage cart of users that are not logged in
       const session = await Session.create({
-        cart: [{ product: productId, cartQuantity: 1 }],
+        cart: [{ product: productId, cartQuantity: localCartQuantity }],
       });
       // set session on client
       setCookie({ sessionId: session._id.toString() });
@@ -43,7 +43,10 @@ export default async function addToCart(productId) {
         return { success: false, message: "Failed, please try again" };
       }
 
-      session.cart.push({ product: productId, cartQuantity: 1 });
+      session.cart.push({
+        product: productId,
+        cartQuantity: localCartQuantity,
+      });
       await session.save();
 
       // refresh session after updating cart
@@ -64,7 +67,7 @@ export default async function addToCart(productId) {
       await Cart.create({
         product: productId,
         user: verifiedSession.userId,
-        cartQuantity: 1,
+        cartQuantity: localCartQuantity,
       });
       revalidateTag(`cart/user-${verifiedSession.userId}`);
       return { success: true, message: "Added to cart" };
