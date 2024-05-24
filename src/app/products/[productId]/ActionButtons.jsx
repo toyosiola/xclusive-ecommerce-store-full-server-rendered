@@ -1,53 +1,15 @@
 "use client";
 
-import {
-  addToWishlist,
-  removeFromWishlist,
-} from "@/utils/server-actions/wishlist";
-import { toast } from "react-toastify";
 import WishlistButton from "./WishlistButton";
-import {
-  addToCart,
-  removeFromCart,
-  cartQuantityHandler,
-} from "@/utils/server-actions/cart";
 import AddToCartButton from "./AddToCartButton";
 import { useState } from "react";
 import QuantityButton from "./QuantityButton";
-
-export async function wishlistFormAction(isInWishlist, id) {
-  try {
-    if (!isInWishlist) {
-      const resp = await addToWishlist(id);
-      if (resp.success) return toast.success(resp.message, { autoClose: 1500 });
-      return toast.error(resp.message);
-    }
-
-    // remove from wishlist
-    const resp = await removeFromWishlist(id);
-    if (resp.success) return toast.info(resp.message, { autoClose: 1500 });
-    toast.error(resp.message);
-  } catch (error) {
-    toast.error("Failed! Please check your internet connection");
-  }
-}
-
-export async function addToCartFormAction(cartQuantity, id, localCartQuantity) {
-  try {
-    if (!cartQuantity) {
-      const resp = await addToCart(id, localCartQuantity);
-      if (resp.success) return toast.success(resp.message, { autoClose: 1500 });
-      return toast.error(resp.message);
-    }
-
-    // remove from cart
-    const resp = await removeFromCart(id);
-    if (resp.success) return toast.info(resp.message, { autoClose: 1500 });
-    toast.error(resp.message);
-  } catch (error) {
-    toast.error("Failed! Please check your internet connection");
-  }
-}
+import {
+  cartFormAction,
+  countFormAction,
+  wishlistFormAction,
+} from "@/utils/form-actions";
+import DisplayedCartQuantity from "./DisplayedCartQuantity";
 
 export default function ActionButtons({
   id,
@@ -57,35 +19,27 @@ export default function ActionButtons({
 }) {
   const [localCartQuantity, setLocalCartQuantity] = useState(1);
 
-  // cart quantity form handler
-  async function countFormAction(formData) {
-    const action = formData.get("action");
-
-    // update local quantity if item has not been added to cart
-    if (!cartQuantity) {
-      action === "increase"
-        ? setLocalCartQuantity((prev) =>
-            prev < quantityInStock ? prev + 1 : quantityInStock,
-          )
-        : setLocalCartQuantity((prev) => (prev <= 1 ? 1 : prev - 1));
-    } else {
-      // update quantity in db if item is in cart
-      await cartQuantityHandler(action, id);
-    }
-  }
-
   const displayedQuantity = cartQuantity || localCartQuantity;
 
   return (
-    <div className="flex flex-wrap items-center gap-4 lg:justify-between">
-      <form action={countFormAction} className="flex items-center">
+    <div className="flex flex-wrap items-center justify-between gap-4">
+      <form
+        action={(formData) =>
+          countFormAction({
+            formData,
+            productId: id,
+            cartQuantity,
+            quantityInStock,
+            setLocalCartQuantity,
+          })
+        }
+        className="flex items-center"
+      >
         {/* reduce quantity button */}
         <QuantityButton value="decrease" {...{ displayedQuantity }} />
 
         {/* quantity */}
-        <p className="flex h-11 w-20 items-center justify-center border-y border-black/50 text-center text-xl">
-          {displayedQuantity}
-        </p>
+        <DisplayedCartQuantity {...{ displayedQuantity }} />
 
         {/* increase quantity button */}
         <QuantityButton
@@ -95,9 +49,7 @@ export default function ActionButtons({
       </form>
 
       {/* add to cart button */}
-      <form
-        action={() => addToCartFormAction(cartQuantity, id, localCartQuantity)}
-      >
+      <form action={() => cartFormAction(cartQuantity, id, localCartQuantity)}>
         <AddToCartButton cartQuantity={cartQuantity} />
       </form>
 

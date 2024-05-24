@@ -1,6 +1,6 @@
 "use client";
 
-import { wishlistFormAction } from "@/app/products/[productId]/ActionButtons";
+import { wishlistFormAction } from "@/utils/form-actions";
 import WishlistTrashSubmitButton from "./WishlistTrashSubmitButton";
 
 export default function WishlistTrashForm({
