@@ -47,13 +47,16 @@ export default async function login(formData) {
     if (session?.sessionId) {
       let dbSession;
       try {
-        dbSession = await Session.findById(session.sessionId);
+        dbSession = await Session.findById(
+          session.sessionId,
+          "-createdAt -updatedAt -cart._id -__v",
+        );
       } catch (error) {
         console.log("Error occurred syncing cart and sessions cart");
       }
 
       // if db is found in db,
-      if (dbSession && dbSession.cart.length > 1) {
+      if (dbSession && dbSession?.cart.length > 0) {
         // compile session products Ids
         const sessionProductsIds = dbSession.cart.map((item) => item.product);
 
