@@ -9,11 +9,12 @@ import "react-toastify/dist/ReactToastify.css";
 import verifySession from "@/utils/verifySession";
 import QueryClientProviderWrapper from "@/components/QueryClientProviderWrapper";
 
+// fonts
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 
