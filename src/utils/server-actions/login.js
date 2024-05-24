@@ -1,15 +1,13 @@
 "use server";
 
-import createJWT from "../createJWT";
-import { cookies } from "next/headers";
 import verifySession from "../verifySession";
 import Session from "@/models/SessionModel";
 import Cart from "@/models/CartModel";
 import User from "@/models/UserModel";
 import { connectDB } from "../db";
+import setCookie from "../setCookie";
 
 export default async function login(formData) {
-  const cookie = cookies();
   const email = formData.get("email");
   const password = formData.get("password");
 
@@ -87,18 +85,9 @@ export default async function login(formData) {
   // End synchronizing carts here
 
   // create logged in session token
-  const token = createJWT({
+  setCookie({
     name: user.firstName,
     userId: user._id,
-  });
-
-  // use either maxAge (in milliseconds) or expires (in new Date() date format)
-  cookie.set("session", token, {
-    httpOnly: true,
-    secure: true,
-    maxAge: Number(process.env.SESSION_LIFETIME),
-    sameSite: "strict",
-    path: "/",
   });
 
   return {

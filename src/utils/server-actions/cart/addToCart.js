@@ -1,15 +1,13 @@
 "use server";
 
-import { devEnv } from "@/app/layout";
 import Cart from "@/models/CartModel";
 import Session from "@/models/SessionModel";
-import createJWT from "@/utils/createJWT";
+import setCookie from "@/utils/setCookie";
 import verifySession from "@/utils/verifySession";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 export default async function addToCart(productId) {
-  const cookie = cookies();
   let verifiedSession;
   try {
     verifiedSession = await verifySession();
@@ -25,14 +23,8 @@ export default async function addToCart(productId) {
       const session = await Session.create({
         cart: [{ product: productId, cartQuantity: 1 }],
       });
-      const token = createJWT({ sessionId: session._id.toString() });
-      cookie.set("session", token, {
-        httpOnly: true,
-        secure: !devEnv,
-        maxAge: Number(process.env.SESSION_LIFETIME),
-        sameSite: "Strict",
-        path: "/",
-      });
+      // set session on client
+      setCookie({ sessionId: session._id.toString() });
       revalidatePath(`products/${productId}`);
       return { success: true, message: "Added to cart" };
     } catch (error) {
@@ -46,7 +38,7 @@ export default async function addToCart(productId) {
       const session = await Session.findById(verifiedSession.sessionId);
       if (!session) {
         // if session is not found in db, delete jwt (Not an expected scenario)
-        cookie.delete("session");
+        cookies().delete("session");
         revalidateTag(`cart/session-${verifiedSession.sessionId}`); // cached session cart
         return { success: false, message: "Failed, please try again" };
       }
@@ -55,14 +47,7 @@ export default async function addToCart(productId) {
       await session.save();
 
       // refresh session after updating cart
-      const token = createJWT({ sessionId: session._id.toString() });
-      cookie.set("session", token, {
-        httpOnly: true,
-        secure: !devEnv,
-        maxAge: Number(process.env.SESSION_LIFETIME),
-        sameSite: "Strict",
-        path: "/",
-      });
+      setCookie({ sessionId: session._id.toString() });
       revalidateTag(`cart/session-${verifiedSession.sessionId}`);
       return { success: true, message: "Added to cart" };
     } catch (error) {

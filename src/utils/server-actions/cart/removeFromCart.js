@@ -4,6 +4,7 @@ import { devEnv } from "@/app/layout";
 import Cart from "@/models/CartModel";
 import Session from "@/models/SessionModel";
 import createJWT from "@/utils/createJWT";
+import setCookie from "@/utils/setCookie";
 import jwt from "jsonwebtoken";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
@@ -12,6 +13,9 @@ import { redirect } from "next/navigation";
 export default async function removeFromCart(productId) {
   const cookie = cookies();
   const session = cookie.get("session")?.value;
+  if (!session)
+    return { success: false, message: "Error! No item in your cart" };
+
   let payload;
   try {
     payload = jwt.verify(session, process.env.JWT_SECRET);
@@ -39,14 +43,7 @@ export default async function removeFromCart(productId) {
         await dbSession.save();
 
         // refresh session after updating cart
-        const token = createJWT({ sessionId: dbSession._id.toString() });
-        cookie.set("session", token, {
-          httpOnly: true,
-          secure: !devEnv,
-          maxAge: Number(process.env.SESSION_LIFETIME),
-          sameSite: "Strict",
-          path: "/",
-        });
+        setCookie({ sessionId: dbSession._id.toString() });
         revalidateTag(`cart/session-${payload.sessionId}`); // cached session cart
       } else {
         // if no item again in cart, delete session
