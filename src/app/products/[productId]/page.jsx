@@ -87,22 +87,25 @@ export default async function SingleProductPage({ params: { productId } }) {
           <div className="">
             <h3 className="mb-4 capitalize">{name}</h3>
 
-            <div className="mb-4 flex items-center gap-2 text-lg">
+            <div className="mb-4 grid grid-cols-[auto_1fr] items-center gap-2 text-base xs:grid-cols-[auto_auto_auto] xs:justify-start xs:text-lg">
               {/* rating */}
               {/* stars container */}
               <RatingStars averageRating={averageRating} />
-              {/* count */}
-              <p className="text-lg text-black/50">{`(${reviewsCount} Reviews)`}</p>
-              <span>|</span>{" "}
-              <span
-                className={
-                  quantityInStock > 1
-                    ? "text-button1"
-                    : "font-semibold text-button2"
-                }
-              >
-                {quantityInStock > 1 ? "In stock" : "Out of stock"}
-              </span>
+              {/* ratings count */}
+              <p className="text-black/50">{`(${reviewsCount} Reviews)`}</p>
+              {/* in / out of stock */}
+              <p className="">
+                <span>|</span>
+                <span
+                  className={
+                    quantityInStock > 1
+                      ? "text-button1"
+                      : "font-semibold text-button2"
+                  }
+                >
+                  {quantityInStock > 1 ? " In stock" : " Out of stock"}
+                </span>
+              </p>
             </div>
 
             <p className="mb-6 flex flex-wrap gap-4 text-2xl">

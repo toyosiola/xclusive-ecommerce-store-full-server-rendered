@@ -209,9 +209,9 @@
 
 #### cart count
 
-- [ ] get and verify session
-- [ ] if increase, increase cartQuantity in session or cart as applicable
-- [ ] if reduce, reduce cartQuantity in session or cart as applicable
+- [x] get and verify session
+- [x] if increase, increase cartQuantity in session or cart as applicable
+- [x] if reduce, reduce cartQuantity in session or cart as applicable
 
 #### /wishlist
 
