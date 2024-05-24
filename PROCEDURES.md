@@ -275,4 +275,5 @@
 - add user reviews to purchased product
 - add admin panel for products and user management
 - use mongodb transaction to delete and create cart items during login
-- delete unused dormant session from db after 7 days
+- delete unused dormant session from db after 7
+- work on out of stock product not to be displayed in product list

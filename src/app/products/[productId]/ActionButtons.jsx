@@ -52,7 +52,7 @@ export async function addToCartFormAction(cartQuantity, id, localCartQuantity) {
 export default function ActionButtons({
   id,
   isInWishlist,
-  cartQuantity,
+  cartQuantity, //cartQuantity is the quantity in db, only true if item is in cart
   quantityInStock,
 }) {
   const [localCartQuantity, setLocalCartQuantity] = useState(1);
@@ -70,24 +70,28 @@ export default function ActionButtons({
         : setLocalCartQuantity((prev) => (prev <= 1 ? 1 : prev - 1));
     } else {
       // update quantity in db if item is in cart
-      const resp = await cartQuantityHandler(action, id);
-      console.log(resp);
+      await cartQuantityHandler(action, id);
     }
   }
+
+  const displayedQuantity = cartQuantity || localCartQuantity;
 
   return (
     <div className="flex flex-wrap items-center gap-4 lg:justify-between">
       <form action={countFormAction} className="flex items-center">
         {/* reduce quantity button */}
-        <QuantityButton value="decrease" />
+        <QuantityButton value="decrease" {...{ displayedQuantity }} />
 
         {/* quantity */}
         <p className="flex h-11 w-20 items-center justify-center border-y border-black/50 text-center text-xl">
-          {cartQuantity || localCartQuantity}
+          {displayedQuantity}
         </p>
 
         {/* increase quantity button */}
-        <QuantityButton value="increase" />
+        <QuantityButton
+          value="increase"
+          {...{ displayedQuantity, quantityInStock }}
+        />
       </form>
 
       {/* add to cart button */}
