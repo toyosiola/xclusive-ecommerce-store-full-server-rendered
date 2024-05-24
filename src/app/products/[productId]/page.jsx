@@ -93,7 +93,16 @@ export default async function SingleProductPage({ params: { productId } }) {
               <RatingStars averageRating={averageRating} />
               {/* count */}
               <p className="text-lg text-black/50">{`(${reviewsCount} Reviews)`}</p>
-              <span>|</span> <span className="text-button1">In stock</span>
+              <span>|</span>{" "}
+              <span
+                className={
+                  quantityInStock > 1
+                    ? "text-button1"
+                    : "font-semibold text-button2"
+                }
+              >
+                {quantityInStock > 1 ? "In stock" : "Out of stock"}
+              </span>
             </div>
 
             <p className="mb-6 flex flex-wrap gap-4 text-2xl">
