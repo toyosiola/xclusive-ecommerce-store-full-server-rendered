@@ -266,10 +266,13 @@
 
 #### to do
 
-- [ ] remove revalidation from home
+- [x] remove revalidation from home
+- [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in users
 - [ ] create indexes for all db query
+- [ ] look into refreshing logged-in user sessions
 - [ ] all pages/ actions that redirect to login, redirect back to the actual page after login-in (e.g. add to wishlist)
 - [ ] Check error "Cookies can only be modified in a Server Action or Route Handler" because verifySession wants to delete cookie sometimes in server component
 - add user reviews to purchased product
 - add admin panel for products and user management
 - use mongodb transaction to delete and create cart items during login
+- delete unused dormant session from db after 7 days
