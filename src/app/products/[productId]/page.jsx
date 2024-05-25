@@ -20,7 +20,7 @@ export default async function SingleProductPage({ params: { productId } }) {
   // verifiedSession.isAuth is false if not-logged-in session exists
   if (verifiedSession && !verifiedSession?.isAuth) {
     const sessionCart = await getSessionCart(verifiedSession.sessionId);
-    cartQuantity = sessionCart.find(
+    cartQuantity = sessionCart?.find(
       (item) => item.product.toString() === productId,
     )?.cartQuantity;
   }
