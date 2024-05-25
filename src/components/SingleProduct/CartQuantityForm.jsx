@@ -12,7 +12,7 @@ export default function CartQuantityForm({
       action={cartQuantityHandler}
       className={`absolute left-0 top-0 grid w-full grid-cols-[auto_1fr_auto] text-center text-text ${cartQuantity ? "" : "pointer-events-none opacity-0"}`}
     >
-      <input name="productId" type="hidden" value={productId} />
+      <input name="productId" type="hidden" value={productId.toString()} />
       <CartQuantityButton
         {...{ value: "decrease", cartQuantity, quantityInStock }}
       />
