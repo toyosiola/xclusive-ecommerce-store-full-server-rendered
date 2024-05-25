@@ -18,6 +18,7 @@ import SearchInput from "@/components/SearchInput";
 import SectionTag from "@/components/SectionTag";
 import SubCategory from "@/components/SubCategory";
 import { mainCategories, subCategories } from "@/data/categories";
+import { getSessionCart, getUserCart } from "@/utils/getCart";
 import { getUserWishlist } from "@/utils/getWishlist";
 import verifySession from "@/utils/verifySession";
 import Image from "next/image";
@@ -27,9 +28,28 @@ import { Suspense } from "react";
 export default async function Home() {
   const verifiedSession = await verifySession();
   // get user wishlist
-  let userWishlist;
+  let userWishlist,
+    cart = {};
+
+  // verifiedSession.isAuth is false if not-logged-in session exists
+  if (verifiedSession && !verifiedSession?.isAuth) {
+    // get session cart
+    const sessionCart = await getSessionCart(verifiedSession.sessionId);
+    // fill cart object with id and cartQuantity to avoid iterating in each singleProduct
+    sessionCart?.forEach(
+      ({ product, cartQuantity }) => (cart[product.toString()] = cartQuantity),
+    );
+  }
+
   if (verifiedSession?.isAuth) {
-    userWishlist = await getUserWishlist(verifiedSession.userId);
+    userWishlist = getUserWishlist(verifiedSession.userId);
+    let userCart = getUserCart(verifiedSession.userId);
+    [userWishlist, userCart] = await new Promise.all([userWishlist, userCart]);
+    // fill cart object
+    userCart.forEach(
+      ({ product, cartQuantity }) => (cart[product.toString()] = cartQuantity),
+    );
+    // turn wishlist to an array of strings
     userWishlist = userWishlist.map((item) => item.product.toString());
   }
 
@@ -111,7 +131,7 @@ export default async function Home() {
 
             {/* Flash sales products */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <FlashSalesProductsSamples userWishlist={userWishlist} />
+              <FlashSalesProductsSamples {...{ userWishlist, cart }} />
             </Suspense>
 
             {/* Link to view all flash sales */}
@@ -160,7 +180,7 @@ export default async function Home() {
 
             {/* Best selling container */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <BestSellingProductsSamples userWishlist={userWishlist} />
+              <BestSellingProductsSamples {...{ userWishlist, cart }} />
             </Suspense>
             {/* view all link for smaller screens only */}
             <Link
@@ -217,7 +237,7 @@ export default async function Home() {
 
             {/* products container */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <TopProductsSamples userWishlist={userWishlist} />
+              <TopProductsSamples {...{ userWishlist, cart }} />
             </Suspense>
             <Link href="/products" className="btn2 mx-auto">
               View All Products

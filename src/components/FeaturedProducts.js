@@ -1,5 +1,5 @@
 import Product from "@/models/ProductModel";
-import SingleProduct from "./SingleProduct";
+import SingleProduct from "./SingleProduct/index.js";
 import { connectDB } from "@/utils/db";
 
 // define projection stage for each aggregation
@@ -12,6 +12,7 @@ export const projectStage = {
     price: 1,
     newProduct: 1,
     discount: 1,
+    quantityInStock: 1,
   },
 };
 
@@ -32,7 +33,7 @@ const featuredProducts = (async function () {
   ]);
 })();
 
-export async function FlashSalesProductsSamples({ userWishlist }) {
+export async function FlashSalesProductsSamples({ userWishlist, cart }) {
   const [{ flashSales }] = await featuredProducts;
 
   return (
@@ -40,15 +41,14 @@ export async function FlashSalesProductsSamples({ userWishlist }) {
       {flashSales.map((product) => (
         <SingleProduct
           key={product._id}
-          {...product}
-          userWishlist={userWishlist}
+          {...{ ...product, userWishlist, cart }}
         />
       ))}
     </div>
   );
 }
 
-export async function BestSellingProductsSamples({ userWishlist }) {
+export async function BestSellingProductsSamples({ userWishlist, cart }) {
   const [{ bestSelling }] = await featuredProducts;
 
   return (
@@ -56,15 +56,14 @@ export async function BestSellingProductsSamples({ userWishlist }) {
       {bestSelling.map((product) => (
         <SingleProduct
           key={product._id}
-          {...product}
-          userWishlist={userWishlist}
+          {...{ ...product, userWishlist, cart }}
         />
       ))}
     </div>
   );
 }
 
-export async function TopProductsSamples({ userWishlist }) {
+export async function TopProductsSamples({ userWishlist, cart }) {
   const [{ topProducts }] = await featuredProducts;
 
   return (
@@ -72,8 +71,7 @@ export async function TopProductsSamples({ userWishlist }) {
       {topProducts.map((product) => (
         <SingleProduct
           key={product._id}
-          {...product}
-          userWishlist={userWishlist}
+          {...{ ...product, userWishlist, cart }}
         />
       ))}
     </div>

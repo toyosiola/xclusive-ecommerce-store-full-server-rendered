@@ -267,6 +267,7 @@
 #### to do
 
 - [x] remove revalidation from home
+- [ ] cache featured products get function, revalidate in 3 days
 - [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in users
 - [ ] create indexes for all db query
 - [ ] look into refreshing logged-in user sessions
