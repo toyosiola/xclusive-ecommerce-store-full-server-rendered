@@ -6,7 +6,9 @@ import setCookie from "@/utils/setCookie";
 import verifySession from "@/utils/verifySession";
 import { revalidateTag } from "next/cache";
 
-export async function cartQuantityHandler(action, productId) {
+export async function cartQuantityHandler(formData) {
+  const action = formData.get("action");
+  const productId = formData.get("productId");
   let verifiedSession;
   try {
     // check if session  exist and valid

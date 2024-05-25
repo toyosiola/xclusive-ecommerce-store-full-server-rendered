@@ -3,7 +3,6 @@ import { cartQuantityHandler } from "../server-actions/cart";
 // cart quantity form handler
 export default async function countFormAction({
   formData,
-  productId,
   cartQuantity,
   quantityInStock,
   setLocalCartQuantity,
@@ -19,6 +18,6 @@ export default async function countFormAction({
       : setLocalCartQuantity((prev) => (prev <= 1 ? 1 : prev - 1));
   } else {
     // update quantity in db if item is in cart
-    cartQuantityHandler(action, productId);
+    cartQuantityHandler(formData);
   }
 }

@@ -27,7 +27,6 @@ export default function ActionButtons({
         action={(formData) =>
           countFormAction({
             formData,
-            productId: id,
             cartQuantity,
             quantityInStock,
             setLocalCartQuantity,
@@ -35,6 +34,7 @@ export default function ActionButtons({
         }
         className="flex items-center"
       >
+        <input name="productId" type="hidden" value={id} />
         {/* reduce quantity button */}
         <QuantityButton value="decrease" {...{ displayedQuantity }} />
 
