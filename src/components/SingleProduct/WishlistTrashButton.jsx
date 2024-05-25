@@ -1,5 +1,3 @@
-"use client";
-
 import { HeartIcon, TrashIcon } from "@/assets/icons";
 import { useFormStatus } from "react-dom";
 
