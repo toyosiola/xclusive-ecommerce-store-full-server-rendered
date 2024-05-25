@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import RatingStars from "../RatingStars";
 import WishlistTrashForm from "./WishlistTrashForm";
+import AddToCartForm from "./AddToCartForm";
+import CartQuantityForm from "./CartQuantityForm";
 
 function SingleProduct({
   _id: id,
@@ -13,10 +15,13 @@ function SingleProduct({
   images,
   newProduct,
   discount,
+  quantityInStock,
   isWishlistPage,
   userWishlist,
+  cart,
 }) {
   const isInWishlist = userWishlist?.includes(id.toString());
+  const cartQuantity = cart[id]; // cartQuantity true means item is in cart
 
   // reducing the length of product name above a certain level
   let newName;
@@ -95,24 +100,14 @@ function SingleProduct({
       </Link>
       <div className="relative">
         {/* add to cart button - disappear when item is in cart */}
-        <button
-          className={`mt-2 block w-full rounded bg-black py-3 text-center text-text duration-300 hover:opacity-70`}
-        >
-          {isWishlistPage ? "Move to Cart" : "Add to Cart"}
-        </button>
+        <AddToCartForm
+          {...{ cartQuantity, productId: id.toString(), isWishlistPage }}
+        />
 
         {/* increase and decrease buttons container. Disappear when item not in cart  */}
-        <div
-          className={`absolute left-0 top-0 flex hidden w-full items-center justify-between text-center text-text`}
-        >
-          <button className="h-12 rounded bg-black px-3  text-2xl font-bold duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-30">
-            -
-          </button>
-          <p className="select-none text-2xl font-semibold text-black">0</p>
-          <button className="h-12 rounded bg-black px-3 text-2xl font-bold  duration-300 hover:opacity-70">
-            +
-          </button>
-        </div>
+        <CartQuantityForm
+          {...{ cartQuantity, quantityInStock, productId: id }}
+        />
       </div>
     </div>
   );
