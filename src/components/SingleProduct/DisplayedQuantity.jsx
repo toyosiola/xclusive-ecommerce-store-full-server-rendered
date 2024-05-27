@@ -5,7 +5,7 @@ import { useFormStatus } from "react-dom";
 export default function DisplayedQuantity({ cartQuantity }) {
   const { pending } = useFormStatus();
   return (
-    <p className="grid select-none place-items-center border-y text-2xl font-semibold text-black">
+    <p className="grid select-none place-items-center text-2xl text-black">
       {!pending ? (
         cartQuantity
       ) : (
