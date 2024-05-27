@@ -6,7 +6,10 @@ import { unstable_cache } from "next/cache";
 export function getUserWishlist(user, isWishlistPage = false) {
   return unstable_cache(
     async () => {
-      const wishlist = Wishlist.find({ user }, "-createdAt -updatedAt -_id");
+      const wishlist = Wishlist.find(
+        { user },
+        "-createdAt -updatedAt -_id",
+      ).sort({ createdAt: -1 });
       if (isWishlistPage)
         wishlist.populate({
           path: "product",
