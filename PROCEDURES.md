@@ -267,6 +267,7 @@
 #### to do
 
 - [x] remove revalidation from home
+- [ ] rename all react components to jsx
 - [ ] cache featured products get function, revalidate in 3 days
 - [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in users
 - [ ] create indexes for all db query

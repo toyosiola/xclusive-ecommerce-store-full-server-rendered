@@ -5,6 +5,7 @@ import RatingStars from "../RatingStars";
 import WishlistTrashForm from "./WishlistTrashForm";
 import AddToCartForm from "./AddToCartForm";
 import CartQuantityForm from "./CartQuantityForm";
+import RemoveFromCartForm from "./RemoveFromCartForm";
 
 function SingleProduct({
   _id: id,
@@ -26,9 +27,9 @@ function SingleProduct({
   // reducing the length of product name above a certain level
   let newName;
   if (discount) {
-    newName = name.length > 15 ? `${name.slice(0, 15)}...` : name;
+    newName = name.length > 16 ? `${name.slice(0, 16)}...` : name;
   } else {
-    newName = name.length > 25 ? `${name.slice(0, 25)}...` : name;
+    newName = name.length > 24 ? `${name.slice(0, 24)}...` : name;
   }
 
   return (
@@ -73,13 +74,13 @@ function SingleProduct({
 
         {/* product content */}
         <div className="mt-4">
-          <div className="mb-2 grid grid-cols-[1fr_auto] items-center justify-between gap-1">
+          <div className="mb-1 grid grid-cols-[1fr_auto] items-center justify-between">
             <h4 className="whitespace-nowrap font-semibold text-gray-600">
               {newName}
             </h4>
 
             {/* price of product */}
-            <h4 className="flex items-baseline gap-2 text-lg font-bold text-secondary2">
+            <h4 className="flex items-baseline gap-2 font-bold text-secondary2">
               {formatPrice(price, discount)}
               {discount && (
                 <span className="text-sm font-medium text-black/50 line-through decoration-black/50">
@@ -91,20 +92,23 @@ function SingleProduct({
 
           {/* ratings container */}
           <div className="flex items-center gap-2 text-lg">
-            {/* stars container */}
             <RatingStars averageRating={averageRating} />
-            {/* count */}
-            <p className="text-lg font-bold text-black/50">({reviewsCount})</p>
+            {/* ratings count */}
+            <p className="text-base font-bold text-black/50">
+              ({reviewsCount})
+            </p>
           </div>
         </div>
       </Link>
       <div className="relative">
+        <RemoveFromCartForm {...{ cartQuantity, productId: id.toString() }} />
+
         {/* add to cart button - disappear when item is in cart */}
         <AddToCartForm
           {...{ cartQuantity, productId: id.toString(), isWishlistPage }}
         />
 
-        {/* increase and decrease buttons container. Disappear when item not in cart  */}
+        {/* increase and decrease buttons container. Disappear when item not in cart */}
         <CartQuantityForm
           {...{ cartQuantity, quantityInStock, productId: id }}
         />
