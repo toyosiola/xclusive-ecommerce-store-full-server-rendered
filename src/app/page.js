@@ -44,7 +44,7 @@ export default async function Home() {
   if (verifiedSession?.isAuth) {
     userWishlist = getUserWishlist(verifiedSession.userId);
     let userCart = getUserCart(verifiedSession.userId);
-    [userWishlist, userCart] = await new Promise.all([userWishlist, userCart]);
+    [userWishlist, userCart] = await Promise.all([userWishlist, userCart]);
     // fill cart object
     userCart.forEach(
       ({ product, cartQuantity }) => (cart[product.toString()] = cartQuantity),
