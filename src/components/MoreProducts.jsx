@@ -11,6 +11,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 
 export default function MoreProducts({
+  cart,
   maxPrice,
   totalCount,
   userWishlist,
@@ -67,8 +68,7 @@ export default function MoreProducts({
               {group.map((product) => (
                 <SingleProduct
                   key={product._id}
-                  {...product}
-                  userWishlist={userWishlist}
+                  {...{ ...product, userWishlist, cart }}
                 />
               ))}
             </React.Fragment>

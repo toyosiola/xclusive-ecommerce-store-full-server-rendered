@@ -8,7 +8,7 @@ import { Suspense } from "react";
 import ProductSkeleton from "@/components/ProductSkeleton";
 import SortSelector from "@/components/SortSelector";
 
-export default function Products({
+export default async function Products({
   searchParams: { category, sort, pricelimit: priceLimit },
 }) {
   return (
@@ -47,11 +47,7 @@ export default function Products({
 
             {/* all products */}
             <Suspense fallback={<ProductSkeleton count={48} isProductsPage />}>
-              <ProductList
-                category={category}
-                sort={sort}
-                priceLimit={priceLimit}
-              />
+              <ProductList {...{ category, sort, priceLimit }} />
             </Suspense>
           </div>
         </div>
