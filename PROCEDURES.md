@@ -269,7 +269,8 @@
 - [x] remove revalidation from home
 - [ ] rename all react components to jsx
 - [ ] cache featured products get function, revalidate in 3 days
-- [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in users
+- [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in
+- [ ] Implement "add all to cart" functionality in wishlist page
 - [ ] create indexes for all db query
 - [ ] look into refreshing logged-in user sessions
 - [ ] all pages/ actions that redirect to login, redirect back to the actual page after login-in (e.g. add to wishlist)
