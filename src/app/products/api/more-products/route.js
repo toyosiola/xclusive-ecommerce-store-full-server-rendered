@@ -15,7 +15,10 @@ export async function GET(req) {
 
   try {
     const filterQuery = constructFilterQuery({ category, priceLimit });
-    let result = Product.find(filterQuery);
+    let result = Product.find(
+      filterQuery,
+      "name images averageRating reviewsCount price newProduct discount quantityInStock",
+    );
 
     if (sort) {
       const sortQuery = constructSortQuery(sort);
