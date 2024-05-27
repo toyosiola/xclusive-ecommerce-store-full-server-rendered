@@ -21,7 +21,7 @@ function SingleProduct({
   userWishlist,
   cart,
 }) {
-  const isInWishlist = userWishlist?.includes(id.toString());
+  const isInWishlist = isWishlistPage || userWishlist?.includes(id.toString());
   const cartQuantity = cart[id]; // cartQuantity true means item is in cart
 
   // reducing the length of product name above a certain level
@@ -101,7 +101,9 @@ function SingleProduct({
         </div>
       </Link>
       <div className="relative">
-        <RemoveFromCartForm {...{ cartQuantity, productId: id.toString() }} />
+        {!isWishlistPage && ( // don't render in wishlist page
+          <RemoveFromCartForm {...{ cartQuantity, productId: id.toString() }} />
+        )}
 
         {/* add to cart button - disappear when item is in cart */}
         <AddToCartForm
@@ -109,9 +111,11 @@ function SingleProduct({
         />
 
         {/* increase and decrease buttons container. Disappear when item not in cart */}
-        <CartQuantityForm
-          {...{ cartQuantity, quantityInStock, productId: id }}
-        />
+        {!isWishlistPage && ( // don't render in wishlist page
+          <CartQuantityForm
+            {...{ cartQuantity, quantityInStock, productId: id }}
+          />
+        )}
       </div>
     </div>
   );
