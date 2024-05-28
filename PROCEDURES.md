@@ -269,6 +269,8 @@
 - [x] remove revalidation from home
 - [ ] rename all react components to jsx
 - [ ] cache featured products get function, revalidate in 3 days
+- [ ] fix 3 decimal place output of format price to 2 decimal place
+- [ ] add add-to-wishlist functionality to cart page
 - [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in
 - [ ] Implement "add all to cart" functionality in wishlist page
 - [ ] create indexes for all db query
