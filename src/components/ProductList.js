@@ -5,6 +5,7 @@ import { connectDB } from "@/utils/db";
 import verifySession from "@/utils/verifySession";
 import { getUserWishlist } from "@/utils/getWishlist";
 import { getSessionCart, getUserCart } from "@/utils/getCart";
+import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 export const productsPerPage = 48;
 
@@ -55,6 +56,12 @@ export default async function ProductList({ category, sort, priceLimit }) {
       </div>
       <MoreProducts
         {...{ maxPrice, totalCount, userWishlist, productsPerPage, cart }}
+      />
+
+      {/* update count of items in wishlist and cart */}
+      <UpdateItemsInBagCount
+        cartCount={Object.keys(cart).length}
+        wishlistCount={userWishlist?.length}
       />
     </>
   );

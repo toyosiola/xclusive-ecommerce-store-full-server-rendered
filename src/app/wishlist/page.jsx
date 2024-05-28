@@ -4,6 +4,7 @@ import { getUserWishlist } from "@/utils/getWishlist";
 import { getUserCart } from "@/utils/getCart";
 import SingleProduct from "@/components/SingleProduct";
 import Link from "next/link";
+import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 export default async function Wishlist() {
   await connectDB();
@@ -65,6 +66,12 @@ export default async function Wishlist() {
           </div>
         )}
       </div>
+
+      {/* update count of items in wishlist and cart */}
+      <UpdateItemsInBagCount
+        cartCount={Object.keys(cart).length}
+        wishlistCount={wishlist.length}
+      />
     </main>
   );
 }

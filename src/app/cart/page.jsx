@@ -3,10 +3,13 @@ import formatPrice from "@/utils/formatPrice";
 import { getSessionCart, getUserCart } from "@/utils/getCart";
 import verifySession from "@/utils/verifySession";
 import Link from "next/link";
+import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
+import { getUserWishlist } from "@/utils/getWishlist";
 
 export default async function Cart() {
   const verifiedSession = await verifySession();
-  let cart = [];
+  let cart = [],
+    wishlist = [];
 
   // verifiedSession.isAuth is false if not-logged-in session exists
   if (verifiedSession && !verifiedSession?.isAuth) {
@@ -20,7 +23,10 @@ export default async function Cart() {
 
   // verifiedSession.isAuth is true if user is logged-in
   if (verifiedSession?.isAuth) {
-    const userCart = await getUserCart(verifiedSession.userId, true);
+    const promise1 = getUserWishlist(verifiedSession.userId, true);
+    const promise2 = getUserCart(verifiedSession.userId, true);
+    const [userWishlist, userCart] = await Promise.all([promise1, promise2]);
+    wishlist = userWishlist;
     cart = userCart.map((item) => ({
       ...item.product,
       cartQuantity: item.cartQuantity,
@@ -106,6 +112,11 @@ export default async function Cart() {
           </div>
         )}
       </div>
+
+      {/* update count of items in wishlist and cart */}
+      <UpdateItemsInBagCount
+        {...{ cartCount: cart.length, wishlistCount: wishlist.length }}
+      />
     </main>
   );
 }

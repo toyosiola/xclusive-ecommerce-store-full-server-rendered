@@ -24,6 +24,7 @@ import verifySession from "@/utils/verifySession";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 export default async function Home() {
   const verifiedSession = await verifySession();
@@ -398,6 +399,12 @@ export default async function Home() {
         <div className="absolute bottom-11 right-12 rounded-full bg-secondary p-3 text-2xl text-black md:right-20">
           <ArrowUpIcon />
         </div>
+
+        {/* update count of items in wishlist and cart */}
+        <UpdateItemsInBagCount
+          cartCount={Object.keys(cart).length}
+          wishlistCount={userWishlist?.length}
+        />
       </main>
     </>
   );

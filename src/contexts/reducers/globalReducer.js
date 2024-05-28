@@ -1,4 +1,4 @@
-import { SET_INITIAL_DETAILS, SET_PRICE, SET_USER } from "../actions";
+import { SET_BAG_COUNT, SET_INITIAL_DETAILS, SET_USER } from "../actions";
 
 export default function reducer(state, action) {
   switch (action.type) {
@@ -6,8 +6,14 @@ export default function reducer(state, action) {
       const { maxPrice, totalCount } = action.payload;
       return { ...state, maxPrice, totalCount };
     }
+
     case SET_USER: {
       return { ...state, user: action.payload };
+    }
+
+    case SET_BAG_COUNT: {
+      const { wishlistCount, cartCount } = action.payload;
+      return { ...state, cartCount, wishlistCount };
     }
 
     default: {

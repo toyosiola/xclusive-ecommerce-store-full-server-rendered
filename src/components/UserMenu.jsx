@@ -9,7 +9,7 @@ export default function UserMenu() {
   const [isUserMenuOpen, toggleIsUserMenuOpen] = useState(false);
 
   return (
-    <div className="relative z-10 hidden text-white lg:block">
+    <div className="relative z-10 ml-4 hidden text-white lg:block">
       {/* user button */}
       <button
         className="rounded-full bg-button2 px-2 py-2 text-xl leading-none"
@@ -19,7 +19,7 @@ export default function UserMenu() {
       </button>
       {/* dropdown menu */}
       <div
-        className={`text-base" absolute right-0 top-12 rounded-md bg-black/70 ${isUserMenuOpen ? "block" : "hidden"}`}
+        className={`absolute right-0 top-12 rounded-md bg-black/70 text-base ${isUserMenuOpen ? "block" : "hidden"}`}
       >
         {/* logout button */}
         <button
@@ -30,7 +30,7 @@ export default function UserMenu() {
           }}
         >
           <IconLogout className="rotate-180 text-2xl" />
-          <p className="font-semibold tracking-wide">Logout</p>
+          <span className="font-semibold tracking-wide">Logout</span>
         </button>
       </div>
       {/* end dropdown menu */}
