@@ -1,46 +1,62 @@
-import { HeartIcon } from "@/assets/icons";
+"use client";
 
-export default function ActionButtons({ name, id }) {
+import WishlistButton from "./WishlistButton";
+import AddToCartButton from "./AddToCartButton";
+import { useState } from "react";
+import QuantityButton from "./QuantityButton";
+import {
+  cartFormAction,
+  countFormAction,
+  wishlistFormAction,
+} from "@/utils/form-actions";
+import DisplayedCartQuantity from "./DisplayedCartQuantity";
+
+export default function ActionButtons({
+  id,
+  isInWishlist,
+  cartQuantity, //cartQuantity is the quantity in db, only true if item is in cart
+  quantityInStock,
+}) {
+  const [localCartQuantity, setLocalCartQuantity] = useState(1);
+
+  const displayedQuantity = cartQuantity || localCartQuantity;
+
   return (
-    <>
-      <div className="flex items-center">
+    <div className="flex flex-wrap items-center justify-between gap-4">
+      <form
+        action={(formData) =>
+          countFormAction({
+            formData,
+            cartQuantity,
+            quantityInStock,
+            setLocalCartQuantity,
+          })
+        }
+        className="flex items-center"
+      >
+        <input name="productId" type="hidden" value={id} />
         {/* reduce quantity button */}
-        <button
-          type="button"
-          className="flex h-11 w-10 items-center justify-center rounded-l border border-black/50 text-2xl duration-300 hover:border-button2 hover:bg-button2 hover:text-text disabled:cursor-not-allowed disabled:opacity-30"
-        >
-          -
-        </button>
+        <QuantityButton value="decrease" {...{ displayedQuantity }} />
 
         {/* quantity */}
-        <p className="flex h-11 w-20 items-center justify-center border-y border-black/50 text-center text-xl">
-          0
-        </p>
+        <DisplayedCartQuantity {...{ displayedQuantity }} />
 
         {/* increase quantity button */}
-        <button
-          type="button"
-          className="flex h-11 w-10 items-center justify-center rounded-r border border-button2 bg-button2 text-2xl text-text duration-300 hover:border-black/50 hover:bg-transparent hover:text-inherit"
-        >
-          +
-        </button>
-      </div>
+        <QuantityButton
+          value="increase"
+          {...{ displayedQuantity, quantityInStock }}
+        />
+      </form>
 
       {/* add to cart button */}
-      <button
-        className="btn2 py-o flex h-11 items-center disabled:cursor-not-allowed disabled:opacity-50"
-        title={"Add to cart"}
-      >
-        Add to cart
-      </button>
+      <form action={() => cartFormAction(cartQuantity, id, localCartQuantity)}>
+        <AddToCartButton cartQuantity={cartQuantity} />
+      </form>
 
       {/* add to wishlist */}
-      <button
-        className="h-11 rounded border border-black/50 fill-white px-2 text-3xl duration-300 hover:bg-black/10"
-        title={"Add to wishlist"}
-      >
-        <HeartIcon className="" />
-      </button>
-    </>
+      <form action={() => wishlistFormAction(isInWishlist, id)}>
+        <WishlistButton isInWishlist={isInWishlist} />
+      </form>
+    </div>
   );
 }

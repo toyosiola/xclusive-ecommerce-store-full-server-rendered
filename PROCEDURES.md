@@ -136,7 +136,7 @@
 - [x] get user with email, if !user, error out
 - [x] compare verification tokens, if !valid, error out. Update user verification state if valid
 - [x] generate jwt (create a func for this. server-only)
-  - [ ] token contains user last name, userId, role. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
+  - [x] token contains user last name, userId, role. Add token to cookie. Ensure cookie is http only,secured, maxAge stored in env, same Site. Check Next.js docs on auth
 - [x] attach jwt to cookie, return user object with only name for conditional client rendering,
 - [x] redirect home on client
 
@@ -177,40 +177,41 @@
   - [x] if sessionId return {isAuth (false), sessionId}
   - [x] if userId, check for user in db (throw 500 if db errors out), if user is true, return {isAuth (true), name, userId, role}
   - [x] if !user, return 404 user not found , if db error, return 500 an error occurred
-- [ ] create add to wishlist server action or manage wishlist (add & remove)
-- [ ] import, invoke and await verifySession in try/catch, assign returned value to session,
-- [ ] if !session or !session.userId, redirect to login
-- [ ] if user is logged in, create a wishlist in the database
-- [ ] revalidate path
+- [x] create add to wishlist server action or manage wishlist (add & remove)
+- [x] import, invoke and await verifySession in try/catch, assign returned value to session,
+- [x] if !session or !session.userId, redirect to login
+- [x] if user is logged in, create a wishlist in the database
+- [x] revalidate tag
 
 #### remove from wishlist functionality
 
-- [ ] create a remove from wishlist
-- [ ] find and delete, if no product found, return error
-- [ ] revalidate path
+- [x] create a remove from wishlist
+- [x] find and delete, if no product found, return error
+- [x] revalidate path
 
 #### add to cart functionality
 
-- [ ] create a add to cart server action
-- [ ] import, invoke and await verifySession in try/catch
-- [ ] if/else: if session.isAuth, create item in cart collections attaching user and product
-  - [ ] else, get session with id, create session cart object, push to session.cart in sessions collection
-- [ ] if !session, create a crypto session token as id
-  - [ ] create a session document in sessions collection in db with sessionId, cartArray and add productId and set quantity to provided quantity or 1
-  - [ ] sign session with jwt, and add to cookie
+- [x] create a add to cart server action
+- [x] import, invoke and await verifySession in try/catch
+- [x] if/else: if session.isAuth, create item in cart collections attaching user and product
+  - [x] else, get session with id, create session cart object, push to session.cart in sessions collection
+- if !session:
+  - [x] create a session document in sessions collection with cart as Array of objects containing product and set quantity to provided quantity or 1
+  - [x] sign session with jwt, and add to cookie
+  - [x] revalidate tags for session and user
 
 #### remove from cart functionality
 
-- [ ] create remove from cart
-- [ ] get session from cookie, verify, check for userId or session
-- [ ] if user, remove from card collection with user and product id
-- [ ] if session, remove from cart in session
+- [x] create remove from cart
+- [x] get session from cookie, verify, check for userId or session
+- [x] if user, remove from card collection with user and product id
+- [x] if session, remove from cart in session
 
 #### cart count
 
-- [ ] get and verify session
-- [ ] if increase, increase cartQuantity in session or cart as applicable
-- [ ] if reduce, reduce cartQuantity in session or cart as applicable
+- [x] get and verify session
+- [x] if increase, increase cartQuantity in session or cart as applicable
+- [x] if reduce, reduce cartQuantity in session or cart as applicable
 
 #### /wishlist
 
@@ -223,9 +224,9 @@
 
   ##### wishlist schema
 
-  - [ ] product: objectId type
-  - [ ] user: objectId type
-  - [ ] timestamps: ISO
+  - [x] product: objectId type
+  - [x] user: objectId type
+  - [x] timestamps: ISO
 
 #### /cart
 
@@ -265,5 +266,19 @@
 
 #### to do
 
-- [ ] remove revalidation from home
+- [x] remove revalidation from home
+- [ ] rename all react components to jsx
+- [ ] cache featured products get function, revalidate in 3 days
+- [ ] fix 3 decimal place output of format price to 2 decimal place
+- [ ] add add-to-wishlist functionality to cart page
+- [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in
+- [ ] Implement "add all to cart" functionality in wishlist page
 - [ ] create indexes for all db query
+- [ ] look into refreshing logged-in user sessions
+- [ ] all pages/ actions that redirect to login, redirect back to the actual page after login-in (e.g. add to wishlist)
+- [ ] Check error "Cookies can only be modified in a Server Action or Route Handler" because verifySession wants to delete cookie sometimes in server component
+- add user reviews to purchased product
+- add admin panel for products and user management
+- use mongodb transaction to delete and create cart items during login
+- delete unused dormant session from db after 7
+- work on out of stock product not to be displayed in product list

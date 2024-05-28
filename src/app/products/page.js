@@ -8,11 +8,11 @@ import { Suspense } from "react";
 import ProductSkeleton from "@/components/ProductSkeleton";
 import SortSelector from "@/components/SortSelector";
 
-export default function Products({
+export default async function Products({
   searchParams: { category, sort, pricelimit: priceLimit },
 }) {
   return (
-    <main className="mt-10 sm:mt-20" key={crypto.randomUUID()}>
+    <main className="mt-10 sm:mt-20">
       <div className="global-container">
         <BreadCrumb page="Products" />
         <div className="grid-cols-[auto_1fr] gap-4 md:grid lg:gap-10">
@@ -27,8 +27,12 @@ export default function Products({
             <div className="mb-6 max-w-full overflow-hidden text-sm">
               <h4 className="mb-1 font-semibold md:mb-3">Categories</h4>
               <ul className="flex justify-between gap-2 overflow-x-auto md:block md:space-y-4">
-                {mainCategories.map((category) => (
-                  <MainCategory key={category.id} {...category} />
+                {mainCategories.map((mainCat) => (
+                  <MainCategory
+                    key={mainCat.id}
+                    {...mainCat}
+                    activeCategory={category}
+                  />
                 ))}
               </ul>
             </div>
@@ -43,11 +47,7 @@ export default function Products({
 
             {/* all products */}
             <Suspense fallback={<ProductSkeleton count={48} isProductsPage />}>
-              <ProductList
-                category={category}
-                sort={sort}
-                priceLimit={priceLimit}
-              />
+              <ProductList {...{ category, sort, priceLimit }} />
             </Suspense>
           </div>
         </div>

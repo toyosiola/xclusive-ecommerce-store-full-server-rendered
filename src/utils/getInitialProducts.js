@@ -6,7 +6,7 @@ import { productsPerPage } from "@/components/ProductList";
 import { connectDB, constructFilterQuery, constructSortQuery } from "./db";
 
 // use wrapper for unstable cache to pass params to cache key
-export default function getInitialProductsWrapper(category, sort, priceLimit) {
+export default function getInitialProducts(category, sort, priceLimit) {
   return unstable_cache(
     async () => {
       // construct filter query depending on product category
@@ -44,6 +44,7 @@ export default function getInitialProductsWrapper(category, sort, priceLimit) {
                 price: "$price",
                 newProduct: "$newProduct",
                 discount: "$discount",
+                quantityInStock: "$quantityInStock",
               },
             }, // Push projected fields into an array
           },
@@ -61,12 +62,7 @@ export default function getInitialProductsWrapper(category, sort, priceLimit) {
       await connectDB();
       return await Product.aggregate(aggregationPipeline);
     },
-    [
-      "initial-products",
-      category ? category : "all",
-      priceLimit ? priceLimit : "",
-      sort ? sort : "none",
-    ],
+    ["initial-products", category || "all", priceLimit || "", sort || "none"],
     { tags: ["products"] },
-  );
+  )();
 }

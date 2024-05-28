@@ -1,7 +1,7 @@
 import Link from "next/link";
 import SearchInput from "./SearchInput";
 import NavLink from "./NavLink";
-import WishLIstCartLink from "./WishListCartLink";
+import NavIcons from "./NavIcons";
 import navLinks from "@/data/navLinks";
 import Sidebar from "./Sidebar";
 
@@ -32,7 +32,7 @@ export default function Navbar() {
               <div className="hidden items-center gap-2 rounded bg-secondary px-3 text-xs lg:flex">
                 <SearchInput />
               </div>
-              <WishLIstCartLink />
+              <NavIcons />
             </div>
 
             <Sidebar />

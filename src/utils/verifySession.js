@@ -7,7 +7,7 @@ import {
 } from "@/errors";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import getUserWrapper from "./getUser";
+import getUser from "./getUser";
 
 export default async function verifySession() {
   const cookie = cookies();
@@ -32,7 +32,7 @@ export default async function verifySession() {
   if (userId) {
     try {
       // wrapper for passing cache keys. returns getUser func
-      user = await getUserWrapper({ _id: userId }, "firstName role")();
+      user = await getUser({ _id: userId }, "firstName role");
     } catch (error) {
       // if database error during fetching
       throw new InternalServerError("An error occurred! Please try again");

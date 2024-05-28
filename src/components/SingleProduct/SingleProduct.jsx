@@ -1,8 +1,11 @@
-import { TrashIcon } from "@/assets/icons";
 import formatPrice from "@/utils/formatPrice";
 import Image from "next/image";
 import Link from "next/link";
-import RatingStars from "./RatingStars";
+import RatingStars from "../RatingStars";
+import WishlistTrashForm from "./WishlistTrashForm";
+import AddToCartForm from "./AddToCartForm";
+import CartQuantityForm from "./CartQuantityForm";
+import RemoveFromCartForm from "./RemoveFromCartForm";
 
 function SingleProduct({
   _id: id,
@@ -13,29 +16,30 @@ function SingleProduct({
   images,
   newProduct,
   discount,
+  quantityInStock,
   isWishlistPage,
+  userWishlist,
+  cart,
 }) {
+  const isInWishlist = isWishlistPage || userWishlist?.includes(id.toString());
+  const cartQuantity = cart[id]; // cartQuantity true means item is in cart
+
   // reducing the length of product name above a certain level
   let newName;
   if (discount) {
-    newName = name.length > 15 ? `${name.slice(0, 15)}...` : name;
+    newName = name.length > 16 ? `${name.slice(0, 16)}...` : name;
   } else {
-    newName = name.length > 25 ? `${name.slice(0, 25)}...` : name;
+    newName = name.length > 24 ? `${name.slice(0, 24)}...` : name;
   }
 
   return (
     <div className="relative mx-auto w-[20rem] max-w-full overflow-x-hidden sm:mx-0">
       {/* icons */}
-      {isWishlistPage ? (
-        <div
-          className="absolute right-3 top-3 rounded-full bg-white fill-none p-1 text-2xl duration-300"
-          title="Remove from wishlist"
-        >
-          <TrashIcon />
-        </div>
-      ) : (
-        <div className="absolute right-3 top-3 rounded-full bg-white p-1"></div>
-      )}
+      <WishlistTrashForm
+        isWishlistPage={isWishlistPage}
+        isInWishlist={isInWishlist}
+        id={id.toString()}
+      />
 
       {/* discount */}
       {discount ? (
@@ -70,13 +74,13 @@ function SingleProduct({
 
         {/* product content */}
         <div className="mt-4">
-          <div className="mb-2 grid grid-cols-[1fr_auto] items-center justify-between gap-1">
+          <div className="mb-1 grid grid-cols-[1fr_auto] items-center justify-between">
             <h4 className="whitespace-nowrap font-semibold text-gray-600">
               {newName}
             </h4>
 
             {/* price of product */}
-            <h4 className="flex items-baseline gap-2 text-lg font-bold text-secondary2">
+            <h4 className="flex items-baseline gap-2 font-bold text-secondary2">
               {formatPrice(price, discount)}
               {discount && (
                 <span className="text-sm font-medium text-black/50 line-through decoration-black/50">
@@ -88,33 +92,30 @@ function SingleProduct({
 
           {/* ratings container */}
           <div className="flex items-center gap-2 text-lg">
-            {/* stars container */}
             <RatingStars averageRating={averageRating} />
-            {/* count */}
-            <p className="text-lg font-bold text-black/50">({reviewsCount})</p>
+            {/* ratings count */}
+            <p className="text-base font-bold text-black/50">
+              ({reviewsCount})
+            </p>
           </div>
         </div>
       </Link>
       <div className="relative">
-        {/* add to cart button - disappear when item is in cart */}
-        <button
-          className={`mt-2 block w-full rounded bg-black py-3 text-center text-text duration-300 hover:opacity-70`}
-        >
-          {isWishlistPage ? "Move to Cart" : "Add to Cart"}
-        </button>
+        {!isWishlistPage && ( // don't render in wishlist page
+          <RemoveFromCartForm {...{ cartQuantity, productId: id.toString() }} />
+        )}
 
-        {/* increase and decrease buttons container. Disappear when item not in cart  */}
-        <div
-          className={`absolute left-0 top-0 flex hidden w-full items-center justify-between text-center text-text`}
-        >
-          <button className="h-12 rounded bg-black px-3  text-2xl font-bold duration-300 hover:opacity-70 disabled:cursor-not-allowed disabled:opacity-30">
-            -
-          </button>
-          <p className="select-none text-2xl font-semibold text-black">0</p>
-          <button className="h-12 rounded bg-black px-3 text-2xl font-bold  duration-300 hover:opacity-70">
-            +
-          </button>
-        </div>
+        {/* add to cart button - disappear when item is in cart */}
+        <AddToCartForm
+          {...{ cartQuantity, productId: id.toString(), isWishlistPage }}
+        />
+
+        {/* increase and decrease buttons container. Disappear when item not in cart */}
+        {!isWishlistPage && ( // don't render in wishlist page
+          <CartQuantityForm
+            {...{ cartQuantity, quantityInStock, productId: id }}
+          />
+        )}
       </div>
     </div>
   );

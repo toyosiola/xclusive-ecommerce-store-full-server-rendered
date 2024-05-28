@@ -57,12 +57,12 @@ export function ChevronRightIcon(props) {
   );
 }
 
-export function ChevronDownIcon(props) {
+export function IconChevronUp(props) {
   return (
-    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" {...props}>
+    <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em" {...props}>
       <path
-        d="M12.364 12.95L17.314 8L18.728 9.414L12.364 15.778L6.00003 9.414L7.41403 8L12.364 12.95Z"
         fill="currentColor"
+        d="M17.657 16.243l1.414-1.414-7.07-7.072-7.072 7.072 1.414 1.414L12 10.586l5.657 5.657z"
       />
     </svg>
   );
@@ -826,6 +826,42 @@ export function IconLogout(props) {
       <path stroke="none" d="M0 0h24v24H0z" />
       <path d="M14 8V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h7a2 2 0 002-2v-2" />
       <path d="M7 12h14l-3-3m0 6l3-3" />
+    </svg>
+  );
+}
+
+export function IconTrashOutline(props) {
+  return (
+    <svg
+      viewBox="0 0 512 512"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      {...props}
+    >
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+        d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320"
+      />
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+        d="M80 112h352"
+      />
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+        d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224"
+      />
     </svg>
   );
 }

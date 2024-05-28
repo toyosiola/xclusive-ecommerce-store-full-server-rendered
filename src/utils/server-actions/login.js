@@ -1,15 +1,13 @@
 "use server";
 
-import createJWT from "../createJWT";
-import { cookies } from "next/headers";
 import verifySession from "../verifySession";
 import Session from "@/models/SessionModel";
 import Cart from "@/models/CartModel";
 import User from "@/models/UserModel";
 import { connectDB } from "../db";
+import setCookie from "../setCookie";
 
 export default async function login(formData) {
-  const cookie = cookies();
   const email = formData.get("email");
   const password = formData.get("password");
 
@@ -39,7 +37,7 @@ export default async function login(formData) {
     };
   }
 
-  // synchronize (not logged in) session cart and saved user cart
+  // synchronize session cart and user cart. session is used to hold cart for users not logged in
   try {
     const session = await verifySession(); // null or object containing sessionId
 
@@ -47,13 +45,16 @@ export default async function login(formData) {
     if (session?.sessionId) {
       let dbSession;
       try {
-        dbSession = await Session.findById(session.sessionId);
+        dbSession = await Session.findById(
+          session.sessionId,
+          "-createdAt -updatedAt -cart._id -__v",
+        );
       } catch (error) {
         console.log("Error occurred syncing cart and sessions cart");
       }
 
       // if db is found in db,
-      if (dbSession && dbSession.cart.length > 1) {
+      if (dbSession && dbSession?.cart.length > 0) {
         // compile session products Ids
         const sessionProductsIds = dbSession.cart.map((item) => item.product);
 
@@ -66,12 +67,12 @@ export default async function login(formData) {
 
           // save session products in cart
           const tempCartProducts = dbSession.cart.map((item) => ({
-            ...item,
+            product: item.product,
             user: user._id,
+            cartQuantity: item.cartQuantity,
           }));
 
-          const newlyCreatedCart = await Cart.create(tempCartProducts);
-          console.log(newlyCreatedCart);
+          await Cart.create(tempCartProducts);
         } catch (error) {
           console.log("Error occurred syncing cart and sessions cart");
         }
@@ -84,18 +85,9 @@ export default async function login(formData) {
   // End synchronizing carts here
 
   // create logged in session token
-  const token = createJWT({
+  setCookie({
     name: user.firstName,
     userId: user._id,
-  });
-
-  // use either maxAge (in milliseconds) or expires (in new Date() date format)
-  cookie.set("session", token, {
-    httpOnly: true,
-    secure: true,
-    maxAge: Number(process.env.SESSION_LIFETIME),
-    sameSite: "strict",
-    path: "/",
   });
 
   return {

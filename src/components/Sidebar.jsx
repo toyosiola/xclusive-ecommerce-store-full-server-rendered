@@ -3,7 +3,6 @@
 import navLinks from "@/data/navLinks";
 import Link from "next/link";
 import { useState } from "react";
-import UserMenu from "./UserMenu";
 import { useGlobalContext } from "@/contexts/providers/GlobalProvider";
 import { IconLogout } from "@/assets/icons";
 import logout from "@/utils/server-actions/logout";
@@ -13,9 +12,6 @@ export default function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <>
-      {/* user menu - show on large screens when user is logged in */}
-      {user && <UserMenu />}
-
       {/* open sidebar Hamburger Button - for small screens --> */}
       <button
         className={`hamburger block lg:hidden ${isSidebarOpen ? "opacity-0" : ""}`}

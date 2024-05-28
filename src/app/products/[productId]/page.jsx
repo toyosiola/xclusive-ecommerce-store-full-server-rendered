@@ -6,24 +6,41 @@ import Product from "@/models/ProductModel";
 import formatPrice from "@/utils/formatPrice";
 import { connectDB } from "@/utils/db";
 import { notFound } from "next/navigation";
-
-// generate pages that are not pregenerated on demand
-export const dynamicParams = true;
-
-// pregenerate few pages
-export async function generateStaticParams() {
-  await connectDB();
-  const products = await Product.find({}, { _id: 1 }).limit(10);
-
-  return products.map((product) => ({ productId: product._id.toString() }));
-}
+import { getUserWishlist } from "@/utils/getWishlist";
+import verifySession from "@/utils/verifySession";
+import { getSessionCart, getUserCart } from "@/utils/getCart";
 
 export default async function SingleProductPage({ params: { productId } }) {
+  let product, isInWishlist, cartQuantity;
   await connectDB();
-  let product;
+
+  // verifiedSession is null if no session exists
+  const verifiedSession = await verifySession();
+
+  // verifiedSession.isAuth is false if not-logged-in session exists
+  if (verifiedSession && !verifiedSession?.isAuth) {
+    const sessionCart = await getSessionCart(verifiedSession.sessionId);
+    cartQuantity = sessionCart?.find(
+      (item) => item.product.toString() === productId,
+    )?.cartQuantity;
+  }
+
+  // verifiedSession.isAuth is true if user is logged-in
+  if (verifiedSession?.isAuth) {
+    const userWishlist = await getUserWishlist(verifiedSession.userId);
+    const userCart = await getUserCart(verifiedSession.userId);
+    isInWishlist = !!userWishlist.find(
+      (item) => item.product.toString() === productId,
+    );
+    cartQuantity = userCart.find(
+      (item) => item.product.toString() === productId,
+    )?.cartQuantity;
+  }
+
+  // fetch product
   try {
     product = await Product.findOne({ _id: productId }).select(
-      "name price averageRating reviewsCount images description discount",
+      "name price averageRating reviewsCount images description discount quantityInStock",
     );
     if (!product) {
       notFound();
@@ -44,6 +61,7 @@ export default async function SingleProductPage({ params: { productId } }) {
     images,
     description,
     discount,
+    quantityInStock,
   } = product;
 
   return (
@@ -60,6 +78,7 @@ export default async function SingleProductPage({ params: { productId } }) {
               width={640}
               height={640}
               alt={name}
+              priority
               className="h-auto w-auto object-cover"
             />
           </div>
@@ -68,13 +87,25 @@ export default async function SingleProductPage({ params: { productId } }) {
           <div className="">
             <h3 className="mb-4 capitalize">{name}</h3>
 
-            <div className="mb-4 flex items-center gap-2 text-lg">
+            <div className="mb-4 grid grid-cols-[auto_1fr] items-center gap-2 text-base xs:grid-cols-[auto_auto_auto] xs:justify-start xs:text-lg">
               {/* rating */}
               {/* stars container */}
               <RatingStars averageRating={averageRating} />
-              {/* count */}
-              <p className="text-lg text-black/50">{`(${reviewsCount} Reviews)`}</p>
-              <span>|</span> <span className="text-button1">In stock</span>
+              {/* ratings count */}
+              <p className="text-black/50">{`(${reviewsCount} Reviews)`}</p>
+              {/* in / out of stock */}
+              <p className="">
+                <span>|</span>
+                <span
+                  className={
+                    quantityInStock > 1
+                      ? "text-button1"
+                      : "font-semibold text-button2"
+                  }
+                >
+                  {quantityInStock > 1 ? " In stock" : " Out of stock"}
+                </span>
+              </p>
             </div>
 
             <p className="mb-6 flex flex-wrap gap-4 text-2xl">
@@ -90,10 +121,10 @@ export default async function SingleProductPage({ params: { productId } }) {
             <hr className="mb-10 w-full border border-black/50" />
 
             {/* buttons container */}
-            <div className="flex flex-wrap items-center gap-4 lg:justify-between">
-              {/* quantity container */}
-              <ActionButtons name={name} id={id} />
-            </div>
+            <ActionButtons
+              id={id.toString()}
+              {...{ isInWishlist, quantityInStock, cartQuantity }}
+            />
           </div>
         </div>
       </div>

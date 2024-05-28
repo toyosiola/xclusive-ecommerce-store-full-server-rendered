@@ -1,5 +1,5 @@
 import Product from "@/models/ProductModel";
-import SingleProduct from "./SingleProduct";
+import SingleProduct from "./SingleProduct/index.js";
 import { connectDB } from "@/utils/db";
 
 // define projection stage for each aggregation
@@ -12,6 +12,7 @@ export const projectStage = {
     price: 1,
     newProduct: 1,
     discount: 1,
+    quantityInStock: 1,
   },
 };
 
@@ -32,37 +33,46 @@ const featuredProducts = (async function () {
   ]);
 })();
 
-export async function FlashSalesProductsSamples() {
+export async function FlashSalesProductsSamples({ userWishlist, cart }) {
   const [{ flashSales }] = await featuredProducts;
 
   return (
     <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
       {flashSales.map((product) => (
-        <SingleProduct key={product._id} {...product} />
+        <SingleProduct
+          key={product._id}
+          {...{ ...product, userWishlist, cart }}
+        />
       ))}
     </div>
   );
 }
 
-export async function BestSellingProductsSamples() {
+export async function BestSellingProductsSamples({ userWishlist, cart }) {
   const [{ bestSelling }] = await featuredProducts;
 
   return (
     <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
       {bestSelling.map((product) => (
-        <SingleProduct key={product._id} {...product} />
+        <SingleProduct
+          key={product._id}
+          {...{ ...product, userWishlist, cart }}
+        />
       ))}
     </div>
   );
 }
 
-export async function TopProductsSamples() {
+export async function TopProductsSamples({ userWishlist, cart }) {
   const [{ topProducts }] = await featuredProducts;
 
   return (
     <div className="mb-14 place-items-center gap-4 gap-y-4 space-y-10 sm:grid sm:grid-cols-2 sm:space-y-0 md:grid-cols-3 lg:grid-cols-4">
       {topProducts.map((product) => (
-        <SingleProduct key={product._id} {...product} />
+        <SingleProduct
+          key={product._id}
+          {...{ ...product, userWishlist, cart }}
+        />
       ))}
     </div>
   );

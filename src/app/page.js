@@ -18,15 +18,42 @@ import SearchInput from "@/components/SearchInput";
 import SectionTag from "@/components/SectionTag";
 import SubCategory from "@/components/SubCategory";
 import { mainCategories, subCategories } from "@/data/categories";
-// import allProducts from "@/data/productsData.json";
+import { getSessionCart, getUserCart } from "@/utils/getCart";
+import { getUserWishlist } from "@/utils/getWishlist";
+import verifySession from "@/utils/verifySession";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
-// revalidate once in 3 days
-export const revalidate = 60 * 60 * 24 * 3;
+export default async function Home() {
+  const verifiedSession = await verifySession();
+  // get user wishlist
+  let userWishlist,
+    cart = {};
 
-export default function Home() {
+  // verifiedSession.isAuth is false if not-logged-in session exists
+  if (verifiedSession && !verifiedSession?.isAuth) {
+    // get session cart
+    const sessionCart = await getSessionCart(verifiedSession.sessionId);
+    // fill cart object with id and cartQuantity to avoid iterating in each singleProduct
+    sessionCart?.forEach(
+      ({ product, cartQuantity }) => (cart[product.toString()] = cartQuantity),
+    );
+  }
+
+  if (verifiedSession?.isAuth) {
+    userWishlist = getUserWishlist(verifiedSession.userId);
+    let userCart = getUserCart(verifiedSession.userId);
+    [userWishlist, userCart] = await Promise.all([userWishlist, userCart]);
+    // fill cart object
+    userCart.forEach(
+      ({ product, cartQuantity }) => (cart[product.toString()] = cartQuantity),
+    );
+    // turn wishlist to an array of strings
+    userWishlist = userWishlist.map((item) => item.product.toString());
+  }
+
   return (
     <>
       <main className="relative">
@@ -105,7 +132,7 @@ export default function Home() {
 
             {/* Flash sales products */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <FlashSalesProductsSamples />
+              <FlashSalesProductsSamples {...{ userWishlist, cart }} />
             </Suspense>
 
             {/* Link to view all flash sales */}
@@ -154,7 +181,7 @@ export default function Home() {
 
             {/* Best selling container */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <BestSellingProductsSamples />
+              <BestSellingProductsSamples {...{ userWishlist, cart }} />
             </Suspense>
             {/* view all link for smaller screens only */}
             <Link
@@ -211,7 +238,7 @@ export default function Home() {
 
             {/* products container */}
             <Suspense fallback={<ProductSkeleton count={4} />}>
-              <TopProductsSamples />
+              <TopProductsSamples {...{ userWishlist, cart }} />
             </Suspense>
             <Link href="/products" className="btn2 mx-auto">
               View All Products
@@ -372,6 +399,12 @@ export default function Home() {
         <div className="absolute bottom-11 right-12 rounded-full bg-secondary p-3 text-2xl text-black md:right-20">
           <ArrowUpIcon />
         </div>
+
+        {/* update count of items in wishlist and cart */}
+        <UpdateItemsInBagCount
+          cartCount={Object.keys(cart).length}
+          wishlistCount={userWishlist?.length}
+        />
       </main>
     </>
   );

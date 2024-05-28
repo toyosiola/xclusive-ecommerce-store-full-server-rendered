@@ -7,12 +7,14 @@ import GlobalProvider from "@/contexts/providers/GlobalProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import verifySession from "@/utils/verifySession";
+import QueryClientProviderWrapper from "@/components/QueryClientProviderWrapper";
 
+// fonts
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 
@@ -36,9 +38,11 @@ export default async function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="grid min-h-[100vh] max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
         <GlobalProvider user={user}>
-          <Navbar />
-          {children}
-          <Footer />
+          <QueryClientProviderWrapper>
+            <Navbar />
+            {children}
+            <Footer />
+          </QueryClientProviderWrapper>
         </GlobalProvider>
         <ToastContainer position="top-center" theme="colored" />
       </body>

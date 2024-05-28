@@ -2,6 +2,7 @@ import Image from "next/image";
 import LoginForm from "./LoginForm";
 import verifySession from "@/utils/verifySession";
 import { redirect } from "next/navigation";
+import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 async function Login() {
   const session = await verifySession();
@@ -27,6 +28,9 @@ async function Login() {
         {/* grid item 2 - form */}
         <LoginForm />
       </div>
+
+      {/* reset count of items in wishlist and cart */}
+      <UpdateItemsInBagCount />
     </main>
   );
 }
