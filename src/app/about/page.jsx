@@ -27,15 +27,15 @@ function About() {
             <h3 className="mb-10">Our Story</h3>
             <div className="space-y-6">
               <p>
-                Launched in 2015, Exclusive is South Asia&apso;s premier online
+                Launched in 2023, Xclusive is South Asia&apso;s premier online
                 shopping market place with an active presence in Bangladesh.
                 Supported by wide range of tailored marketing, data and service
-                solutions, Exclusive has 10,500 sellers and 300 brands and
-                serves 3 millions customers across the region.
+                solutions, Xclusive has 10,500 sellers and 300 brands and serves
+                3 millions customers across the region.
               </p>
               <p>
-                Exclusive has more than 1 Million products to offer, growing at
-                a very fast. Exclusive offers a diverse assortment in categories
+                Xclusive has more than 1 Million products to offer, growing at a
+                very fast. Xclusive offers a diverse assortment in categories
                 ranging from consumer.
               </p>
             </div>
@@ -44,9 +44,8 @@ function About() {
           <div className="">
             <Image
               src="/images/two-african-females-holding-shopping-bags.png"
-              alt={
-                "Two females holding shopping bags while reacting to something their smartphone"
-              }
+              alt="Two females holding shopping bags while reacting to something their smartphone"
+              priority
               width={705}
               height={609}
               sizes="(min-width: 768px) 50vw, 100vw"

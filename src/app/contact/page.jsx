@@ -46,8 +46,8 @@ export default function Contact() {
                 <p className="text-sm">
                   Fill out our form and we will contact you within 24 hours.
                 </p>
-                <p className="text-sm">Emails: customer@exclusive.com</p>
-                <p className="text-sm">Emails: support@exclusive.com</p>
+                <p className="text-sm">Emails: customer@xclusive.com</p>
+                <p className="text-sm">Emails: support@xclusive.com</p>
               </div>
             </div>
           </div>
