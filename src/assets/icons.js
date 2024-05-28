@@ -57,12 +57,12 @@ export function ChevronRightIcon(props) {
   );
 }
 
-export function ChevronDownIcon(props) {
+export function IconChevronUp(props) {
   return (
-    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" {...props}>
+    <svg fill="none" viewBox="0 0 24 24" height="1em" width="1em" {...props}>
       <path
-        d="M12.364 12.95L17.314 8L18.728 9.414L12.364 15.778L6.00003 9.414L7.41403 8L12.364 12.95Z"
         fill="currentColor"
+        d="M17.657 16.243l1.414-1.414-7.07-7.072-7.072 7.072 1.414 1.414L12 10.586l5.657 5.657z"
       />
     </svg>
   );
