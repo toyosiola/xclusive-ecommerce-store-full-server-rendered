@@ -23,7 +23,6 @@ export default function MoreProducts({
   const numOfPages = Math.ceil(totalCount / productsPerPage);
   const category = searchParams.get("category");
   const sort = searchParams.get("sort");
-
   async function fetchProducts({ pageParam }) {
     const url = `/products/api/more-products?page=${pageParam}${category ? `&category=${category}` : ""}${sort ? `&sort=${sort}&` : ""}`;
 
@@ -36,15 +35,12 @@ export default function MoreProducts({
 
   const { data, error, fetchNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: [
-        "more-products",
-        category ? category : "all",
-        sort ? sort : "none",
-      ],
+      queryKey: ["more-products", category || "all", sort || "none"],
       queryFn: fetchProducts,
       initialPageParam: 2,
       getNextPageParam: (_, __, lastPageParam) =>
         lastPageParam >= numOfPages ? null : lastPageParam + 1,
+      enabled: false,
     });
 
   // set maxPrice and totalCount on first product page load
@@ -54,7 +50,7 @@ export default function MoreProducts({
 
   // fetch products when observer is in view
   useEffect(() => {
-    if (inView) {
+    if (inView && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [inView]);
@@ -85,7 +81,7 @@ export default function MoreProducts({
         </div>
       )}
       {/* show loading when fetching products */}
-      {(status === "pending" || isFetchingNextPage) && (
+      {isFetchingNextPage && (
         <div className="mb-14 mt-14 flex justify-center">
           <LoadingSpinner />
         </div>
