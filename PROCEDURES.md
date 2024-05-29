@@ -215,12 +215,12 @@
 
 #### /wishlist
 
-- [ ] User should be logged in to see their wishlist
-- [ ] Check login status inside page, not middleware.
-- [ ] If not logged in, advise to log in with a login page link
-- [ ] If logged in, fetch wishlists with userId from wishlists collection. Populate product field, project needed field. Create userId for self if necessary and tie wishlist/cart products to self
-- [ ] add to cart from wishlist should be through transaction. check transaction success potential if product not found in wishlist i.e. get product from wishlists collection, add to carts collection, then delete from wishlist. add to cart and wishlist should be done with server action. revalidate path after action
-- [ ] move all to cart should also be through transaction and server action. revalidate path after action
+- [x] User should be logged in to see their wishlist
+- [x] Check login status inside page, not middleware.
+- [x] If not logged in, advise to log in with a login page link
+- [x] If logged in, fetch wishlists with userId from wishlists collection. Populate product field, project needed field. Create userId for self if necessary and tie wishlist/cart products to self
+- [x] add to cart from wishlist should be through transaction. check transaction success potential if product not found in wishlist i.e. get product from wishlists collection, add to carts collection, then delete from wishlist. add to cart and wishlist should be done with server action. revalidate path after action
+- [x] move all to cart should also be through transaction and server action. revalidate path after action
 
   ##### wishlist schema
 
@@ -230,12 +230,12 @@
 
 #### /cart
 
-- [ ] cart will be registered to sessions for user not logged in but to carts collection if user is logged in
-- [ ] check for access or session token from cookies. Only one should be present, immediately a user is logged in, session cart is synchronized with user and session invalidated
-- [ ] For users not logged in:
-  - [ ] validate session token, if valid, get populated cart products and render. Project needed fields
-- [ ] For logged in users:
-  - [ ] validate access token, if valid, get populated cart products from carts collection using userId and render. Project needed fields
+- [x] cart will be registered to sessions for user not logged in but to carts collection if user is logged in
+- [x] check for access or session token from cookies. Only one should be present, immediately a user is logged in, session cart is synchronized with user and session invalidated
+- [x] For users not logged in:
+  - [x] validate session token, if valid, get populated cart products and render. Project needed fields
+- [x] For logged in users:
+  - [x] validate access token, if valid, get populated cart products from carts collection using userId and render. Project needed fields
 
 #### session schema
 
@@ -270,6 +270,7 @@
 - [ ] rename all react components to jsx
 - [ ] cache featured products get function, revalidate in 3 days
 - [ ] fix 3 decimal place output of format price to 2 decimal place
+- [ ] make each product image in cart page link to respective single product page
 - [ ] add add-to-wishlist functionality to cart page
 - [ ] enforce that a maximum of 100 items can be added to cart for not-logged-in
 - [ ] Implement "add all to cart" functionality in wishlist page

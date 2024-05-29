@@ -33,15 +33,14 @@ export default function MoreProducts({
     return await resp.json();
   }
 
-  const { data, error, fetchNextPage, isFetchingNextPage, status } =
-    useInfiniteQuery({
-      queryKey: ["more-products", category || "all", sort || "none"],
-      queryFn: fetchProducts,
-      initialPageParam: 2,
-      getNextPageParam: (_, __, lastPageParam) =>
-        lastPageParam >= numOfPages ? null : lastPageParam + 1,
-      enabled: false,
-    });
+  const { data, error, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ["more-products", category || "all", sort || "none"],
+    queryFn: fetchProducts,
+    initialPageParam: 2,
+    getNextPageParam: (_, __, lastPageParam) =>
+      lastPageParam >= numOfPages ? null : lastPageParam + 1,
+    enabled: false,
+  });
 
   // set maxPrice and totalCount on first product page load
   useEffect(() => {

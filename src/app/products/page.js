@@ -7,6 +7,7 @@ import ProductList from "@/components/ProductList";
 import { Suspense } from "react";
 import ProductSkeleton from "@/components/ProductSkeleton";
 import SortSelector from "@/components/SortSelector";
+import BackToTopButton from "@/components/BackToTopButton";
 
 export default async function Products({
   searchParams: { category, sort, pricelimit: priceLimit },
@@ -52,6 +53,9 @@ export default async function Products({
           </div>
         </div>
       </div>
+
+      {/* back to top button */}
+      <BackToTopButton />
     </main>
   );
 }

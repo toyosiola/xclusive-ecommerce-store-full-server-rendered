@@ -9,9 +9,10 @@ import { notFound } from "next/navigation";
 import { getUserWishlist } from "@/utils/getWishlist";
 import verifySession from "@/utils/verifySession";
 import { getSessionCart, getUserCart } from "@/utils/getCart";
+import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 export default async function SingleProductPage({ params: { productId } }) {
-  let product, isInWishlist, cartQuantity;
+  let product, wishlist, isInWishlist, cart;
   await connectDB();
 
   // verifiedSession is null if no session exists
@@ -19,23 +20,21 @@ export default async function SingleProductPage({ params: { productId } }) {
 
   // verifiedSession.isAuth is false if not-logged-in session exists
   if (verifiedSession && !verifiedSession?.isAuth) {
-    const sessionCart = await getSessionCart(verifiedSession.sessionId);
-    cartQuantity = sessionCart?.find(
-      (item) => item.product.toString() === productId,
-    )?.cartQuantity;
+    cart = await getSessionCart(verifiedSession.sessionId);
   }
 
   // verifiedSession.isAuth is true if user is logged-in
   if (verifiedSession?.isAuth) {
-    const userWishlist = await getUserWishlist(verifiedSession.userId);
-    const userCart = await getUserCart(verifiedSession.userId);
-    isInWishlist = !!userWishlist.find(
+    wishlist = await getUserWishlist(verifiedSession.userId);
+    cart = await getUserCart(verifiedSession.userId);
+    isInWishlist = !!wishlist.find(
       (item) => item.product.toString() === productId,
     );
-    cartQuantity = userCart.find(
-      (item) => item.product.toString() === productId,
-    )?.cartQuantity;
   }
+
+  const cartQuantity = cart?.find(
+    (item) => item.product.toString() === productId,
+  )?.cartQuantity;
 
   // fetch product
   try {
@@ -124,6 +123,12 @@ export default async function SingleProductPage({ params: { productId } }) {
             <ActionButtons
               id={id.toString()}
               {...{ isInWishlist, quantityInStock, cartQuantity }}
+            />
+
+            {/* update count of items in wishlist and cart */}
+            <UpdateItemsInBagCount
+              cartCount={cart.length}
+              wishlistCount={wishlist?.length}
             />
           </div>
         </div>

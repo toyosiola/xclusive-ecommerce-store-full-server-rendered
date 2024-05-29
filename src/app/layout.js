@@ -35,7 +35,10 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${poppins.variable} scroll-smooth`}
+    >
       <body className="grid min-h-[100vh] max-w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
         <GlobalProvider user={user}>
           <QueryClientProviderWrapper>

@@ -10,7 +10,7 @@ export default function WishlistTrashSubmitButton({
     <button
       type="submit"
       disabled={pending}
-      className="cursor-default rounded-full bg-white p-1 text-2xl duration-300 disabled:cursor-not-allowed disabled:opacity-40"
+      className={`cursor-default rounded-full bg-white p-1 text-2xl duration-300 disabled:opacity-40 ${pending ? "disabled:cursor-wait" : ""}`}
       title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
     >
       {isWishlistPage ? (
