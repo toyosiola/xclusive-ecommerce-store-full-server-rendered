@@ -6,7 +6,7 @@ export default function RemoveFromCartButton() {
   return (
     <button
       type="submit"
-      className="py-1 pr-2 font-medium text-button2 duration-300 hover:text-hoverButton disabled:cursor-not-allowed disabled:opacity-30"
+      className={`py-1 pr-2 font-medium text-button2 duration-300 hover:text-hoverButton disabled:opacity-30 ${pending ? "cursor-wait" : ""}`}
       title="Remove item"
       disabled={pending}
     >

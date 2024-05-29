@@ -22,7 +22,7 @@ export default function CartQuantityButton({
           ? cartQuantity <= 1 // disable decrease when quantity is 1
           : cartQuantity >= quantityInStock) //disable increase when quantity is equal to quantity in stock
       }
-      className={`rounded border border-black/30 p-1 text-2xl text-button2 duration-200 hover:border-button2 hover:bg-button2 hover:text-text disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-black/30 disabled:hover:bg-transparent md:py-0 ${decreaseBtn ? "rotate-180" : ""}`}
+      className={`rounded border border-black/30 p-1 text-2xl text-button2 duration-200 hover:border-button2 hover:bg-button2 hover:text-text disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-black/30 disabled:hover:bg-transparent md:py-0 ${pending ? "disabled:cursor-wait" : ""} ${decreaseBtn ? "rotate-180" : ""}`}
     >
       <ChevronRightIcon className="hidden border md:inline" />
       <IconChevronUp className="border md:hidden" />
