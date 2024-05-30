@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 async function Login() {
-  const session = await verifySession();
+  const session = await verifySession("inPage");
   if (session?.isAuth) {
     redirect("/");
   }

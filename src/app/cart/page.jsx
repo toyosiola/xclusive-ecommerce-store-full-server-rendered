@@ -7,7 +7,7 @@ import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 import { getUserWishlist } from "@/utils/getWishlist";
 
 export default async function Cart() {
-  const verifiedSession = await verifySession();
+  const verifiedSession = await verifySession("inPage");
   let cart = [],
     wishlist = [];
 

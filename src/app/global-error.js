@@ -2,7 +2,9 @@
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import deleteSession from "@/utils/server-actions/deleteSession";
 import { Inter, Poppins } from "next/font/google";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -18,9 +20,15 @@ export const metadata = {
 };
 
 export default function GlobalError({ error, reset }) {
+  // delete session if there was error in validating session
+  useEffect(() => {
+    if (error.message === ("Invalid session" || "User not found"))
+      deleteSession();
+  }, [error.message]);
+
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="grid min-h-[100vh] w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">
+      <body className="grid min-h-[100vh] w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary py-4 font-poppins text-text2">
         <Navbar />
         <main className="flex h-full flex-col items-center justify-center">
           <h3 className="mb-6 px-2 text-center">
