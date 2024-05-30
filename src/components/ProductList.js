@@ -11,7 +11,7 @@ export const productsPerPage = 48;
 
 export default async function ProductList({ category, sort, priceLimit }) {
   await connectDB();
-  const verifiedSession = await verifySession();
+  const verifiedSession = await verifySession("inPage");
   // get user wishlist
   let userWishlist,
     cart = {};

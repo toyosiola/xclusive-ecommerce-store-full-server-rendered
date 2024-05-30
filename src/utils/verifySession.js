@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import getUser from "./getUser";
 
-export default async function verifySession() {
+export default async function verifySession(inPage) {
   const cookie = cookies();
   const session = cookie.get("session")?.value;
   let payload, user;
@@ -20,7 +20,7 @@ export default async function verifySession() {
     payload = jwt.verify(session, process.env.JWT_SECRET);
   } catch (error) {
     // if session is invalid, delete session cookie (session is not expected to be invalid)
-    cookie.delete("session");
+    if (!inPage) cookie.delete("session");
     throw new UnauthenticatedError("Invalid session");
   }
 
@@ -40,7 +40,7 @@ export default async function verifySession() {
 
     // if user is not found in database
     if (!user) {
-      cookie.delete("session");
+      if (!inPage) cookie.delete("session");
       throw new NotFoundError("User not found");
     }
 
@@ -53,6 +53,6 @@ export default async function verifySession() {
   }
 
   // not expected to reach this point
-  cookie.delete("session");
+  if (!inPage) cookie.delete("session");
   throw new UnauthenticatedError("Invalid session");
 }

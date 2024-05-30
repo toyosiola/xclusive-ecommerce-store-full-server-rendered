@@ -16,7 +16,7 @@ export default async function SingleProductPage({ params: { productId } }) {
   await connectDB();
 
   // verifiedSession is null if no session exists
-  const verifiedSession = await verifySession();
+  const verifiedSession = await verifySession("inPage");
 
   // verifiedSession.isAuth is false if not-logged-in session exists
   if (verifiedSession && !verifiedSession?.isAuth) {
