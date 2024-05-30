@@ -127,7 +127,7 @@ export default async function SingleProductPage({ params: { productId } }) {
 
             {/* update count of items in wishlist and cart */}
             <UpdateItemsInBagCount
-              cartCount={cart.length}
+              cartCount={cart?.length}
               wishlistCount={wishlist?.length}
             />
           </div>
