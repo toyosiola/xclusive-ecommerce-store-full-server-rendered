@@ -278,6 +278,7 @@
 - [ ] look into refreshing logged-in user sessions
 - [ ] all pages/ actions that redirect to login, redirect back to the actual page after login-in (e.g. add to wishlist)
 - [ ] Check error "Cookies can only be modified in a Server Action or Route Handler" because verifySession wants to delete cookie sometimes in server component
+- give user log out state
 - add user reviews to purchased product
 - add admin panel for products and user management
 - use mongodb transaction to delete and create cart items during login
