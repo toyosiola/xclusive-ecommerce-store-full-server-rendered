@@ -29,9 +29,13 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   await connectDB();
   let user = null;
-  const session = await verifySession("inPage");
-  if (session?.isAuth) {
-    user = { name: session.name };
+  try {
+    const session = await verifySession("inPage");
+    if (session?.isAuth) {
+      user = { name: session.name };
+    }
+  } catch (error) {
+    console.log(error.message);
   }
 
   return (
