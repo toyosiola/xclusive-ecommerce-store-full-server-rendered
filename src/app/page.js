@@ -27,7 +27,7 @@ import { Suspense } from "react";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 export default async function Home() {
-  const verifiedSession = await verifySession();
+  const verifiedSession = await verifySession("inPage");
   // get user wishlist
   let userWishlist,
     cart = {};

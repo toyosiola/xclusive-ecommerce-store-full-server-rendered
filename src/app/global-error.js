@@ -2,7 +2,9 @@
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import deleteSession from "@/utils/server-actions/deleteSession";
 import { Inter, Poppins } from "next/font/google";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -18,6 +20,11 @@ export const metadata = {
 };
 
 export default function GlobalError({ error, reset }) {
+  // delete session if there was error in validating session
+  useEffect(() => {
+    if (error.sessionCode === (401 || 404)) deleteSession();
+  }, [error.sessionCode]);
+
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="grid min-h-[100vh] w-[100vw] grid-rows-[auto_1fr_auto] overflow-x-hidden bg-primary font-poppins text-text2">

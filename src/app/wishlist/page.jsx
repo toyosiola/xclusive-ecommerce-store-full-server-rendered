@@ -9,7 +9,7 @@ import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 export default async function Wishlist() {
   await connectDB();
   // verifiedSession is null if no session exists
-  const verifiedSession = await verifySession();
+  const verifiedSession = await verifySession("inPage");
 
   // if user is not logged in
   if (!verifiedSession?.isAuth) {

@@ -2,6 +2,7 @@ class NotFoundError extends Error {
   constructor(message) {
     super(message);
     this.statusCode = 404;
+    this.sessionCode = 404;
   }
 }
 
@@ -9,6 +10,7 @@ class UnauthenticatedError extends Error {
   constructor(message) {
     super(message);
     this.statusCode = 401;
+    this.sessionCode = 401;
   }
 }
 
