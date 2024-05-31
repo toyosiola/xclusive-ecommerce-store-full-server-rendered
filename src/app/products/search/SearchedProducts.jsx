@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 async function fetchProducts(search) {
-  const resp = await fetch(`/products/api/search-products?search=${search}`);
+  const resp = await fetch(`/api/search-products?search=${search}`);
   if (!resp.ok) {
     throw new Error("Error fetching products");
   }
