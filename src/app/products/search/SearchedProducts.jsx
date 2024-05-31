@@ -35,12 +35,12 @@ export default function SearchedProducts({ userWishlist, cart }) {
         <input
           type="search"
           name="search"
-          className="max-w-full grow rounded-l-full bg-transparent py-1 pl-2 outline-none sm:py-2 sm:pl-4"
-          placeholder="What are you looking for?"
+          className="max-w-full grow rounded-l-full bg-transparent pl-4 outline-none sm:pl-6"
+          placeholder="Search products here..."
         />
         <button
           type="submit"
-          className="rounded-r-full bg-button2 px-2 py-1 text-2xl text-white sm:px-4 sm:py-2 sm:text-3xl"
+          className="rounded-r-full bg-button2 px-4 py-2 text-3xl text-white duration-300 hover:bg-hoverButton sm:py-3 sm:text-3xl"
         >
           <SearchIcon className="font-bold" />
         </button>
@@ -55,7 +55,7 @@ export default function SearchedProducts({ userWishlist, cart }) {
       {/* if error */}
       {isError && (
         <div className="my-14 text-center">
-          <p className="mb-2">An error occurred</p>
+          <p className="mb-4 font-medium md:text-xl">An error occurred...</p>
           <button onClick={refetch} className="btn2 mx-auto">
             Try again
           </button>

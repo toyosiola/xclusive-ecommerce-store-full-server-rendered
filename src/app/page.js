@@ -14,7 +14,6 @@ import FlashSalesTimer from "@/components/FlashSalesTimer";
 import LtdOfferTimer from "@/components/LtdOfferTimer";
 import MainCategory from "@/components/MainCategory";
 import ProductSkeleton from "@/components/ProductSkeleton";
-import SearchInput from "@/components/SearchInput";
 import SectionTag from "@/components/SectionTag";
 import SubCategory from "@/components/SubCategory";
 import { mainCategories, subCategories } from "@/data/categories";
@@ -59,19 +58,12 @@ export default async function Home() {
       {/* HERO SECTION*/}
       <section>
         <div className="global-container gap-11 md:grid md:grid-cols-[auto_1fr]">
-          <div className="pt-10 md:border-r md:pr-8">
-            {/* Search box */}
-            <div className="mb-4 flex items-center gap-2 rounded bg-secondary px-3 text-xs sm:mb-5 sm:text-sm lg:hidden">
-              <SearchInput />
-            </div>
-
-            {/* categories */}
-            <ul className="flex justify-between gap-2 overflow-x-auto md:block md:space-y-4 lg:w-56">
-              {mainCategories.map((category) => (
-                <MainCategory key={category.id} {...category} />
-              ))}
-            </ul>
-          </div>
+          {/* categories */}
+          <ul className="flex justify-between gap-2 overflow-x-auto pt-10 md:block md:space-y-4 md:border-r md:pr-8 lg:w-56">
+            {mainCategories.map((category) => (
+              <MainCategory key={category.id} {...category} />
+            ))}
+          </ul>
 
           {/* Voucher */}
           <div className="mt-10 items-center justify-between gap-4 space-y-4 bg-black px-4 py-4 text-white md:flex md:space-y-0 lg:px-16">
