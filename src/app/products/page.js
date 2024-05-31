@@ -1,5 +1,4 @@
 import BreadCrumb from "@/components/BreadCrumb";
-import SearchInput from "@/components/SearchInput";
 import MainCategory from "@/components/MainCategory";
 import { PriceLimitBar } from "@/components/PriceLimitBar";
 import { mainCategories } from "@/data/categories";
@@ -19,11 +18,6 @@ export default async function Products({
         <div className="grid-cols-[auto_1fr] gap-4 md:grid lg:gap-10">
           {/* filtering categories */}
           <div className="">
-            {/* Search box */}
-            <div className="mb-4 flex items-center gap-2 rounded bg-secondary px-3 text-xs sm:mb-5 sm:text-sm lg:hidden">
-              <SearchInput />
-            </div>
-
             {/* categories */}
             <div className="mb-6 max-w-full overflow-hidden text-sm">
               <h4 className="mb-1 font-semibold md:mb-3">Categories</h4>
