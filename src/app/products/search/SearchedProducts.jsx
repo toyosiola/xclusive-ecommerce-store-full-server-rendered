@@ -28,7 +28,7 @@ export default function SearchedProducts({ userWishlist, cart }) {
       <form
         action={(formData) => {
           const search = formData.get("search");
-          if (search.trim()) setSearchQuery(search);
+          if (search.trim() && !isLoading) setSearchQuery(search);
         }}
         className="mx-auto mb-10 flex max-w-screen-sm items-center justify-center gap-4 rounded-full bg-secondary"
       >
@@ -40,7 +40,8 @@ export default function SearchedProducts({ userWishlist, cart }) {
         />
         <button
           type="submit"
-          className="rounded-r-full bg-button2 px-4 py-2 text-3xl text-white duration-300 hover:bg-hoverButton sm:py-3 sm:text-3xl"
+          disabled={isLoading}
+          className={`rounded-r-full bg-button2 px-4 py-2 text-3xl text-white duration-300 hover:bg-hoverButton disabled:opacity-80 sm:py-3 sm:text-3xl ${isLoading ? "cursor-wait" : ""}`}
         >
           <SearchIcon className="font-bold" />
         </button>
