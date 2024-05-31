@@ -5,8 +5,13 @@ import verifySession from "@/utils/verifySession";
 import Link from "next/link";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 import { getUserWishlist } from "@/utils/getWishlist";
+import { loadStripe } from "@stripe/stripe-js";
 
-export default async function Cart() {
+// create `Stripe` object
+loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+export default async function Cart({ searchParams: { orderStatus } }) {
+  // orderStatus is only true when redirecting from stripe page, cookies will not come with the request, hence orderStatus is passed to client to refresh the page for client verification
   const verifiedSession = await verifySession("inPage");
   let cart = [],
     wishlist = [];
@@ -105,9 +110,11 @@ export default async function Cart() {
                 <p className="">{formatPrice(subTotal)}</p>
               </div>
 
-              <button className="btn2 w-full max-w-none">
-                Proceed to checkout
-              </button>
+              <form action="/api/cart-checkout" method="post">
+                <button type="submit" className="btn2 w-full max-w-none">
+                  Proceed to checkout
+                </button>
+              </form>
             </div>
           </div>
         )}
@@ -115,7 +122,11 @@ export default async function Cart() {
 
       {/* update count of items in wishlist and cart */}
       <UpdateItemsInBagCount
-        {...{ cartCount: cart.length, wishlistCount: wishlist.length }}
+        {...{
+          cartCount: cart.length,
+          wishlistCount: wishlist.length,
+          orderStatus,
+        }}
       />
     </main>
   );
