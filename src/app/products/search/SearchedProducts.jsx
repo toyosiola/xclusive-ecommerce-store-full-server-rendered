@@ -4,18 +4,18 @@ import { SearchIcon } from "@/assets/icons";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import SingleProduct from "@/components/SingleProduct";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 async function fetchProducts(search) {
-  const resp = await fetch(`/products/api/search-products?search=${search}`);
+  const resp = await fetch(`/api/search-products?search=${search}`);
   if (!resp.ok) {
     throw new Error("Error fetching products");
   }
   return await resp.json();
 }
 
-export default function SearchedProducts({ userWishlist, cart }) {
-  const [searchQuery, setSearchQuery] = useState("");
+export default function SearchedProducts({ userWishlist, cart, searchQuery }) {
+  const router = useRouter();
 
   const { data, refetch, isLoading, isError } = useQuery({
     queryKey: ["searched-products", searchQuery],
@@ -27,17 +27,24 @@ export default function SearchedProducts({ userWishlist, cart }) {
     <>
       <form
         action={(formData) => {
-          const search = formData.get("search");
-          if (search.trim() && !isLoading) setSearchQuery(search);
+          const search = formData.get("query")?.trim();
+          if (search && !isLoading)
+            return router.replace(`/products/search?query=${search}`);
+
+          // reset page if no search inputs but there is previous search
+          if (searchQuery && !search) router.replace("/products/search");
         }}
-        className="mx-auto mb-10 flex max-w-screen-sm items-center justify-center gap-4 rounded-full bg-secondary"
+        className="mx-auto mb-10 flex max-w-screen-sm items-center justify-center gap-4 rounded-full bg-secondary pl-4 sm:pl-6"
       >
-        <input
-          type="search"
-          name="search"
-          className="max-w-full grow rounded-l-full bg-transparent pl-4 outline-none sm:pl-6"
-          placeholder="Search products here..."
-        />
+        <div className="grow overflow-hidden">
+          <input
+            type="search"
+            name="query"
+            defaultValue={searchQuery || ""}
+            className="w-full bg-transparent outline-none"
+            placeholder="Search for products here..."
+          />
+        </div>
         <button
           type="submit"
           disabled={isLoading}

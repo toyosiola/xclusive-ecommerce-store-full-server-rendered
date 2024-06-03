@@ -23,8 +23,9 @@ export default function MoreProducts({
   const numOfPages = Math.ceil(totalCount / productsPerPage);
   const category = searchParams.get("category");
   const sort = searchParams.get("sort");
+
   async function fetchProducts({ pageParam }) {
-    const url = `/products/api/more-products?page=${pageParam}${category ? `&category=${category}` : ""}${sort ? `&sort=${sort}&` : ""}`;
+    const url = `/api/more-products?page=${pageParam}${category ? `&category=${category}` : ""}${sort ? `&sort=${sort}&` : ""}`;
 
     const resp = await fetch(url);
     if (!resp.ok) {

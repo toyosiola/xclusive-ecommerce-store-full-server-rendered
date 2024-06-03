@@ -20,6 +20,9 @@ const poppins = Poppins({
 
 // variable to differentiate dev/prod environment when necessary app-wide
 export const devEnv = process.env.NODE_ENV === "development";
+export const host = devEnv
+  ? "http://localhost:3000"
+  : "https://xclusive-store.vercel.app";
 
 export const metadata = {
   title: "Xclusive Store",

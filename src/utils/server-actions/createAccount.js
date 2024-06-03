@@ -4,7 +4,7 @@ import User from "@/models/UserModel";
 import isEmail from "validator/es/lib/isEmail";
 import crypto from "crypto";
 import transporter from "../nodemailer";
-import { devEnv } from "@/app/layout";
+import { host } from "@/app/layout";
 
 export default async function createAccount(formData) {
   let verificationToken;
@@ -81,9 +81,6 @@ export default async function createAccount(formData) {
 
   // // send verification email
   try {
-    const host = devEnv
-      ? "http://localhost:3000"
-      : "https://xclusive-store.vercel.app";
     const verificationLink = `${host}/verify-email?t=${verificationToken}&e=${email}`;
     await transporter.sendMail({
       from: `"Xclusive Store" <${process.env.EMAIL}>`,
