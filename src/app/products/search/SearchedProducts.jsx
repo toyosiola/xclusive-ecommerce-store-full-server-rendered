@@ -32,12 +32,14 @@ export default function SearchedProducts({ userWishlist, cart }) {
         }}
         className="mx-auto mb-10 flex max-w-screen-sm items-center justify-center gap-4 rounded-full bg-secondary"
       >
-        <input
-          type="search"
-          name="search"
-          className="max-w-full grow rounded-l-full bg-transparent pl-4 outline-none sm:pl-6"
-          placeholder="Search products here..."
-        />
+        <div className="grow overflow-hidden">
+          <input
+            type="search"
+            name="search"
+            className="w-full rounded-l-full bg-transparent pl-4 outline-none sm:pl-6"
+            placeholder="Search for products here..."
+          />
+        </div>
         <button
           type="submit"
           disabled={isLoading}
