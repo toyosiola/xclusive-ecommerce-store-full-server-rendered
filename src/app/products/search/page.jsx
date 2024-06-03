@@ -6,7 +6,7 @@ import { getUserWishlist } from "@/utils/getWishlist";
 import { getSessionCart, getUserCart } from "@/utils/getCart";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
-export default async function SearchPage() {
+export default async function SearchPage({ searchParams: { query } }) {
   await connectDB();
   const verifiedSession = await verifySession("inPage");
   // get user wishlist
@@ -41,7 +41,7 @@ export default async function SearchPage() {
         <BreadCrumb page="Search" />
         {/* search bar container */}
 
-        <SearchedProducts {...{ userWishlist, cart }} />
+        <SearchedProducts {...{ userWishlist, cart, searchQuery: query }} />
 
         {/* update count of items in wishlist and cart */}
         <UpdateItemsInBagCount
