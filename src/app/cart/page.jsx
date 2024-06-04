@@ -6,12 +6,14 @@ import Link from "next/link";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 import { getUserWishlist } from "@/utils/getWishlist";
 import { loadStripe } from "@stripe/stripe-js";
+import { IconAttention } from "@/assets/icons";
+import CartCheckoutBUtton from "./CartCheckoutBUtton";
 
 // create `Stripe` object
-loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
-export default async function Cart({ searchParams: { orderStatus } }) {
-  // orderStatus is only true when redirecting from stripe page, cookies will not come with the request, hence orderStatus is passed to client to refresh the page for client verification
+export default async function CartPage() {
+  // orderStatus is only true when redirecting from stripe page
   const verifiedSession = await verifySession("inPage");
   let cart = [],
     wishlist = [];
@@ -111,9 +113,24 @@ export default async function Cart({ searchParams: { orderStatus } }) {
               </div>
 
               <form action="/api/cart-checkout" method="post">
-                <button type="submit" className="btn2 w-full max-w-none">
-                  Proceed to checkout
-                </button>
+                {/* show login link / checkout button if user is logged out / in */}
+                {verifiedSession?.isAuth ? (
+                  <CartCheckoutBUtton />
+                ) : (
+                  <div className="mt-4 flex items-center gap-2">
+                    <IconAttention className="text-4xl text-secondary2" />
+                    <span>
+                      Please{" "}
+                      <Link
+                        href="/login"
+                        className="text-lg font-semibold tracking-wider text-secondary2 duration-300 hover:text-hoverButton"
+                      >
+                        login
+                      </Link>{" "}
+                      to proceed to checkout
+                    </span>
+                  </div>
+                )}
               </form>
             </div>
           </div>
@@ -122,11 +139,7 @@ export default async function Cart({ searchParams: { orderStatus } }) {
 
       {/* update count of items in wishlist and cart */}
       <UpdateItemsInBagCount
-        {...{
-          cartCount: cart.length,
-          wishlistCount: wishlist.length,
-          orderStatus,
-        }}
+        {...{ cartCount: cart.length, wishlistCount: wishlist.length }}
       />
     </main>
   );

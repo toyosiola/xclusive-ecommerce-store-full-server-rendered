@@ -865,3 +865,31 @@ export function IconTrashOutline(props) {
     </svg>
   );
 }
+
+export function IconAttention(props) {
+  return (
+    <svg
+      viewBox="0 0 961.539 1000"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      {...props}
+    >
+      <path d="M956.54 874c6.666 10.667 6.666 22 0 34-6.668 10.667-16.668 16-30 16h-892c-12 0-21.334-5.333-28-16-8-12-8.668-23.333-2-34l446-782c5.332-12 15.332-18 30-18 14.666 0 24.666 6 30 18l446 782m-420-50V724h-110v100h110m0-174V350h-110v300h110" />
+    </svg>
+  );
+}
+
+export function IconCheckmarkCircle(props) {
+  return (
+    <svg
+      viewBox="0 0 512 512"
+      fill="currentColor"
+      height="1em"
+      width="1em"
+      {...props}
+    >
+      <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm108.25 138.29l-134.4 160a16 16 0 01-12 5.71h-.27a16 16 0 01-11.89-5.3l-57.6-64a16 16 0 1123.78-21.4l45.29 50.32 122.59-145.91a16 16 0 0124.5 20.58z" />
+    </svg>
+  );
+}

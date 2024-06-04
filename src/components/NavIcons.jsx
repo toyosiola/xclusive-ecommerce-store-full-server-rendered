@@ -9,6 +9,8 @@ import { usePathname } from "next/navigation";
 export default function NavIcons() {
   const { user, cartCount, wishlistCount } = useGlobalContext();
   const pathname = usePathname();
+  const hideCounts =
+    pathname === "/cart/order-successful" || pathname === "/login";
 
   return (
     <div className="flex items-center gap-4 text-3xl">
@@ -29,7 +31,7 @@ export default function NavIcons() {
       <Link href="/wishlist" className="relative">
         <span className="absolute right-0 top-0 grid h-5 w-5 translate-x-1/4 place-items-center rounded-full bg-secondary2 text-xs font-semibold text-white">
           {/* don't display count in login page */}
-          {pathname === "/login" || wishlistCount}
+          {hideCounts || wishlistCount}
         </span>
         <HeartIcon className="fill-black duration-500 hover:text-text1" />
       </Link>
@@ -37,7 +39,7 @@ export default function NavIcons() {
       {/* cart */}
       <Link href="/cart" className="relative">
         <span className="absolute right-0 top-0 grid  h-5 w-5 translate-x-1/2 place-items-center rounded-full bg-secondary2 text-xs font-semibold text-white">
-          {pathname === "/login" || cartCount}
+          {hideCounts || cartCount}
         </span>
         <CartIcon className="fill-black duration-300 hover:text-text1" />
       </Link>

@@ -11,7 +11,7 @@ export default function setCookie(payload) {
     httpOnly: true,
     secure: !devEnv,
     maxAge: Number(process.env.SESSION_LIFETIME),
-    sameSite: "Strict",
+    sameSite: "lax",
     path: "/",
   });
 }
