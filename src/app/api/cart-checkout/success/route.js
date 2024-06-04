@@ -1,5 +1,7 @@
+// stripe redirect to this endpoint after successful payment
 import { UnauthenticatedError } from "@/errors";
 import Cart from "@/models/CartModel";
+import Order from "@/models/OrderModel";
 import { connectDB } from "@/utils/db";
 import verifySession from "@/utils/verifySession";
 import { revalidateTag } from "next/cache";
@@ -12,10 +14,9 @@ export async function GET(req) {
   const stripeSessionId = searchParams.get("session_id");
 
   try {
-    // retrieve stripe session. stripe will throw error if session does not exist
+    // retrieve stripe session. Will throw 404 error if session does not exist
     const stripeSession =
       await stripe.checkout.sessions.retrieve(stripeSessionId);
-    // const customer = await stripe.customers.retrieve(stripeSession.id);
 
     // verify user
     const verifiedSession = await verifySession();
@@ -25,13 +26,26 @@ export async function GET(req) {
 
     //create entry in db
     await connectDB();
+    const { id, metadata, amount_subtotal, amount_total, payment_status } =
+      stripeSession;
+    const order = Order.create({
+      user: metadata.userId,
+      orderedProducts: JSON.parse(metadata.products),
+      orderSubtotal: amount_subtotal,
+      orderTotal: amount_total,
+      paymentStatus: payment_status,
+      stripeSessionId: id,
+    });
 
     // clear user cart
-    await Cart.deleteMany({ user: verifiedSession.userId });
-    revalidateTag(`cart/user-${verifiedSession.userId}`); // cached user cart
+    const cart = Cart.deleteMany({ user: verifiedSession.userId });
+    await Promise.all([order, cart]);
+
+    // revalidate cached user cart
+    revalidateTag(`cart/user-${verifiedSession.userId}`);
   } catch (error) {
-    console.error("error", error);
-    notFound();
+    if (error.statusCode === 404) notFound();
+    if (error.statusCode === 401) redirect("/login");
   }
-  redirect("/cart");
+  redirect("/cart?order_status=success");
 }

@@ -6,7 +6,8 @@ import Link from "next/link";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 import { getUserWishlist } from "@/utils/getWishlist";
 import { loadStripe } from "@stripe/stripe-js";
-import Cart from "@/models/CartModel";
+import { IconAttention } from "@/assets/icons";
+import CartCheckoutBUtton from "./CartCheckoutBUtton";
 
 // create `Stripe` object
 loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -112,9 +113,24 @@ export default async function CartPage({ searchParams: { order_status } }) {
               </div>
 
               <form action="/api/cart-checkout" method="post">
-                <button type="submit" className="btn2 w-full max-w-none">
-                  Proceed to checkout
-                </button>
+                {/* show login link / checkout button if user is logged out / in */}
+                {verifiedSession?.isAuth ? (
+                  <CartCheckoutBUtton />
+                ) : (
+                  <div className="mt-4 flex items-center gap-2">
+                    <IconAttention className="text-4xl text-secondary2" />
+                    <span>
+                      Please{" "}
+                      <Link
+                        href="/login"
+                        className="text-lg font-semibold tracking-wider text-secondary2 duration-300 hover:text-hoverButton"
+                      >
+                        login
+                      </Link>{" "}
+                      to proceed to checkout
+                    </span>
+                  </div>
+                )}
               </form>
             </div>
           </div>
