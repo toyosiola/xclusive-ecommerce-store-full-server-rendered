@@ -46,6 +46,9 @@ export async function GET(req) {
   } catch (error) {
     if (error.statusCode === 404) notFound();
     if (error.statusCode === 401) redirect("/login");
+    return new Response(error.message || "An error occurred!", {
+      status: error.statusCode || 500,
+    });
   }
-  redirect("/cart?order_status=success");
+  redirect("/cart/order-successful");
 }

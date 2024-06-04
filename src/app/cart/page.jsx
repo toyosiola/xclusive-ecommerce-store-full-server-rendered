@@ -10,9 +10,9 @@ import { IconAttention } from "@/assets/icons";
 import CartCheckoutBUtton from "./CartCheckoutBUtton";
 
 // create `Stripe` object
-loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
-export default async function CartPage({ searchParams: { order_status } }) {
+export default async function CartPage() {
   // orderStatus is only true when redirecting from stripe page
   const verifiedSession = await verifySession("inPage");
   let cart = [],
