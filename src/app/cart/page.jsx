@@ -5,15 +5,11 @@ import verifySession from "@/utils/verifySession";
 import Link from "next/link";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 import { getUserWishlist } from "@/utils/getWishlist";
-import { loadStripe } from "@stripe/stripe-js";
 import { IconAttention } from "@/assets/icons";
 import CartCheckoutBUtton from "./CartCheckoutBUtton";
-
-// create `Stripe` object
-loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+import LoadStripe from "./LoadStripe";
 
 export default async function CartPage() {
-  // orderStatus is only true when redirecting from stripe page
   const verifiedSession = await verifySession("inPage");
   let cart = [],
     wishlist = [];
@@ -136,6 +132,8 @@ export default async function CartPage() {
           </div>
         )}
       </div>
+
+      <LoadStripe />
 
       {/* update count of items in wishlist and cart */}
       <UpdateItemsInBagCount
