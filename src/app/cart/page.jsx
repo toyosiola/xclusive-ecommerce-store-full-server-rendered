@@ -17,7 +17,10 @@ export default async function CartPage() {
   // verifiedSession.isAuth is false if not-logged-in session exists
   if (verifiedSession && !verifiedSession?.isAuth) {
     // get session cart
-    const sessionCart = await getSessionCart(verifiedSession.sessionId, true);
+    const sessionCart = await getSessionCart(
+      verifiedSession.sessionId,
+      !!"populateProduct",
+    );
     cart = sessionCart?.map((item) => ({
       ...item.product,
       cartQuantity: item.cartQuantity,
@@ -26,8 +29,11 @@ export default async function CartPage() {
 
   // verifiedSession.isAuth is true if user is logged-in
   if (verifiedSession?.isAuth) {
-    const promise1 = getUserWishlist(verifiedSession.userId, true);
-    const promise2 = getUserCart(verifiedSession.userId, true);
+    const promise1 = getUserWishlist(
+      verifiedSession.userId,
+      !!"populateProduct",
+    );
+    const promise2 = getUserCart(verifiedSession.userId, !!"populateProduct");
     const [userWishlist, userCart] = await Promise.all([promise1, promise2]);
     wishlist = userWishlist;
     cart = userCart.map((item) => ({

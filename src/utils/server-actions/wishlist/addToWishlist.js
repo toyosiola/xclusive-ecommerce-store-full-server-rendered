@@ -11,7 +11,7 @@ export default async function addToWishlist(productId) {
     verifiedSession = await verifySession();
   } catch (error) {
     // handle error thrown during session verification
-    if (error.statusCode === (401 || 404))
+    if (error.statusCode === 401 || error.statusCode === 404)
       return {
         success: false,
         message: "Please login to add product to your wishlist",

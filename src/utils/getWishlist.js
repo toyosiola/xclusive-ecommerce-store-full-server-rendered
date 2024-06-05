@@ -3,14 +3,14 @@ import "server-only";
 import Wishlist from "@/models/WishlistModel";
 import { unstable_cache } from "next/cache";
 
-export function getUserWishlist(user, isWishlistPage = false) {
+export function getUserWishlist(user, populateProduct = false) {
   return unstable_cache(
     async () => {
       const wishlist = Wishlist.find(
         { user },
         "-createdAt -updatedAt -_id",
       ).sort({ createdAt: -1 });
-      if (isWishlistPage)
+      if (populateProduct)
         wishlist.populate({
           path: "product",
           select:
@@ -19,7 +19,7 @@ export function getUserWishlist(user, isWishlistPage = false) {
 
       return (await wishlist).map((item) => item.toObject());
     },
-    ["wishlist", user, isWishlistPage],
+    ["wishlist", user, populateProduct],
     { tags: ["wishlist", `wishlist/user-${user}`] },
   )();
 }

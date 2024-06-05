@@ -22,9 +22,8 @@ export const metadata = {
 export default function GlobalError({ error, reset }) {
   // delete session if there was error in validating session
   useEffect(() => {
-    if (error.message === ("Invalid session" || "User not found"))
-      deleteSession();
-  }, [error.message]);
+    if (error.digest === "4196203339") deleteSession();
+  }, [error.digest]);
 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>

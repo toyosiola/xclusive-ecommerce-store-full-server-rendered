@@ -6,9 +6,8 @@ import { useEffect } from "react";
 export default function Error({ error, reset }) {
   // delete session if there was error in validating session
   useEffect(() => {
-    if (error.message === ("Invalid session" || "User not found"))
-      deleteSession();
-  }, [error.message]);
+    if (error.digest === "4196203339") deleteSession();
+  }, [error.digest]);
 
   return (
     <main className="flex h-full flex-col items-center justify-center py-4">
