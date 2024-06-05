@@ -1,5 +1,6 @@
 import { host } from "@/app/layout";
 import { UnauthenticatedError } from "@/errors";
+import { connectDB } from "@/utils/db";
 import { getUserCart } from "@/utils/getCart";
 import verifySession from "@/utils/verifySession";
 import { notFound, redirect } from "next/navigation";
@@ -18,6 +19,7 @@ export async function POST() {
       );
 
     // get cart items and map to stripe line-items format
+    await connectDB();
     const cart = await getUserCart(verifiedSession.userId, !!"populateProduct");
 
     // line items is used by stripe. It's an array of each product details
