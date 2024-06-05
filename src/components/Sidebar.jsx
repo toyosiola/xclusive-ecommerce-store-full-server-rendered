@@ -81,6 +81,7 @@ export default function Sidebar() {
                 type="button"
                 onClick={async () => {
                   await logout();
+                  setIsSidebarOpen(false);
                   dispatch({ type: SET_USER, payload: null });
                 }}
                 className="flex w-full items-center gap-2 py-3 pl-1 text-button2 duration-300 hover:pl-3 hover:text-hoverButton"
