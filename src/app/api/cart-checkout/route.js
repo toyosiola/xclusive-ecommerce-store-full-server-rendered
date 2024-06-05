@@ -40,29 +40,16 @@ export async function POST() {
       };
     });
 
-    // products stored in stripe session to be saved in db after successful payment
-    const products = JSON.stringify(
-      cart.map((item) => {
-        const { _id, price, discount, name } = item.product;
-        const amountPaid = Math.round(price - price * (discount || 0));
-        return {
-          product: _id.toString(),
-          name,
-          markedPrice: price,
-          discount,
-          amountPaid,
-          quantity: item.cartQuantity,
-          totalAmountPaid: item.cartQuantity * amountPaid,
-        };
-      }),
+    const productIdsAndQuantity = JSON.stringify(
+      cart.map((item) => `${item.product._id.toString()}|${item.cartQuantity}`),
     );
 
     // Create Checkout Sessions from body params.
     stripeSession = await stripe.checkout.sessions.create({
       line_items, // line_items is an array of products data
       mode: "payment",
-      metadata: { userId: verifiedSession.userId.toString(), products },
-      success_url: `${host}/api/cart-checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      metadata: { userId: verifiedSession.userId.toString() },
+      success_url: `${host}/api/cart-checkout/success?session_id={CHECKOUT_SESSION_ID}&products=${productIdsAndQuantity}`,
       cancel_url: host + "/cart",
     });
   } catch (err) {
