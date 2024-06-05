@@ -1,6 +1,7 @@
 import Product from "@/models/ProductModel";
 import SingleProduct from "./SingleProduct/index.js";
 import { connectDB } from "@/utils/db";
+import { unstable_cache } from "next/cache.js";
 
 // define projection stage for each aggregation
 export const projectStage = {
@@ -20,20 +21,29 @@ const subPipeline = (query) => {
   return [{ $match: query }, { $sample: { size: 4 } }, projectStage];
 };
 
-const featuredProducts = (async function () {
-  await connectDB();
-  return Product.aggregate([
-    {
-      $facet: {
-        flashSales: subPipeline({ discount: { $gt: 0 } }),
-        bestSelling: subPipeline({ reviewsCount: { $gt: 50 } }),
-        topProducts: subPipeline({ price: { $gt: 70000 } }),
+// unstable cache must be called in a component or ... to be cached
+export const getFeaturedProducts = unstable_cache(
+  async function () {
+    await connectDB();
+    return await Product.aggregate([
+      {
+        $facet: {
+          flashSales: subPipeline({ discount: { $gt: 0 } }),
+          bestSelling: subPipeline({ reviewsCount: { $gt: 50 } }),
+          topProducts: subPipeline({ price: { $gt: 70000 } }),
+        },
       },
-    },
-  ]);
-})();
+    ]);
+  },
+  ["featured-products"],
+  { revalidate: 60 * 60 * 24, tags: ["products", "featured-products"] },
+);
 
-export async function FlashSalesProductsSamples({ userWishlist, cart }) {
+export async function FlashSalesProductsSamples({
+  userWishlist,
+  cart,
+  featuredProducts,
+}) {
   const [{ flashSales }] = await featuredProducts;
 
   return (
@@ -48,7 +58,11 @@ export async function FlashSalesProductsSamples({ userWishlist, cart }) {
   );
 }
 
-export async function BestSellingProductsSamples({ userWishlist, cart }) {
+export async function BestSellingProductsSamples({
+  userWishlist,
+  cart,
+  featuredProducts,
+}) {
   const [{ bestSelling }] = await featuredProducts;
 
   return (
@@ -63,7 +77,11 @@ export async function BestSellingProductsSamples({ userWishlist, cart }) {
   );
 }
 
-export async function TopProductsSamples({ userWishlist, cart }) {
+export async function TopProductsSamples({
+  userWishlist,
+  cart,
+  featuredProducts,
+}) {
   const [{ topProducts }] = await featuredProducts;
 
   return (
