@@ -1,5 +1,6 @@
 import { IconCheckmarkCircle } from "@/assets/icons";
 import Link from "next/link";
+import Confetti from "./Confetti";
 
 export default function page() {
   return (
@@ -23,6 +24,8 @@ export default function page() {
           </div>
         </div>
       </div>
+
+      <Confetti />
     </main>
   );
 }

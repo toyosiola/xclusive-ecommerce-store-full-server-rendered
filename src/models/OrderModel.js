@@ -19,7 +19,7 @@ const orderSchema = new Schema(
         name: { type: String, required: true },
         markedPrice: { type: Number, required: true },
         discount: { type: Number, required: true },
-        amountPaid: { type: Number, required: true },
+        unitAmountPaid: { type: Number, required: true },
         quantity: { type: Number, required: true },
         totalAmountPaid: { type: Number, required: true },
       },
