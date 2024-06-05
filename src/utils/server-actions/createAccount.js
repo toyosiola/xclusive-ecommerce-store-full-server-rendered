@@ -5,6 +5,7 @@ import isEmail from "validator/es/lib/isEmail";
 import crypto from "crypto";
 import transporter from "../nodemailer";
 import { host } from "@/app/layout";
+import { connectDB } from "../db";
 
 export default async function createAccount(formData) {
   let verificationToken;
@@ -33,6 +34,8 @@ export default async function createAccount(formData) {
       message: "Passwords do not match. Ensure both fields are the same",
     };
   }
+
+  await connectDB();
 
   try {
     const isEmailTaken = await User.findOne({ email });
