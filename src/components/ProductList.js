@@ -43,10 +43,7 @@ export default async function ProductList({ category, sort, priceLimit }) {
 
   return (
     <>
-      <div
-        className="mb-14 grid-cols-2 place-items-center gap-4 gap-y-14 space-y-10 sm:grid sm:space-y-0 lg:grid-cols-3"
-        key={crypto.randomUUID()}
-      >
+      <div className="mb-14 grid-cols-2 place-items-center gap-4 gap-y-14 space-y-10 sm:grid sm:space-y-0 lg:grid-cols-3">
         {products.map((product) => (
           <SingleProduct
             key={product._id}

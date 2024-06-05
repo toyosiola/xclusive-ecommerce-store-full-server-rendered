@@ -59,7 +59,6 @@ export default function getInitialProducts(category, sort, priceLimit) {
         },
       );
 
-      await connectDB();
       return await Product.aggregate(aggregationPipeline);
     },
     ["initial-products", category || "all", priceLimit || "", sort || "none"],

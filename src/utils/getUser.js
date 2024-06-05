@@ -6,7 +6,6 @@ import { connectDB } from "./db";
 export default function getUser(query, selectedFields = "") {
   return unstable_cache(
     async function () {
-      await connectDB();
       let user = User.findOne(query);
       if (selectedFields) {
         user.select(selectedFields);

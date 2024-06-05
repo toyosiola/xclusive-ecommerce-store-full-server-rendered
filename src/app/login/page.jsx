@@ -3,8 +3,10 @@ import LoginForm from "./LoginForm";
 import verifySession from "@/utils/verifySession";
 import { redirect } from "next/navigation";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
+import { connectDB } from "@/utils/db";
 
 async function Login() {
+  await connectDB();
   const session = await verifySession("inPage");
   if (session?.isAuth) {
     redirect("/");

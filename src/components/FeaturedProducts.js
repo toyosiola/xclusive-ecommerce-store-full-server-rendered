@@ -24,7 +24,6 @@ const subPipeline = (query) => {
 // unstable cache must be called in a component or ... to be cached
 export const getFeaturedProducts = unstable_cache(
   async function () {
-    await connectDB();
     return await Product.aggregate([
       {
         $facet: {
