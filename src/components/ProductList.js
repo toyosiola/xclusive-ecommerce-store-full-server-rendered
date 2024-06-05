@@ -11,6 +11,7 @@ export const productsPerPage = 48;
 
 export default async function ProductList({ category, sort, priceLimit }) {
   await connectDB();
+  const initialProductsPromise = getInitialProducts(category, sort, priceLimit);
   const verifiedSession = await verifySession("inPage");
   // get user wishlist
   let userWishlist,
@@ -38,11 +39,7 @@ export default async function ProductList({ category, sort, priceLimit }) {
     userWishlist = userWishlist.map((item) => item.product.toString());
   }
 
-  const [{ products, maxPrice, totalCount }] = await getInitialProducts(
-    category,
-    sort,
-    priceLimit,
-  );
+  const [{ products, maxPrice, totalCount }] = await initialProductsPromise;
 
   return (
     <>

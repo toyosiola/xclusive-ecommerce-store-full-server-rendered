@@ -8,8 +8,10 @@ import { getUserWishlist } from "@/utils/getWishlist";
 import { IconAttention } from "@/assets/icons";
 import CartCheckoutBUtton from "./CartCheckoutBUtton";
 import LoadStripe from "./LoadStripe";
+import { connectDB } from "@/utils/db";
 
 export default async function CartPage() {
+  await connectDB();
   const verifiedSession = await verifySession("inPage");
   let cart = [],
     wishlist = [];

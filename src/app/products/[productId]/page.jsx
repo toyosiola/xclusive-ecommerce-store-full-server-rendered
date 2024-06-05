@@ -14,6 +14,11 @@ import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 export default async function SingleProductPage({ params: { productId } }) {
   let product, wishlist, isInWishlist, cart;
   await connectDB();
+  const productPromise = Product.findOne({ _id: productId })
+    .select(
+      "name price averageRating reviewsCount images description discount quantityInStock",
+    )
+    .exec();
 
   // verifiedSession is null if no session exists
   const verifiedSession = await verifySession("inPage");
@@ -38,9 +43,7 @@ export default async function SingleProductPage({ params: { productId } }) {
 
   // fetch product
   try {
-    product = await Product.findOne({ _id: productId }).select(
-      "name price averageRating reviewsCount images description discount quantityInStock",
-    );
+    product = await productPromise;
     if (!product) {
       notFound();
     }

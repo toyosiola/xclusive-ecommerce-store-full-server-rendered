@@ -9,6 +9,7 @@ import {
   BestSellingProductsSamples,
   FlashSalesProductsSamples,
   TopProductsSamples,
+  getFeaturedProducts,
 } from "@/components/FeaturedProducts";
 import FlashSalesTimer from "@/components/FlashSalesTimer";
 import LtdOfferTimer from "@/components/LtdOfferTimer";
@@ -26,6 +27,8 @@ import { Suspense } from "react";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
 
 export default async function Home() {
+  await connectDB();
+  const featuredProducts = getFeaturedProducts();
   const verifiedSession = await verifySession("inPage");
   // get user wishlist
   let userWishlist,
@@ -123,7 +126,9 @@ export default async function Home() {
 
           {/* Flash sales products */}
           <Suspense fallback={<ProductSkeleton count={4} />}>
-            <FlashSalesProductsSamples {...{ userWishlist, cart }} />
+            <FlashSalesProductsSamples
+              {...{ userWishlist, cart, featuredProducts }}
+            />
           </Suspense>
 
           {/* Link to view all flash sales */}
@@ -169,7 +174,9 @@ export default async function Home() {
 
           {/* Best selling container */}
           <Suspense fallback={<ProductSkeleton count={4} />}>
-            <BestSellingProductsSamples {...{ userWishlist, cart }} />
+            <BestSellingProductsSamples
+              {...{ userWishlist, cart, featuredProducts }}
+            />
           </Suspense>
           {/* view all link for smaller screens only */}
           <Link
@@ -226,7 +233,7 @@ export default async function Home() {
 
           {/* products container */}
           <Suspense fallback={<ProductSkeleton count={4} />}>
-            <TopProductsSamples {...{ userWishlist, cart }} />
+            <TopProductsSamples {...{ userWishlist, cart, featuredProducts }} />
           </Suspense>
           <Link href="/products" className="btn2 mx-auto">
             View All Products
