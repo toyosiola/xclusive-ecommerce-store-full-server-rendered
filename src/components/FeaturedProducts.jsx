@@ -1,6 +1,5 @@
 import Product from "@/models/ProductModel";
 import SingleProduct from "./SingleProduct/index.js";
-import { connectDB } from "@/utils/db";
 import { unstable_cache } from "next/cache.js";
 
 // define projection stage for each aggregation
