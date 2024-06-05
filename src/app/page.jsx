@@ -25,6 +25,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import UpdateItemsInBagCount from "@/components/UpdateItemsInBagCount";
+import { connectDB } from "@/utils/db";
 
 export default async function Home() {
   await connectDB();
