@@ -8,12 +8,14 @@ import {
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import getUser from "./getUser";
+import { connectDB } from "./db";
 
 export default async function verifySession(inPage) {
   const cookie = cookies();
   const session = cookie.get("session")?.value;
   let payload, user;
 
+  await connectDB();
   if (!session) return null;
 
   try {
