@@ -66,6 +66,7 @@ export async function POST() {
   } catch (err) {
     console.error(err);
     if (err.statusCode === 404) notFound();
+    if (err.statusCode === 401) redirect("/login");
     return new Response(err.message || "An error occurred", {
       status: err.statusCode || 500,
     });

@@ -26,7 +26,7 @@ export default async function Wishlist() {
   }
 
   let cart = {};
-  const promise1 = getUserWishlist(verifiedSession.userId, true);
+  const promise1 = getUserWishlist(verifiedSession.userId, !!"populateProduct");
   const promise2 = getUserCart(verifiedSession.userId);
   const [wishlist, userCart] = await Promise.all([promise1, promise2]);
   userCart.forEach(
