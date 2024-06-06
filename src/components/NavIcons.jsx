@@ -33,7 +33,9 @@ export default function NavIcons() {
           {/* don't display count in login page */}
           {hideCounts || wishlistCount}
         </span>
-        <HeartIcon className="fill-black duration-500 hover:text-text1" />
+        <HeartIcon
+          className={`duration-300 hover:text-text1 ${hideCounts || wishlistCount < 1 ? "fill-none" : ""}`}
+        />
       </Link>
 
       {/* cart */}
@@ -41,7 +43,9 @@ export default function NavIcons() {
         <span className="absolute right-0 top-0 grid  h-5 w-5 translate-x-1/2 place-items-center rounded-full bg-secondary2 text-xs font-semibold text-white">
           {hideCounts || cartCount}
         </span>
-        <CartIcon className="fill-black duration-300 hover:text-text1" />
+        <CartIcon
+          className={`duration-300 hover:text-text1 ${hideCounts || cartCount < 1 ? "fill-none" : ""}`}
+        />
       </Link>
 
       {/* user menu - show on large screens when user is logged in */}
