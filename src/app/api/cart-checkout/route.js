@@ -30,7 +30,7 @@ export async function POST() {
         quantity: item.cartQuantity,
         price_data: {
           currency: "usd",
-          unit_amount: Math.ceil(price - price * (discount || 0)),
+          unit_amount: Math.round(price - price * (discount || 0)),
           product_data: {
             name,
             images: [images[0]],
