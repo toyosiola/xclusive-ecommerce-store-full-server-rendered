@@ -219,8 +219,6 @@
 - [x] Check login status inside page, not middleware.
 - [x] If not logged in, advise to log in with a login page link
 - [x] If logged in, fetch wishlists with userId from wishlists collection. Populate product field, project needed field. Create userId for self if necessary and tie wishlist/cart products to self
-- [x] add to cart from wishlist should be through transaction. check transaction success potential if product not found in wishlist i.e. get product from wishlists collection, add to carts collection, then delete from wishlist. add to cart and wishlist should be done with server action. revalidate path after action
-- [x] move all to cart should also be through transaction and server action. revalidate path after action
 
   ##### wishlist schema
 
@@ -267,8 +265,8 @@
 #### to do
 
 - [x] remove revalidation from home
-- [ ] rename all react components to jsx
-- [ ] cache featured products get function, revalidate in 3 days
+- [x] rename all react components to jsx
+- [x] cache featured products get function, revalidate in 3 days
 - [ ] fix 3 decimal place output of format price to 2 decimal place
 - [ ] make each product image in cart page link to respective single product page
 - [ ] add add-to-wishlist functionality to cart page
@@ -277,10 +275,18 @@
 - [ ] create indexes for all db query
 - [ ] look into refreshing logged-in user sessions
 - [ ] all pages/ actions that redirect to login, redirect back to the actual page after login-in (e.g. add to wishlist)
-- [x] Check error "Cookies can only be modified in a Server Action or Route Handler" because verifySession wants to delete cookie sometimes in server component
-- give user log out state to show logging out when logout is in process
-- add user reviews to purchased product
-- add admin panel for products and user management
-- use mongodb transaction to delete and create cart items during login
-- delete unused dormant session from db after 7
+- [ ] Check error "Cookies can only be modified in a Server Action or Route Handler" because verifySession wants to delete cookie sometimes in server component
+- [ ] In syncing session products with cart during login, deleting products from cart and adding products to cart should be done with mongodb transactions
+- [ ] give user log out state to show logging out when logout is in process
+- add user reviews to purchased product, auto update product ratings
 - work on out of stock product not to be displayed in product list
+- delete unused dormant session from db after 7
+- user email notification after successful order
+- create user profile page
+- user order history on user profile page
+- add admin panel for products and user management (add, edit, delete)
+- all order history for admin, group by days
+- implement more payment processors
+- security: rate limiting, helmet, xss, mongo-sanitizer
+- social media integration (don't know what this is about yet)
+- analytics integration
