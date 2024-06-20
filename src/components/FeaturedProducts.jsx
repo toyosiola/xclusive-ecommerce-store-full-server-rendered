@@ -34,7 +34,7 @@ export const getFeaturedProducts = unstable_cache(
     ]);
   },
   ["featured-products"],
-  { revalidate: 60 * 60 * 24, tags: ["products", "featured-products"] },
+  { revalidate: 86400, tags: ["products", "featured-products"] }, // revalidate - 1day in seconds
 );
 
 export async function FlashSalesProductsSamples({
