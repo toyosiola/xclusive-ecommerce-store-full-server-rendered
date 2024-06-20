@@ -1,6 +1,6 @@
 import Product from "@/models/ProductModel";
-import SingleProduct from "./SingleProduct/index.js";
-import { unstable_cache } from "next/cache.js";
+import SingleProduct from "./SingleProduct";
+import { unstable_cache } from "next/cache";
 
 // define projection stage for each aggregation
 export const projectStage = {
